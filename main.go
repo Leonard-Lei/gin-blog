@@ -1,11 +1,22 @@
 package main
 
 import (
+	/*
 	"fmt"
 	"net/http"
 
 	"gin-blog/pkg/setting"
 	"gin-blog/routers"
+	*/
+
+    "fmt"
+    "log"
+    "syscall"
+
+    "github.com/fvbock/endless"
+
+    "gin-blog/routers"
+    "gin-blog/pkg/setting"
 )
 
 // @title Golang Gin API
@@ -16,7 +27,6 @@ import (
 // @license.url https://github.com/EDDYCJY/go-gin-example/blob/master/LICENSE
 func main() {
 
-	/*
 		endless.DefaultReadTimeOut = setting.ReadTimeout
 		endless.DefaultWriteTimeOut = setting.WriteTimeout
 		endless.DefaultMaxHeaderBytes = 1 << 20
@@ -32,7 +42,8 @@ func main() {
 		if err != nil {
 			log.Printf("Server err: %v", err)
 		}
-	*/
+	
+	/*
 	router := routers.InitRouter()
 
 	s := &http.Server{
@@ -44,4 +55,5 @@ func main() {
 	}
 
 	s.ListenAndServe()
+	*/
 }
