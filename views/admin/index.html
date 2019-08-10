@@ -109,7 +109,7 @@
               <li class="user-body">
 					<a class="dropdown-item" href="javascript:void(0)"><i class="ion-log-out"></i>个人信息</a>
 					<div class="dropdown-divider"></div>
-					<div class="p-10"><a href="javascript:void(0)" class="btn btn-sm btn-rounded btn-success">注销</a></div>
+					<div class="p-10"><a href="javascript:void(0)" onclick="logout()" class="btn btn-sm btn-rounded btn-success">注销</a></div>
               </li>
             </ul>
           </li>	
@@ -591,6 +591,17 @@
 	
 	<!-- Ekan Admin for demo purposes -->
 	<script src="/statics/admin/js/demo.js"></script>
+
+	<script type="text/javascript">
+		
+		$(document).ready(function(){
+			logout = function (){
+				sessionStorage.removeItem("flyray_blog_token");
+				window.location.href="login"
+			  alert("logout");
+			}
+		})
+	</script>
 	
 </body>
 </html>
