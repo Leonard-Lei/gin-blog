@@ -34,6 +34,8 @@ func InitRouter() *gin.Engine {
 	{
 		//渲染页面
 		admin.GET("/index", GetAdminIndex)
+		//渲染页面
+		admin.GET("/login", GetLogin)
 	}
 
 	blog := r.Group("/blog")
