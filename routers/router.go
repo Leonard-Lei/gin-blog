@@ -32,16 +32,20 @@ func InitRouter() *gin.Engine {
 
 	admin := r.Group("/admin")
 	{
-		//渲染页面
+		//后台首页
 		admin.GET("/index", GetAdminIndex)
-		//渲染页面
+		//后台登陆页面
 		admin.GET("/login", GetLogin)
+		//后台博客列表
+		admin.GET("/list", GetAdminBlogList)
 	}
 
 	blog := r.Group("/blog")
 	{
-		//渲染页面
+		//博客首页
 		blog.GET("/index", GetBlogIndex)
+		//博客首页
+		blog.GET("/detail", GetBlogDetail)
 	}
 
 	apiv1 := r.Group("/api/v1")

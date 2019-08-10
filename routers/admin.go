@@ -6,16 +6,23 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//管理后台首页
+//后台首页
 func GetAdminIndex(c *gin.Context) {
 	c.HTML(http.StatusOK, "admin/index.html", gin.H{
 		"title": "GIN: 首页",
 	})
 }
 
-//管理后台首页
+//后台登陆页面
 func GetLogin(c *gin.Context) {
 	c.HTML(http.StatusOK, "admin/login.html", gin.H{
 		"title": "GIN: 登录界面",
+	})
+}
+
+//后台博客列表
+func GetAdminBlogList(c *gin.Context) {
+	c.HTML(http.StatusOK, "admin/list.html", gin.H{
+		"title": "GIN: 博客列表",
 	})
 }

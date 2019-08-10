@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 {{define "admin/index.html"}}
 <html lang="en">
   <head>
@@ -38,10 +37,20 @@
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 
-     
+     <!-- jQuery 3 -->
+	<script src="/statics/admin/assets/vendor_components/jquery-3.3.1/jquery-3.3.1.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			var token = sessionStorage.getItem("flyray_blog_token");
+			if(token == undefined || token == null){
+				window.location.href="login"
+			}
+		})
+	</script>
   </head>
 
 <body class="hold-transition skin-info dark-sidebar light sidebar-mini">
+
 <div class="wrapper">
 
   <header class="main-header">
@@ -91,22 +100,16 @@
 				  <div class="flexbox align-self-center">					  
 				  	<img src="/statics/admin/images/avatar/7.jpg" class="float-left rounded-circle" alt="User Image">					  
 					<h4 class="user-name align-self-center">
-					  <span>Samuel Brus</span>
-					  <small>samuel@gmail.com</small>
+					  <span>admin</span>
+					  <small>博羸兄弟</small>
 					</h4>
 				  </div>
               </li>
               <!-- Menu Body -->
               <li class="user-body">
-				    <a class="dropdown-item" href="javascript:void(0)"><i class="ion ion-person"></i> My Profile</a>
-					<a class="dropdown-item" href="javascript:void(0)"><i class="ion ion-bag"></i> My Balance</a>
-					<a class="dropdown-item" href="javascript:void(0)"><i class="ion ion-email-unread"></i> Inbox</a>
+					<a class="dropdown-item" href="javascript:void(0)"><i class="ion-log-out"></i>个人信息</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="javascript:void(0)"><i class="ion ion-settings"></i> Account Setting</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="javascript:void(0)"><i class="ion-log-out"></i> Logout</a>
-					<div class="dropdown-divider"></div>
-					<div class="p-10"><a href="javascript:void(0)" class="btn btn-sm btn-rounded btn-success">View Profile</a></div>
+					<div class="p-10"><a href="javascript:void(0)" class="btn btn-sm btn-rounded btn-success">注销</a></div>
               </li>
             </ul>
           </li>	
@@ -131,11 +134,6 @@
       <div class="user-panel">
         <div class="image">
           <img src="/statics/admin/images/logo-big.png" class="rounded-circle" alt="User Image">
-        </div>
-        <div class="info">
-			<a href="" class="link" data-toggle="tooltip" title="" data-original-title="Settings"><i class="ion ion-gear-b"></i></a>
-            <a href="" class="link" data-toggle="tooltip" title="" data-original-title="Email"><i class="ion ion-android-mail"></i></a>
-            <a href="" class="link" data-toggle="tooltip" title="" data-original-title="Logout"><i class="ion ion-power"></i></a>
         </div>
       </div>
       
@@ -167,7 +165,7 @@
 		</span>
 		  </a>
 		  <ul class="treeview-menu">
-			  <li class="active"><a href="index.html"><i class="ti-more"></i>博客列表</a></li>
+			  <li class=""><a href="list"><i class="ti-more"></i>博客列表</a></li>
 			  <li><a href="index-2.html"><i class="ti-more"></i>评论信息</a></li>
 		  </ul>
 		</li>
@@ -556,8 +554,7 @@
 <!-- ./wrapper -->
 
 	  
-	<!-- jQuery 3 -->
-	<script src="/statics/admin/assets/vendor_components/jquery-3.3.1/jquery-3.3.1.js"></script>
+	
 	
 	<!-- jQuery UI 1.11.4 -->
 	<script src="/statics/admin/assets/vendor_components/jquery-ui/jquery-ui.js"></script>
@@ -594,7 +591,6 @@
 	
 	<!-- Ekan Admin for demo purposes -->
 	<script src="/statics/admin/js/demo.js"></script>
-	
 	
 </body>
 </html>
