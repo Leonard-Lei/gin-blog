@@ -25,7 +25,22 @@ func InitRouter() *gin.Engine {
 	//新增获取token的方法
 	r.GET("/auth", api.GetAuth)
 
+	// 加载static文件夹下所有的文件
+	r.LoadHTMLGlob("views/**/*")
+
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+	admin := r.Group("/admin")
+	{
+		//渲染页面
+		admin.GET("/index", GetAdminIndex)
+	}
+
+	blog := r.Group("/blog")
+	{
+		//渲染页面
+		blog.GET("/index", GetBlogIndex)
+	}
 
 	apiv1 := r.Group("/api/v1")
 	apiv1.Use(jwt.JWT())

@@ -19,3 +19,5 @@
 [INFO][article.go:130]2019/08/04 13:45:38 [content 内容不能为空]
 [INFO][article.go:130]2019/08/04 13:45:38 [created_by 创建人不能为空]
 [INFO][article.go:130]2019/08/04 13:45:38 [state 状态只允许0或1]
+[INFO][auth.go:46]2019/08/04 23:18:38 [GetAuth Success]
+[INFO][auth.go:46]2019/08/04 23:18:43 [GetAuth Success]
