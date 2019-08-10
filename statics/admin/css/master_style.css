@@ -63,7 +63,7 @@ import icon and fonts Styles
 @import url(icons/weather-icons/css/weather-icons.min.css);
 @import url(icons/iconmind/iconmind.css);
 
-@import url(../../assets/vendor_components/animate/animate.css);
+@import url(../../admin/assets/vendor_components/animate/animate.css);
 @import url('https://fonts.googleapis.com/css?family=Nunito+Sans:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i');
 
 /*------------------------------------------------------------------
@@ -385,7 +385,7 @@ a:active, a:focus, a:hover {
     display: block;
 }
 .main-header .top-nav-search {
-    padding-top: 22px;
+    padding-top: 16px;
     width: 450px;
 }
 .main-header .top-nav-search .input-group {
@@ -871,7 +871,7 @@ a:active, a:focus, a:hover {
     position: relative;
     width: 100%;
     padding: 15px 0 15px;
-    background-image: url(../../images/user-info2.jpg);    
+    background-image: url(../../admin/images/user-info2.jpg);    
 	background-size: cover;
 }
 .user-panel:after, .user-panel:before {
@@ -1252,7 +1252,6 @@ a:active, a:focus, a:hover {
 	padding: 0px 15px;
 	vertical-align: middle;
     line-height: 80px;
-    display: block;
 	font-size: 1.5rem;
 }
 .search-box .app-search {
