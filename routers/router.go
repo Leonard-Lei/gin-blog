@@ -57,8 +57,10 @@ func InitRouter() *gin.Engine {
 		blog.GET("/life", GetBlogArchives)
 		//博客里程碑
 		blog.GET("/roadmap", GetBlogRoadmap)
-		//博客里程碑
+		//博客搜索
 		blog.GET("/search", GetBlogSearch)
+		//关于我们
+		blog.GET("/about", GetBlogAbout)
 
 	}
 

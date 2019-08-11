@@ -61,3 +61,12 @@ func GetBlogSearch(c *gin.Context) {
 		"title": "GIN: 博客搜索",
 	})
 }
+
+//博客搜索
+func GetBlogAbout(c *gin.Context) {
+	c.HTML(http.StatusOK, "blog/about.html", gin.H{
+		"title": "GIN: 关于我们",
+	})
+}
+
+
