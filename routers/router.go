@@ -21,13 +21,17 @@ func InitRouter() *gin.Engine {
 
 	//gin.SetMode(setting.ServerSetting.RunMode)
 
+	r.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
+	
 	//新增获取token的方法
 	r.GET("/auth", api.GetAuth)
 
 	// 加载static文件夹下所有的文件
 	r.LoadHTMLGlob("views/**/*")
-
+	//swagger接口
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	//图片上传
+	r.POST("/upload", api.UploadImage)
 
 	admin := r.Group("/admin")
 	{
