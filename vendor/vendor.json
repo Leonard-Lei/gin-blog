@@ -172,6 +172,12 @@
 			"revision": ""
 		},
 		{
+			"checksumSHA1": "l4UK+UeiR6yyvHUZpr31bIqsYWI=",
+			"path": "github.com/robfig/cron",
+			"revision": "61d93e07d1be270591d43ede700aa3ae69a2326f",
+			"revisionTime": "2019-06-16T12:43:56Z"
+		},
+		{
 			"checksumSHA1": "IP3DX7lU+yn8Xm2G7lHURisG0Yk=",
 			"path": "github.com/swaggo/gin-swagger",
 			"revision": "d488a692749fd254a12d1d1326caa3419953e82d",
