@@ -3,14 +3,7 @@
 {{define "blog/index.html"}}
 <html lang="zh">
 
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<title>博羸兄弟</title>
-		<meta name="description" content="" />
-		<meta name="keywords" content="" />
-		<link rel="stylesheet" type="text/css" href="/statics/blog/css/index.css" media="all" />
-	</head>
+	{{ template "top_header.html" .}}
 
 	<body class="home blog custom-background round-avatars">
 
@@ -60,16 +53,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="post post-layout-list" data-aos="fade-up">
-							<div class="status_list_item icon_kyubo">
-								<div class="status_user" style="background-image: url(/statics/blog/images/b0ce3f3cde0c084b6d42321b2dcbc407.jpeg);">
-									<div class="status_section">
-										<a href="detail.html" class="status_btn">状态</a>
-										<p class="section_p">因为我这后半年飘忽不定的更新节奏，感觉真的对不住用户。最近才松下来能处理反馈的bug，顺便加快新主题 Dcras 的制作，农历年后或许能上线，准确时间，不敢说-- 为了感谢大家对 Yarn 的支持，Dcras 会以 获兑现码半价的承诺 给 Yarn ... </p>
-									</div>
-								</div>
-							</div>
-						</div>
+
 						<div class="post post-layout-list js-gallery" data-aos="fade-up">
 							<div class="post-album">
 								<div class="row content">
@@ -96,36 +80,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="post post-layout-list" data-aos="fade-up">
-							<div class="postnormal review ">
-								<div class="post-container review-item">
-									<div class="row review-item-wrapper">
-										<div class="col-sm-3">
-											<a rel="nofollow" href="detail.html">
-												<div class="review-item-img" style="background-image: url(/statics/blog/images/47fb3c_9afed6c259f94589881bd55376206366mv2_d_3840_5784_s_4_2-800x450.jpg);"></div>
-											</a>
-										</div>
-										<div class="col-sm-9 flex-xs-middle">
-											<div class="review-item-title">
-												<a href="detail.html" rel="bookmark">给大家介绍一下</a>
-											</div>
-											<div class="review-item-creator"><b>发布日期：</b>2017-10-02</div>
-											<span class="review-item-info"><b>总浏览量：</b>1600 reads</span>
-										</div>
-									</div>
-									<div class="review-bg-wrapper">
-										<div class="bg-blur" style="background-image: url(/statics/blog/images/47fb3c_9afed6c259f94589881bd55376206366mv2_d_3840_5784_s_4_2-800x450.jpg);"></div>
-									</div>
-								</div>
-								<div class="post-container">
-									<div class="entry-content">现在的明星的影响力足以影响国内娱乐圈的"半壁江山"，发条微博，新浪都恐慌好几天，来来来，蹭个热点给大家介绍一下我的女朋友。</div>
-									<div class="post-footer">
-										<a class="gaz-btn primary" href="detail.html">READ MORE</a>
-										<span class="total-comments-on-post pull-right"><a href="">30 Comments</a></span>
-									</div>
-								</div>
-							</div>
-						</div>
+
 					</div>
 					<!-- post-formats end Infinite Scroll star -->
 					<!-- post-formats -->
