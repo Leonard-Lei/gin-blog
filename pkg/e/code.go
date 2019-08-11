@@ -1,10 +1,10 @@
 package e
 
 const (
-	SUCCESS        = 200
-	ERROR          = 500
-	INVALID_PARAMS = 400
-
+	SUCCESS               = 200
+	ERROR                 = 500
+	INVALID_PARAMS        = 400
+	INVALID_JSON_PARAMS   = 422
 	ERROR_EXIST_TAG       = 10001
 	ERROR_EXIST_TAG_FAIL  = 10002
 	ERROR_NOT_EXIST_TAG   = 10003

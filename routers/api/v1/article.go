@@ -9,6 +9,7 @@ import (
 	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
 
+	"encoding/json"
 	"gin-blog/pkg/app"
 	"gin-blog/pkg/e"
 	"gin-blog/pkg/qrcode"
@@ -139,7 +140,16 @@ func AddArticle(c *gin.Context) {
 		form AddArticleForm
 	)
 
-	httpCode, errCode := app.BindAndValid(c, &form)
+	body := make([]byte, 1024)
+	n, _ := c.Request.Body.Read(body)
+	//fmt.Println(string(body[0:n]))
+	//string 转json 再转 form
+	err := json.Unmarshal([]byte(string(body[0:n])), &form)
+	if err != nil {
+		appG.Response(http.StatusBadRequest, e.INVALID_JSON_PARAMS, nil)
+		return
+	}
+	httpCode, errCode := app.BindAndValid(c, form)
 	if errCode != e.SUCCESS {
 		appG.Response(httpCode, errCode, nil)
 		return
@@ -202,7 +212,17 @@ func EditArticle(c *gin.Context) {
 		form = EditArticleForm{ID: com.StrTo(c.Param("id")).MustInt()}
 	)
 
-	httpCode, errCode := app.BindAndValid(c, &form)
+	body := make([]byte, 1024)
+	n, _ := c.Request.Body.Read(body)
+	//fmt.Println(string(body[0:n]))
+	//string 转json 再转 form
+	err := json.Unmarshal([]byte(string(body[0:n])), &form)
+	if err != nil {
+		appG.Response(http.StatusBadRequest, e.INVALID_JSON_PARAMS, nil)
+		return
+	}
+
+	httpCode, errCode := app.BindAndValid(c, form)
 	if errCode != e.SUCCESS {
 		appG.Response(httpCode, errCode, nil)
 		return

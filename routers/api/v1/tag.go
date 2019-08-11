@@ -1,6 +1,8 @@
 package v1
 
 import (
+	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/Unknwon/com"
@@ -75,7 +77,16 @@ func AddTag(c *gin.Context) {
 		form AddTagForm
 	)
 
-	httpCode, errCode := app.BindAndValid(c, &form)
+	body := make([]byte, 1024)
+	n, _ := c.Request.Body.Read(body)
+	//fmt.Println(string(body[0:n]))
+	//string 转json 再转 form
+	err := json.Unmarshal([]byte(string(body[0:n])), &form)
+	if err != nil {
+		appG.Response(http.StatusBadRequest, e.INVALID_JSON_PARAMS, nil)
+		return
+	}
+	httpCode, errCode := app.BindAndValid(c, form)
 	if errCode != e.SUCCESS {
 		appG.Response(httpCode, errCode, nil)
 		return
@@ -127,7 +138,17 @@ func EditTag(c *gin.Context) {
 		form = EditTagForm{ID: com.StrTo(c.Param("id")).MustInt()}
 	)
 
-	httpCode, errCode := app.BindAndValid(c, &form)
+	body := make([]byte, 1024)
+	n, _ := c.Request.Body.Read(body)
+	//fmt.Println(string(body[0:n]))
+	//string 转json 再转 form
+	err := json.Unmarshal([]byte(string(body[0:n])), &form)
+	if err != nil {
+		appG.Response(http.StatusBadRequest, e.INVALID_JSON_PARAMS, nil)
+		return
+	}
+
+	httpCode, errCode := app.BindAndValid(c, form)
 	if errCode != e.SUCCESS {
 		appG.Response(httpCode, errCode, nil)
 		return

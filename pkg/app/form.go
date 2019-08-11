@@ -11,10 +11,10 @@ import (
 
 // BindAndValid binds and validates data
 func BindAndValid(c *gin.Context, form interface{}) (int, int) {
-	err := c.Bind(form)
-	if err != nil {
-		return http.StatusBadRequest, e.INVALID_PARAMS
-	}
+	// err := c.Bind(form)
+	// if err != nil {
+	// 	return http.StatusBadRequest, e.INVALID_PARAMS
+	// }
 
 	valid := validation.Validation{}
 	check, err := valid.Valid(form)

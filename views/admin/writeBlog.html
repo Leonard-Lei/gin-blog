@@ -571,7 +571,22 @@
 			$("#save-html-db").bind('click', function() {
 				alert(editor.getHTML());
 				$.ajax({
-					type:""
+					type:"POST",
+					//请求的媒体类型
+					// contentType: "application/json;charset=UTF-8",
+					//请求地址
+					url : "/api/v1/articles",
+					//数据，json字符串
+					data : "tag_id=1&title=test1&desc=test-desc&content=test-content&created_by=test-created&state=1",
+					//请求成功
+					success : function(result) {
+						console.log(result);
+					},
+					//请求失败，包含具体的错误信息
+					error : function(e){
+						console.log(e.status);
+						console.log(e.responseText);
+					}
 				})
 				alert("发表成功！！");
 			}); 
