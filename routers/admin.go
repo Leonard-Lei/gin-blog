@@ -26,3 +26,10 @@ func GetAdminBlogList(c *gin.Context) {
 		"title": "GIN: 博客列表",
 	})
 }
+
+//写博客
+func GetWriteBlog(c *gin.Context) {
+	c.HTML(http.StatusOK, "admin/writeBlog.html", gin.H{
+		"title": "GIN: 写博客页面",
+	})
+}

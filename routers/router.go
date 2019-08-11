@@ -42,6 +42,8 @@ func InitRouter() *gin.Engine {
 		admin.GET("/login", GetLogin)
 		//后台博客列表
 		admin.GET("/list", GetAdminBlogList)
+		//写博客页面
+		admin.GET("/writeBlog", GetWriteBlog)
 	}
 
 	blog := r.Group("/blog")

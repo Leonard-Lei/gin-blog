@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-{{define "admin/list.html"}}
+{{define "admin/writeBlog.html"}}
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="/statics/admin/images/favicon.ico">
 
-    <title>博羸兄弟博客 - 博客列表</title>
+    <title>博羸兄弟博客 - Dashboard</title>
     
 	<!-- Bootstrap 4.0-->
 	<link rel="stylesheet" href="/statics/admin/assets/vendor_components/bootstrap/dist/css/bootstrap.css">
@@ -55,7 +55,7 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index.html" class="logo">
+    <a href="index" class="logo">
       <!-- mini logo -->
 	  <div class="logo-mini">
 		  <span class="light-logo"><img src="/statics/admin/images/logo-light.png" alt="logo"></span>
@@ -95,23 +95,23 @@
               <img src="/statics/admin/images/avatar/7.jpg" class="user-image rounded-circle" alt="User Image">
             </a>
             <ul class="dropdown-menu animated flipInX">
-				<!-- User image -->
-				<li class="user-header bg-img" style="background-image: url(/statics/admin/images/user-info.jpg)" data-overlay="3">
-					<div class="flexbox align-self-center">					  
-						<img src="/statics/admin/images/avatar/7.jpg" class="float-left rounded-circle" alt="User Image">					  
-						<h4 class="user-name align-self-center">
-						<span>admin</span>
-						<small>博羸兄弟</small>
-						</h4>
-					</div>
-				</li>
-				<!-- Menu Body -->
-				<li class="user-body">
-						<a class="dropdown-item" href="javascript:void(0)"><i class="ion-log-out"></i>个人信息</a>
-						<div class="dropdown-divider"></div>
-						<div class="p-10"><a href="javascript:void(0)" class="btn btn-sm btn-rounded btn-success">注销</a></div>
-				</li>
-			</ul>
+              <!-- User image -->
+              <li class="user-header bg-img" style="background-image: url(/statics/admin/images/user-info.jpg)" data-overlay="3">
+				  <div class="flexbox align-self-center">					  
+				  	<img src="/statics/admin/images/avatar/7.jpg" class="float-left rounded-circle" alt="User Image">					  
+					<h4 class="user-name align-self-center">
+					  <span>admin</span>
+					  <small>博羸兄弟</small>
+					</h4>
+				  </div>
+              </li>
+              <!-- Menu Body -->
+              <li class="user-body">
+					<a class="dropdown-item" href="javascript:void(0)"><i class="ion-log-out"></i>个人信息</a>
+					<div class="dropdown-divider"></div>
+					<div class="p-10"><a href="javascript:void(0)" onclick="logout()" class="btn btn-sm btn-rounded btn-success">注销</a></div>
+              </li>
+            </ul>
           </li>	
 			
 		  
@@ -142,7 +142,7 @@
 		  
         <li class="header nav-small-cap">菜单</li>
 		
-		<li class="treeview">
+		<li class="treeview ">
           <a href="#">
             <i class="ti-dashboard"></i>
             <span>数据统计</span>
@@ -151,7 +151,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class=""><a href="index.html"><i class="ti-more"></i>数据看板</a></li>
+            <li><a href="index.html"><i class="ti-more"></i>数据看板</a></li>
             <li><a href="index-2.html"><i class="ti-more"></i>数据看板</a></li>
           </ul>
         </li>
@@ -165,12 +165,15 @@
 		</span>
 		  </a>
 		  <ul class="treeview-menu">
-			  <li class="active"><a href="list"><i class="ti-more"></i>博客列表</a></li>
+			  <li class=""><a href="list"><i class="ti-more"></i>博客列表</a></li>
 			  <li><a href="index-2.html"><i class="ti-more"></i>评论信息</a></li>
-              <li><a href="writeBlog"><i class="ti-more"></i>写博客</a></li>
+              <li class="active"><a href="writeBlog"><i class="ti-more"></i>写博客</a></li>
 		  </ul>
 		</li>
 		  
+
+
+
       </ul>
     </section>
     <div class="sidebar-footer">
@@ -190,8 +193,7 @@
 		<div class="content-header">
 			<div class="d-flex align-items-center">
 				<div class="mr-auto">
-					<h3 class="page-title">博客列表</h3>
-					<a href="writeBlog">写博客</a>
+					<h3 class="page-title">数据大屏</h3>
 				</div>
 				<div class="right-title w-170">
 					<span class="subheader_daterange font-weight-600" id="dashboard_daterangepicker">
@@ -210,111 +212,66 @@
 		<!-- Main content -->
 		<section class="content">
 			
-				<div class="box">
-						<!-- /.box-header -->
-						<div class="box-body">
-							<div class="table-responsive">
-							  <table id="" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
-								<thead>
-									<tr>
-										<th>Name</th>
-										<th>Position</th>
-										<th>Office</th>
-										<th>Age</th>
-										<th>Start date</th>
-										<th>Salary</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>Tiger Nixon</td>
-										<td>System Architect</td>
-										<td>Edinburgh</td>
-										<td>61</td>
-										<td>2011/04/25</td>
-										<td>$320,800</td>
-									</tr>
-									<tr>
-										<td>Garrett Winters</td>
-										<td>Accountant</td>
-										<td>Tokyo</td>
-										<td>63</td>
-										<td>2011/07/25</td>
-										<td>$170,750</td>
-									</tr>
-									<tr>
-										<td>Ashton Cox</td>
-										<td>Junior Technical Author</td>
-										<td>San Francisco</td>
-										<td>66</td>
-										<td>2009/01/12</td>
-										<td>$86,000</td>
-									</tr>
-									<tr>
-										<td>Cedric Kelly</td>
-										<td>Senior Javascript Developer</td>
-										<td>Edinburgh</td>
-										<td>22</td>
-										<td>2012/03/29</td>
-										<td>$433,060</td>
-									</tr>
-									<tr>
-										<td>Airi Satou</td>
-										<td>Accountant</td>
-										<td>Tokyo</td>
-										<td>33</td>
-										<td>2008/11/28</td>
-										<td>$162,700</td>
-									</tr>
-									<tr>
-										<td>Brielle Williamson</td>
-										<td>Integration Specialist</td>
-										<td>New York</td>
-										<td>61</td>
-										<td>2012/12/02</td>
-										<td>$372,000</td>
-									</tr>
-									<tr>
-										<td>Herrod Chandler</td>
-										<td>Sales Assistant</td>
-										<td>San Francisco</td>
-										<td>59</td>
-										<td>2012/08/06</td>
-										<td>$137,500</td>
-									</tr>
-									<tr>
-										<td>Rhona Davidson</td>
-										<td>Integration Specialist</td>
-										<td>Tokyo</td>
-										<td>55</td>
-										<td>2010/10/14</td>
-										<td>$327,900</td>
-									</tr>
-									<tr>
-										<td>Donna Snider</td>
-										<td>Customer Support</td>
-										<td>New York</td>
-										<td>27</td>
-										<td>2011/01/25</td>
-										<td>$112,000</td>
-									</tr>
-								</tbody>				  
-								<tfoot>
-									<tr>
-										<th>Name</th>
-										<th>Position</th>
-										<th>Office</th>
-										<th>Age</th>
-										<th>Start date</th>
-										<th>Salary</th>
-									</tr>
-								</tfoot>
-							</table>
-							</div>              
-						</div>
-						<!-- /.box-body -->
+			<div class="row">
+				<div class="col-xl-4 col-12">
+					<div class="box box-body">
+					  <h6 class="text-uppercase">注册用户</h6>
+					  <div class="flexbox mt-2">
+						<span class=" font-size-30">85,987</span>
+						<span class="ion ion-person text-danger font-size-40"></span>
 					  </div>
-					  <!-- /.box -->    
+					</div>
+				</div>
+				<!-- /.col -->
+
+				<div class="col-xl-4 col-12">
+					<div class="box box-body">
+					  <h6 class="text-uppercase">文章</h6>
+					  <div class="flexbox mt-2">
+						<span class=" font-size-30">2,951</span>
+						<span class="ion ion-email text-info font-size-40"></span>
+					  </div>
+					</div>
+				</div>
+				<!-- /.col -->
+				<div class="col-xl-4 col-12">
+					<div class="box box-body">
+					  <h6 class="text-uppercase">访问人数</h6>
+					  <div class="flexbox mt-2">
+						<span class=" font-size-30">15,845</span>
+						<span class="ion ion-document text-primary font-size-40"></span>
+					  </div>
+					</div>
+				</div>
+				<!-- /.col -->
+		    </div>					
+			
+			<div class="row">
+				<div class="col-xl-7 col-12">
+					<div class="box">
+					  <div class="box-header with-border">
+						<h4 class="box-title">Data Overview</h4>
+					  </div>
+
+					  <div class="box-body">
+						  <div id="e_chart_1" class="chart" style="height:400px;"></div>
+					  </div>
+					</div>
+				</div>
+
+				<div class="col-xl-5 col-12">			
+				  <!-- Chart -->
+				  <div class="box">
+					<div class="box-header with-border">
+					  <h4 class="box-title">Social Ads Campaigns</h4>
+					</div>
+					<div class="box-body">
+						<div id="e_chart_2" class="chart" style="height:400px;"></div>
+					</div>
+					<!-- /.box-body -->
+				  </div>
+				  <!-- /.box -->
+				</div>
 
 		</section>
 		<!-- /.content -->
@@ -616,7 +573,7 @@
 	<!-- Slimscroll -->
 	<script src="/statics/admin/assets/vendor_components/jquery-slimscroll/jquery.slimscroll.js"></script>
 	
-	<!-- FastClick -->
+	<!-- FastClick -->horizontal-timeline
 	<script src="/statics/admin/assets/vendor_components/fastclick/lib/fastclick.js"></script>
 	
     <!-- eChart Plugins -->
@@ -636,9 +593,16 @@
 	<!-- Ekan Admin for demo purposes -->
 	<script src="/statics/admin/js/demo.js"></script>
 
-	<!-- This is data table -->
-    <script src="/statics/admin/assets/vendor_components/datatable/datatables.min.js"></script>
-	<script src="/statics/admin/js/pages/data-table.js"></script>
+	<script type="text/javascript">
+		
+		$(document).ready(function(){
+			logout = function (){
+				sessionStorage.removeItem("flyray_blog_token");
+				window.location.href="login"
+			  alert("logout");
+			}
+		})
+	</script>
 	
 </body>
 </html>
