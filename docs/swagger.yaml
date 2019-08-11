@@ -1,13 +1,16 @@
-basePath: '{{.BasePath}}'
-host: '{{.Host}}'
+basePath: /v2
+host: petstore.swagger.io
 info:
-  contact: {}
-  description: An example of gin
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server Petstore server.
   license:
-    name: MIT
-    url: https://github.com/EDDYCJY/go-gin-example/blob/master/LICENSE
-  termsOfService: https://github.com/EDDYCJY/go-gin-example
-  title: Golang Gin API
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
   version: "1.0"
 paths:
   /api/v1/articles:
@@ -17,20 +20,17 @@ paths:
         in: body
         name: tag_id
         schema:
-          $ref: '#/definitions/int'
-          type: object
+          type: integer
       - description: State
         in: body
         name: state
         schema:
-          $ref: '#/definitions/int'
-          type: object
+          type: integer
       - description: CreatedBy
         in: body
         name: created_by
         schema:
-          $ref: '#/definitions/int'
-          type: object
+          type: integer
       produces:
       - application/json
       responses:
@@ -50,43 +50,37 @@ paths:
         name: tag_id
         required: true
         schema:
-          $ref: '#/definitions/int'
-          type: object
+          type: integer
       - description: Title
         in: body
         name: title
         required: true
         schema:
-          $ref: '#/definitions/string'
-          type: object
+          type: string
       - description: Desc
         in: body
         name: desc
         required: true
         schema:
-          $ref: '#/definitions/string'
-          type: object
+          type: string
       - description: Content
         in: body
         name: content
         required: true
         schema:
-          $ref: '#/definitions/string'
-          type: object
+          type: string
       - description: CreatedBy
         in: body
         name: created_by
         required: true
         schema:
-          $ref: '#/definitions/string'
-          type: object
+          type: string
       - description: State
         in: body
         name: state
         required: true
         schema:
-          $ref: '#/definitions/int'
-          type: object
+          type: integer
       produces:
       - application/json
       responses:
@@ -149,39 +143,33 @@ paths:
         in: body
         name: tag_id
         schema:
-          $ref: '#/definitions/string'
-          type: object
+          type: string
       - description: Title
         in: body
         name: title
         schema:
-          $ref: '#/definitions/string'
-          type: object
+          type: string
       - description: Desc
         in: body
         name: desc
         schema:
-          $ref: '#/definitions/string'
-          type: object
+          type: string
       - description: Content
         in: body
         name: content
         schema:
-          $ref: '#/definitions/string'
-          type: object
+          type: string
       - description: ModifiedBy
         in: body
         name: modified_by
         required: true
         schema:
-          $ref: '#/definitions/string'
-          type: object
+          type: string
       - description: State
         in: body
         name: state
         schema:
-          $ref: '#/definitions/int'
-          type: object
+          type: integer
       produces:
       - application/json
       responses:
@@ -224,20 +212,17 @@ paths:
         name: name
         required: true
         schema:
-          $ref: '#/definitions/string'
-          type: object
+          type: string
       - description: State
         in: body
         name: state
         schema:
-          $ref: '#/definitions/int'
-          type: object
+          type: integer
       - description: CreatedBy
         in: body
         name: created_by
         schema:
-          $ref: '#/definitions/int'
-          type: object
+          type: integer
       produces:
       - application/json
       responses:
@@ -282,21 +267,18 @@ paths:
         name: name
         required: true
         schema:
-          $ref: '#/definitions/string'
-          type: object
+          type: string
       - description: State
         in: body
         name: state
         schema:
-          $ref: '#/definitions/int'
-          type: object
+          type: integer
       - description: ModifiedBy
         in: body
         name: modified_by
         required: true
         schema:
-          $ref: '#/definitions/string'
-          type: object
+          type: string
       produces:
       - application/json
       responses:
@@ -316,14 +298,12 @@ paths:
         in: body
         name: name
         schema:
-          $ref: '#/definitions/string'
-          type: object
+          type: string
       - description: State
         in: body
         name: state
         schema:
-          $ref: '#/definitions/int'
-          type: object
+          type: integer
       produces:
       - application/json
       responses:

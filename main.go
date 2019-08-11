@@ -32,12 +32,20 @@ func init() {
 	util.Setup()
 }
 
-// @title Golang Gin API
+// @title Swagger Example API
 // @version 1.0
-// @description An example of gin
-// @termsOfService https://github.com/EDDYCJY/go-gin-example
-// @license.name MIT
-// @license.url https://github.com/EDDYCJY/go-gin-example/blob/master/LICENSE
+// @description This is a sample server Petstore server.
+// @termsOfService http://swagger.io/terms/
+
+// @contact.name API Support
+// @contact.url http://www.swagger.io/support
+// @contact.email support@swagger.io
+
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host petstore.swagger.io
+// @BasePath /v2
 func main() {
 
 	/*

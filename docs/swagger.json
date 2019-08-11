@@ -1,18 +1,22 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "An example of gin",
-        "title": "Golang Gin API",
-        "termsOfService": "https://github.com/EDDYCJY/go-gin-example",
-        "contact": {},
+        "description": "This is a sample server Petstore server.",
+        "title": "Swagger Example API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
         "license": {
-            "name": "MIT",
-            "url": "https://github.com/EDDYCJY/go-gin-example/blob/master/LICENSE"
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         },
         "version": "1.0"
     },
-    "host": "{{.Host}}",
-    "basePath": "{{.BasePath}}",
+    "host": "petstore.swagger.io",
+    "basePath": "/v2",
     "paths": {
         "/api/v1/articles": {
             "get": {
@@ -26,8 +30,7 @@
                         "name": "tag_id",
                         "in": "body",
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/int"
+                            "type": "integer"
                         }
                     },
                     {
@@ -35,8 +38,7 @@
                         "name": "state",
                         "in": "body",
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/int"
+                            "type": "integer"
                         }
                     },
                     {
@@ -44,8 +46,7 @@
                         "name": "created_by",
                         "in": "body",
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/int"
+                            "type": "integer"
                         }
                     }
                 ],
@@ -76,8 +77,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/int"
+                            "type": "integer"
                         }
                     },
                     {
@@ -86,8 +86,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/string"
+                            "type": "string"
                         }
                     },
                     {
@@ -96,8 +95,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/string"
+                            "type": "string"
                         }
                     },
                     {
@@ -106,8 +104,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/string"
+                            "type": "string"
                         }
                     },
                     {
@@ -116,8 +113,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/string"
+                            "type": "string"
                         }
                     },
                     {
@@ -126,8 +122,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/int"
+                            "type": "integer"
                         }
                     }
                 ],
@@ -195,8 +190,7 @@
                         "name": "tag_id",
                         "in": "body",
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/string"
+                            "type": "string"
                         }
                     },
                     {
@@ -204,8 +198,7 @@
                         "name": "title",
                         "in": "body",
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/string"
+                            "type": "string"
                         }
                     },
                     {
@@ -213,8 +206,7 @@
                         "name": "desc",
                         "in": "body",
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/string"
+                            "type": "string"
                         }
                     },
                     {
@@ -222,8 +214,7 @@
                         "name": "content",
                         "in": "body",
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/string"
+                            "type": "string"
                         }
                     },
                     {
@@ -232,8 +223,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/string"
+                            "type": "string"
                         }
                     },
                     {
@@ -241,8 +231,7 @@
                         "name": "state",
                         "in": "body",
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/int"
+                            "type": "integer"
                         }
                     }
                 ],
@@ -338,8 +327,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/string"
+                            "type": "string"
                         }
                     },
                     {
@@ -347,8 +335,7 @@
                         "name": "state",
                         "in": "body",
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/int"
+                            "type": "integer"
                         }
                     },
                     {
@@ -356,8 +343,7 @@
                         "name": "created_by",
                         "in": "body",
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/int"
+                            "type": "integer"
                         }
                     }
                 ],
@@ -389,8 +375,7 @@
                         "name": "name",
                         "in": "body",
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/string"
+                            "type": "string"
                         }
                     },
                     {
@@ -398,8 +383,7 @@
                         "name": "state",
                         "in": "body",
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/int"
+                            "type": "integer"
                         }
                     }
                 ],
@@ -473,8 +457,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/string"
+                            "type": "string"
                         }
                     },
                     {
@@ -482,8 +465,7 @@
                         "name": "state",
                         "in": "body",
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/int"
+                            "type": "integer"
                         }
                     },
                     {
@@ -492,8 +474,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/string"
+                            "type": "string"
                         }
                     }
                 ],
