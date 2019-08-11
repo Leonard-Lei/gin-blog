@@ -2,26 +2,110 @@ basePath: '{{.BasePath}}'
 host: '{{.Host}}'
 info:
   contact: {}
-  description: '{{.Description}}'
-  license: {}
-  title: '{{.Title}}'
-  version: '{{.Version}}'
+  description: An example of gin
+  license:
+    name: MIT
+    url: https://github.com/EDDYCJY/go-gin-example/blob/master/LICENSE
+  termsOfService: https://github.com/EDDYCJY/go-gin-example
+  title: Golang Gin API
+  version: "1.0"
 paths:
-  /api/v1/tags:
+  /api/v1/articles:
+    get:
+      parameters:
+      - description: TagID
+        in: body
+        name: tag_id
+        schema:
+          $ref: '#/definitions/int'
+          type: object
+      - description: State
+        in: body
+        name: state
+        schema:
+          $ref: '#/definitions/int'
+          type: object
+      - description: CreatedBy
+        in: body
+        name: created_by
+        schema:
+          $ref: '#/definitions/int'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+        "500":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: Get multiple articles
     post:
       parameters:
-      - description: Name
-        in: query
-        name: name
+      - description: TagID
+        in: body
+        name: tag_id
         required: true
-        type: string
-      - description: State
-        in: query
-        name: state
-        type: integer
+        schema:
+          $ref: '#/definitions/int'
+          type: object
+      - description: Title
+        in: body
+        name: title
+        required: true
+        schema:
+          $ref: '#/definitions/string'
+          type: object
+      - description: Desc
+        in: body
+        name: desc
+        required: true
+        schema:
+          $ref: '#/definitions/string'
+          type: object
+      - description: Content
+        in: body
+        name: content
+        required: true
+        schema:
+          $ref: '#/definitions/string'
+          type: object
       - description: CreatedBy
-        in: query
+        in: body
         name: created_by
+        required: true
+        schema:
+          $ref: '#/definitions/string'
+          type: object
+      - description: State
+        in: body
+        name: state
+        required: true
+        schema:
+          $ref: '#/definitions/int'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+        "500":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: Add article
+  /api/v1/articles/{id}:
+    delete:
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
         type: integer
       produces:
       - application/json
@@ -30,8 +114,162 @@ paths:
           description: '{"code":200,"data":{},"msg":"ok"}'
           schema:
             type: string
-      summary: 新增文章标签
+        "500":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: Delete article
+    get:
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+        "500":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: Get a single article
+    put:
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: TagID
+        in: body
+        name: tag_id
+        schema:
+          $ref: '#/definitions/string'
+          type: object
+      - description: Title
+        in: body
+        name: title
+        schema:
+          $ref: '#/definitions/string'
+          type: object
+      - description: Desc
+        in: body
+        name: desc
+        schema:
+          $ref: '#/definitions/string'
+          type: object
+      - description: Content
+        in: body
+        name: content
+        schema:
+          $ref: '#/definitions/string'
+          type: object
+      - description: ModifiedBy
+        in: body
+        name: modified_by
+        required: true
+        schema:
+          $ref: '#/definitions/string'
+          type: object
+      - description: State
+        in: body
+        name: state
+        schema:
+          $ref: '#/definitions/int'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+        "500":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: Update article
+  /api/v1/tags:
+    get:
+      parameters:
+      - description: Name
+        in: query
+        name: name
+        type: string
+      - description: State
+        in: query
+        name: state
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+        "500":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: Get multiple article tags
+    post:
+      parameters:
+      - description: Name
+        in: body
+        name: name
+        required: true
+        schema:
+          $ref: '#/definitions/string'
+          type: object
+      - description: State
+        in: body
+        name: state
+        schema:
+          $ref: '#/definitions/int'
+          type: object
+      - description: CreatedBy
+        in: body
+        name: created_by
+        schema:
+          $ref: '#/definitions/int'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+        "500":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: Add article tag
   /api/v1/tags/{id}:
+    delete:
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+        "500":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: Delete article tag
     put:
       parameters:
       - description: ID
@@ -40,19 +278,25 @@ paths:
         required: true
         type: integer
       - description: ID
-        in: query
+        in: body
         name: name
         required: true
-        type: string
+        schema:
+          $ref: '#/definitions/string'
+          type: object
       - description: State
-        in: query
+        in: body
         name: state
-        type: integer
+        schema:
+          $ref: '#/definitions/int'
+          type: object
       - description: ModifiedBy
-        in: query
+        in: body
         name: modified_by
         required: true
-        type: string
+        schema:
+          $ref: '#/definitions/string'
+          type: object
       produces:
       - application/json
       responses:
@@ -60,5 +304,58 @@ paths:
           description: '{"code":200,"data":{},"msg":"ok"}'
           schema:
             type: string
-      summary: 修改文章标签
+        "500":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: Update article tag
+  /api/v1/tags/export:
+    post:
+      parameters:
+      - description: Name
+        in: body
+        name: name
+        schema:
+          $ref: '#/definitions/string'
+          type: object
+      - description: State
+        in: body
+        name: state
+        schema:
+          $ref: '#/definitions/int'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+        "500":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: Export article tag
+  /api/v1/tags/import:
+    post:
+      parameters:
+      - description: Excel File
+        in: body
+        name: file
+        required: true
+        schema:
+          $ref: '#/definitions/file'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+        "500":
+          description: '{"code":200,"data":{},"msg":"ok"}'
+          schema:
+            type: string
+      summary: Import article tag
 swagger: "2.0"

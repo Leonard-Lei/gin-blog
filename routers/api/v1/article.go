@@ -21,8 +21,8 @@ import (
 // @Summary Get a single article
 // @Produce  json
 // @Param id path int true "ID"
-// @Success 200 {object} app.Response
-// @Failure 500 {object} app.Response
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Router /api/v1/articles/{id} [get]
 func GetArticle(c *gin.Context) {
 	appG := app.Gin{C: c}
@@ -61,8 +61,8 @@ func GetArticle(c *gin.Context) {
 // @Param tag_id body int false "TagID"
 // @Param state body int false "State"
 // @Param created_by body int false "CreatedBy"
-// @Success 200 {object} app.Response
-// @Failure 500 {object} app.Response
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Router /api/v1/articles [get]
 func GetArticles(c *gin.Context) {
 	appG := app.Gin{C: c}
@@ -130,8 +130,8 @@ type AddArticleForm struct {
 // @Param content body string true "Content"
 // @Param created_by body string true "CreatedBy"
 // @Param state body int true "State"
-// @Success 200 {object} app.Response
-// @Failure 500 {object} app.Response
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Router /api/v1/articles [post]
 func AddArticle(c *gin.Context) {
 	var (
@@ -193,8 +193,8 @@ type EditArticleForm struct {
 // @Param content body string false "Content"
 // @Param modified_by body string true "ModifiedBy"
 // @Param state body int false "State"
-// @Success 200 {object} app.Response
-// @Failure 500 {object} app.Response
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Router /api/v1/articles/{id} [put]
 func EditArticle(c *gin.Context) {
 	var (
@@ -252,8 +252,8 @@ func EditArticle(c *gin.Context) {
 // @Summary Delete article
 // @Produce  json
 // @Param id path int true "ID"
-// @Success 200 {object} app.Response
-// @Failure 500 {object} app.Response
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Router /api/v1/articles/{id} [delete]
 func DeleteArticle(c *gin.Context) {
 	appG := app.Gin{C: c}

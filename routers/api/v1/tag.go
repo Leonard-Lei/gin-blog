@@ -20,8 +20,8 @@ import (
 // @Produce  json
 // @Param name query string false "Name"
 // @Param state query int false "State"
-// @Success 200 {object} app.Response
-// @Failure 500 {object} app.Response
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Router /api/v1/tags [get]
 func GetTags(c *gin.Context) {
 	appG := app.Gin{C: c}
@@ -66,8 +66,8 @@ type AddTagForm struct {
 // @Param name body string true "Name"
 // @Param state body int false "State"
 // @Param created_by body int false "CreatedBy"
-// @Success 200 {object} app.Response
-// @Failure 500 {object} app.Response
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Router /api/v1/tags [post]
 func AddTag(c *gin.Context) {
 	var (
@@ -118,8 +118,8 @@ type EditTagForm struct {
 // @Param name body string true "ID"
 // @Param state body int false "State"
 // @Param modified_by body string true "ModifiedBy"
-// @Success 200 {object} app.Response
-// @Failure 500 {object} app.Response
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Router /api/v1/tags/{id} [put]
 func EditTag(c *gin.Context) {
 	var (
@@ -163,8 +163,8 @@ func EditTag(c *gin.Context) {
 // @Summary Delete article tag
 // @Produce  json
 // @Param id path int true "ID"
-// @Success 200 {object} app.Response
-// @Failure 500 {object} app.Response
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Router /api/v1/tags/{id} [delete]
 func DeleteTag(c *gin.Context) {
 	appG := app.Gin{C: c}
@@ -201,8 +201,8 @@ func DeleteTag(c *gin.Context) {
 // @Produce  json
 // @Param name body string false "Name"
 // @Param state body int false "State"
-// @Success 200 {object} app.Response
-// @Failure 500 {object} app.Response
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Router /api/v1/tags/export [post]
 func ExportTag(c *gin.Context) {
 	appG := app.Gin{C: c}
@@ -232,8 +232,8 @@ func ExportTag(c *gin.Context) {
 // @Summary Import article tag
 // @Produce  json
 // @Param file body file true "Excel File"
-// @Success 200 {object} app.Response
-// @Failure 500 {object} app.Response
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Router /api/v1/tags/import [post]
 func ImportTag(c *gin.Context) {
 	appG := app.Gin{C: c}
