@@ -102,3 +102,9 @@ func (article *Article) BeforeUpdate(scope *gorm.Scope) error {
 
 	return nil
 }
+
+func CleanAllArticle() bool {
+	db.Unscoped().Where("deleted_on != ? ", 0).Delete(&Article{})
+
+	return true
+}

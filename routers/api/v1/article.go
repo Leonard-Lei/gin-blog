@@ -15,7 +15,12 @@ import (
 	"gin-blog/pkg/util"
 )
 
-//获取单个文章
+// @Summary Get a single article
+// @Produce  json
+// @Param id path int true "ID"
+// @Success 200 {object} app.Response
+// @Failure 500 {object} app.Response
+// @Router /api/v1/articles/{id} [get]
 func GetArticle(c *gin.Context) {
 	id := com.StrTo(c.Param("id")).MustInt()
 
@@ -44,7 +49,14 @@ func GetArticle(c *gin.Context) {
 	})
 }
 
-//获取多个文章
+// @Summary Get multiple articles
+// @Produce  json
+// @Param tag_id body int false "TagID"
+// @Param state body int false "State"
+// @Param created_by body int false "CreatedBy"
+// @Success 200 {object} app.Response
+// @Failure 500 {object} app.Response
+// @Router /api/v1/articles [get]
 func GetArticles(c *gin.Context) {
 	data := make(map[string]interface{})
 	maps := make(map[string]interface{})
@@ -70,7 +82,7 @@ func GetArticles(c *gin.Context) {
 	if !valid.HasErrors() {
 		code = e.SUCCESS
 
-		data["lists"] = models.GetArticles(util.GetPage(c), setting.PageSize, maps)
+		data["lists"] = models.GetArticles(util.GetPage(c), setting.AppSetting.PageSize, maps)
 		data["total"] = models.GetArticleTotal(maps)
 
 		logging.Info("GetArticles Success")
@@ -92,7 +104,17 @@ func GetArticles(c *gin.Context) {
 	})
 }
 
-//新增文章
+// @Summary Add article
+// @Produce  json
+// @Param tag_id body int true "TagID"
+// @Param title body string true "Title"
+// @Param desc body string true "Desc"
+// @Param content body string true "Content"
+// @Param created_by body string true "CreatedBy"
+// @Param state body int true "State"
+// @Success 200 {object} app.Response
+// @Failure 500 {object} app.Response
+// @Router /api/v1/articles [post]
 func AddArticle(c *gin.Context) {
 	tagId := com.StrTo(c.Query("tag_id")).MustInt()
 	title := c.Query("title")
@@ -138,7 +160,18 @@ func AddArticle(c *gin.Context) {
 	})
 }
 
-//修改文章
+// @Summary Update article
+// @Produce  json
+// @Param id path int true "ID"
+// @Param tag_id body string false "TagID"
+// @Param title body string false "Title"
+// @Param desc body string false "Desc"
+// @Param content body string false "Content"
+// @Param modified_by body string true "ModifiedBy"
+// @Param state body int false "State"
+// @Success 200 {object} app.Response
+// @Failure 500 {object} app.Response
+// @Router /api/v1/articles/{id} [put]
 func EditArticle(c *gin.Context) {
 	valid := validation.Validation{}
 
@@ -203,7 +236,12 @@ func EditArticle(c *gin.Context) {
 	})
 }
 
-//删除文章
+// @Summary Delete article
+// @Produce  json
+// @Param id path int true "ID"
+// @Success 200 {object} app.Response
+// @Failure 500 {object} app.Response
+// @Router /api/v1/articles/{id} [delete]
 func DeleteArticle(c *gin.Context) {
 	id := com.StrTo(c.Param("id")).MustInt()
 

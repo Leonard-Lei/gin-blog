@@ -8,7 +8,6 @@ import (
 	_ "gin-blog/docs"
 
 	"gin-blog/middleware/jwt"
-	"gin-blog/pkg/setting"
 	"gin-blog/routers/api"
 	v1 "gin-blog/routers/api/v1"
 )
@@ -20,7 +19,7 @@ func InitRouter() *gin.Engine {
 
 	r.Use(gin.Recovery())
 
-	gin.SetMode(setting.RunMode)
+	//gin.SetMode(setting.ServerSetting.RunMode)
 
 	//新增获取token的方法
 	r.GET("/auth", api.GetAuth)

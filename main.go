@@ -2,10 +2,17 @@ package main
 
 import (
 	"fmt"
-	"net/http"
-
+	"gin-blog/models"
+	"gin-blog/pkg/logging"
 	"gin-blog/pkg/setting"
 	"gin-blog/routers"
+	"log"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+
+	//"gin-blog/pkg/gredis"
+	"gin-blog/pkg/util"
 	/*
 		    "fmt"
 		    "log"
@@ -16,6 +23,14 @@ import (
 		    "gin-blog/routers"
 			"gin-blog/pkg/setting"
 	*/)
+
+func init() {
+	setting.Setup()
+	models.Setup()
+	logging.Setup()
+	//gredis.Setup()
+	util.Setup()
+}
 
 // @title Golang Gin API
 // @version 1.0
@@ -43,15 +58,24 @@ func main() {
 		}
 
 	*/
-	router := routers.InitRouter()
-	router.Static("/statics", "./statics")
-	s := &http.Server{
-		Addr:           fmt.Sprintf(":%d", setting.HTTPPort),
-		Handler:        router,
-		ReadTimeout:    setting.ReadTimeout,
-		WriteTimeout:   setting.WriteTimeout,
-		MaxHeaderBytes: 1 << 20,
+	gin.SetMode(setting.ServerSetting.RunMode)
+	routersInit := routers.InitRouter()
+	readTimeout := setting.ServerSetting.ReadTimeout
+	writeTimeout := setting.ServerSetting.WriteTimeout
+	endPoint := fmt.Sprintf(":%d", setting.ServerSetting.HttpPort)
+	maxHeaderBytes := 1 << 20
+
+	routersInit.Static("/statics", "./statics")
+
+	server := &http.Server{
+		Addr:           endPoint,
+		Handler:        routersInit,
+		ReadTimeout:    readTimeout,
+		WriteTimeout:   writeTimeout,
+		MaxHeaderBytes: maxHeaderBytes,
 	}
 
-	s.ListenAndServe()
+	log.Printf("[info] start http server listening %s", endPoint)
+
+	server.ListenAndServe()
 }
