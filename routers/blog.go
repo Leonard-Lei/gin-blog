@@ -26,3 +26,38 @@ func GetBlogDetail(c *gin.Context) {
 		"title": "GIN: 博客详情",
 	})
 }
+
+//博客详情
+func GetBlogLink(c *gin.Context) {
+	c.HTML(http.StatusOK, "blog/link.html", gin.H{
+		"title": "GIN: 博客友情链接",
+	})
+}
+
+//博客留言
+func GetBlogGustbook(c *gin.Context) {
+	c.HTML(http.StatusOK, "blog/guestbook.html", gin.H{
+		"title": "GIN: 博客友情链接",
+	})
+}
+
+//博客归档
+func GetBlogArchives(c *gin.Context) {
+	c.HTML(http.StatusOK, "blog/archives.html", gin.H{
+		"title": "GIN: 博客归档",
+	})
+}
+
+//博客里程碑
+func GetBlogRoadmap(c *gin.Context) {
+	c.HTML(http.StatusOK, "blog/roadmap.html", gin.H{
+		"title": "GIN: 博客里程碑",
+	})
+}
+
+//博客搜索
+func GetBlogSearch(c *gin.Context) {
+	c.HTML(http.StatusOK, "blog/search.html", gin.H{
+		"title": "GIN: 博客搜索",
+	})
+}

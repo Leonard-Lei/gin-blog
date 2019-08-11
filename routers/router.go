@@ -46,6 +46,21 @@ func InitRouter() *gin.Engine {
 		blog.GET("/index", GetBlogIndex)
 		//博客首页
 		blog.GET("/detail", GetBlogDetail)
+		//博客友情链接
+		blog.GET("/link", GetBlogLink)
+		//博客留言
+		blog.GET("/gustbook", GetBlogGustbook)
+		//博客归档
+		blog.GET("/archives", GetBlogArchives)
+		//博客归档
+		blog.GET("/hardware", GetBlogArchives) //博客归档
+		blog.GET("/software", GetBlogArchives) //博客归档
+		blog.GET("/life", GetBlogArchives)
+		//博客里程碑
+		blog.GET("/roadmap", GetBlogRoadmap)
+		//博客里程碑
+		blog.GET("/search", GetBlogSearch)
+
 	}
 
 	apiv1 := r.Group("/api/v1")
