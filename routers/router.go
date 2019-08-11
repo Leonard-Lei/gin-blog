@@ -6,10 +6,11 @@ import (
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 
 	_ "gin-blog/docs"
-
 	"gin-blog/middleware/jwt"
+	"gin-blog/pkg/upload"
 	"gin-blog/routers/api"
 	v1 "gin-blog/routers/api/v1"
+	"net/http"
 )
 
 func InitRouter() *gin.Engine {
@@ -22,7 +23,7 @@ func InitRouter() *gin.Engine {
 	//gin.SetMode(setting.ServerSetting.RunMode)
 
 	r.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
-	
+
 	//新增获取token的方法
 	r.GET("/auth", api.GetAuth)
 
