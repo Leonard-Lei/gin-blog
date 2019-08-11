@@ -39,6 +39,10 @@
 
      <!-- jQuery 3 -->
 	<script src="/statics/admin/assets/vendor_components/jquery-3.3.1/jquery-3.3.1.js"></script>
+
+	<link rel="stylesheet" href="/statics/admin/editor.md/css/editormd.min.css" />
+	
+
 	<script type="text/javascript">
 		$(function(){
 			var token = sessionStorage.getItem("flyray_blog_token");
@@ -211,67 +215,13 @@
 
 		<!-- Main content -->
 		<section class="content">
-			
-			<div class="row">
-				<div class="col-xl-4 col-12">
-					<div class="box box-body">
-					  <h6 class="text-uppercase">注册用户</h6>
-					  <div class="flexbox mt-2">
-						<span class=" font-size-30">85,987</span>
-						<span class="ion ion-person text-danger font-size-40"></span>
-					  </div>
-					</div>
-				</div>
-				<!-- /.col -->
-
-				<div class="col-xl-4 col-12">
-					<div class="box box-body">
-					  <h6 class="text-uppercase">文章</h6>
-					  <div class="flexbox mt-2">
-						<span class=" font-size-30">2,951</span>
-						<span class="ion ion-email text-info font-size-40"></span>
-					  </div>
-					</div>
-				</div>
-				<!-- /.col -->
-				<div class="col-xl-4 col-12">
-					<div class="box box-body">
-					  <h6 class="text-uppercase">访问人数</h6>
-					  <div class="flexbox mt-2">
-						<span class=" font-size-30">15,845</span>
-						<span class="ion ion-document text-primary font-size-40"></span>
-					  </div>
-					</div>
-				</div>
-				<!-- /.col -->
-		    </div>					
-			
-			<div class="row">
-				<div class="col-xl-7 col-12">
-					<div class="box">
-					  <div class="box-header with-border">
-						<h4 class="box-title">Data Overview</h4>
-					  </div>
-
-					  <div class="box-body">
-						  <div id="e_chart_1" class="chart" style="height:400px;"></div>
-					  </div>
-					</div>
-				</div>
-
-				<div class="col-xl-5 col-12">			
-				  <!-- Chart -->
-				  <div class="box">
-					<div class="box-header with-border">
-					  <h4 class="box-title">Social Ads Campaigns</h4>
-					</div>
-					<div class="box-body">
-						<div id="e_chart_2" class="chart" style="height:400px;"></div>
-					</div>
-					<!-- /.box-body -->
-				  </div>
-				  <!-- /.box -->
-				</div>
+			<button id="get-md-btn">Get Markdown</button>
+            <button id="get-html-btn">Get HTML</button>
+			<div id="test-editor">
+				<textarea style="display:none;">### 关于 Editor.md
+						**Editor.md** 是一款开源的、可嵌入的 Markdown 在线编辑器（组件），基于 CodeMirror、jQuery 和 Marked 构建。
+				</textarea>
+			</div>
 
 		</section>
 		<!-- /.content -->
@@ -593,15 +543,38 @@
 	<!-- Ekan Admin for demo purposes -->
 	<script src="/statics/admin/js/demo.js"></script>
 
+	<script src="/statics/admin/editor.md/js/editormd.min.js"></script>
+
 	<script type="text/javascript">
-		
-		$(document).ready(function(){
-			logout = function (){
-				sessionStorage.removeItem("flyray_blog_token");
-				window.location.href="login"
-			  alert("logout");
-			}
-		})
+		$(function() {
+			var editor = editormd("test-editor", {
+				// width  : "100%",
+				// height : "100%",
+				path   : "/statics/admin/editor.md/",
+				//theme: "dark",//工具栏主题
+				//previewTheme: "dark",//预览主题
+				//editorTheme: "pastel-on-dark",//编辑主题
+				saveHTMLToTextarea: true,
+				//autoHeight: true,
+				htmlDecode: "style,script,iframe", 
+				emoji: false,
+				taskList: true, 
+				tocm: true,         // Using [TOCM]
+				tex: true,                   // 开启科学公式TeX语言支持，默认关闭
+				flowChart: true,             // 开启流程图支持，默认关闭
+				sequenceDiagram: true,       // 开启时序/序列图支持，默认关闭,
+				syncScrolling: "single"
+			});
+
+			$("#get-md-btn").bind('click', function(){
+                    alert(editor.getMarkdown());
+                });
+                
+                $("#get-html-btn").bind('click', function() {
+                    alert(editor.getHTML());
+				}); 
+				
+		});
 	</script>
 	
 </body>
