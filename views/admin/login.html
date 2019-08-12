@@ -122,6 +122,7 @@
 						console.log(result);
 						if(result.code == 200){
 							sessionStorage.setItem("flyray_blog_token",result.data.token);
+							localStorage.setItem("flyray_blog_token",result.data.token);
 							window.location.href="index"
 						}else{
 							$("#alerttopright").fadeToggle(350);

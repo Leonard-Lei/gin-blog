@@ -11,8 +11,8 @@
 
 		<div id="main" class="content">
 			<div class="container">
-				<article itemscope="itemscope">
-					<div class="posts-list js-posts">
+				<article itemscope="itemscope" id="content">
+					<div class="posts-list js-posts" id="content_list">
 						<div class="post post-layout-list" data-aos="fade-up">
 							<div class="status_list_item icon_kyubo">
 								<div class="status_user" style="background-image: url(/statics/blog/images/b0ce3f3cde0c084b6d42321b2dcbc407.jpeg);">
@@ -91,7 +91,43 @@
 					<!-- -pagination  -->
 			</div>
 		</div>
-        {{ template "footer.html" .}}
+		{{ template "footer.html" .}}
+		<script type="text/javascript">
+			$(function () {
+				var token = localStorage.getItem("flyray_blog_token");
+				$.ajax({
+					type:"GET",
+					//请求的媒体类型
+					contentType: "application/json;charset=UTF-8",
+					headers:{'token':token},
+					//请求地址
+					url : "/api/v1/articles",
+					//请求成功
+					success : function(result) {
+						var list = result.data;
+						console.log(list)
+						for(j = 0,len=list.length; j < len; j++) {
+							$("#content_list").append("<div class='post post-layout-list' data-aos='fade-up'>"+
+							"<div class='status_list_item icon_kyubo'>"+
+								"<div class='status_user' style='background-image: url(/statics/blog/images/b0ce3f3cde0c084b6d42321b2dcbc407.jpeg);'>"+
+									"<div class='status_section'>"+
+										"<a href='detail' class='status_btn'>交代是不可能交代的</a>"+
+										"<p class='section_p'>相隔上一次的更新我掰手指数一数，下意识的双腿一软，给各位小哥哥小姐姐们跪下了。自从有了对象后，周末几乎落下了主题的进度（邪魅的笑）。一边开发新的主题，一边收集您们给我反馈回来的'臭虫'，还有新的主题后台看见了一些大神在... </p>"+
+									"</div>"+
+								"</div>"+
+							"</div>"+
+						"</div>"); 
+						}
+						console.log(result);
+					},
+					//请求失败，包含具体的错误信息
+					error : function(e){
+						console.log(e.status);
+						console.log(e.responseText);
+					}
+				})
+			});
+		</script>
 	</body>
 
 </html>

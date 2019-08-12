@@ -118,6 +118,7 @@ type AddArticleForm struct {
 	Title         string `form:"title" valid:"Required;MaxSize(100)"`
 	Desc          string `form:"desc" valid:"Required;MaxSize(255)"`
 	Content       string `form:"content" valid:"Required;MaxSize(65535)"`
+	MdContent     string `form:"md_content" valid:"Required;MaxSize(65535)"`
 	CreatedBy     string `form:"created_by" valid:"Required;MaxSize(100)"`
 	CoverImageUrl string `form:"cover_image_url" valid:"Required;MaxSize(255)"`
 	State         int    `form:"state" valid:"Range(0,1)"`
@@ -174,6 +175,7 @@ func AddArticle(c *gin.Context) {
 		Content:       form.Content,
 		CoverImageUrl: form.CoverImageUrl,
 		State:         form.State,
+		MdContent:     form.MdContent,
 	}
 	if err := articleService.Add(); err != nil {
 		appG.Response(http.StatusInternalServerError, e.ERROR_ADD_ARTICLE_FAIL, nil)

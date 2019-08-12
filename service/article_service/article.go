@@ -15,6 +15,7 @@ type Article struct {
 	Title         string
 	Desc          string
 	Content       string
+	MdContent     string
 	CoverImageUrl string
 	State         int
 	CreatedBy     string
@@ -30,6 +31,7 @@ func (a *Article) Add() error {
 		"title":           a.Title,
 		"desc":            a.Desc,
 		"content":         a.Content,
+		"md_content":      a.MdContent,
 		"created_by":      a.CreatedBy,
 		"cover_image_url": a.CoverImageUrl,
 		"state":           a.State,
@@ -48,6 +50,7 @@ func (a *Article) Edit() error {
 		"title":           a.Title,
 		"desc":            a.Desc,
 		"content":         a.Content,
+		"md_content":      a.MdContent,
 		"cover_image_url": a.CoverImageUrl,
 		"state":           a.State,
 		"modified_by":     a.ModifiedBy,
@@ -79,34 +82,34 @@ func (a *Article) Get() (*models.Article, error) {
 }
 
 func (a *Article) GetAll() ([]*models.Article, error) {
-	var (
-		articles, cacheArticles []*models.Article
-	)
+	// var (
+	// 	articles, cacheArticles []*models.Article
+	// )
 
-	cache := cache_service.Article{
-		TagID: a.TagID,
-		State: a.State,
+	// cache := cache_service.Article{
+	// 	TagID: a.TagID,
+	// 	State: a.State,
 
-		PageNum:  a.PageNum,
-		PageSize: a.PageSize,
-	}
-	key := cache.GetArticlesKey()
-	if gredis.Exists(key) {
-		data, err := gredis.Get(key)
-		if err != nil {
-			logging.Info(err)
-		} else {
-			json.Unmarshal(data, &cacheArticles)
-			return cacheArticles, nil
-		}
-	}
+	// 	PageNum:  a.PageNum,
+	// 	PageSize: a.PageSize,
+	// }
+	//key := cache.GetArticlesKey()
+	// if gredis.Exists(key) {
+	// 	data, err := gredis.Get(key)
+	// 	if err != nil {
+	// 		logging.Info(err)
+	// 	} else {
+	// 		json.Unmarshal(data, &cacheArticles)
+	// 		return cacheArticles, nil
+	// 	}
+	// }
 
 	articles, err := models.GetArticles(a.PageNum, a.PageSize, a.getMaps())
 	if err != nil {
 		return nil, err
 	}
 
-	gredis.Set(key, articles, 3600)
+	//gredis.Set(key, articles, 3600)
 	return articles, nil
 }
 
