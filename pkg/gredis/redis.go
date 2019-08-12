@@ -6,6 +6,7 @@ import (
 
 	"github.com/gomodule/redigo/redis"
 
+	"gin-blog/pkg/logging"
 	"gin-blog/pkg/setting"
 )
 
@@ -25,6 +26,7 @@ func Setup() error {
 			if setting.RedisSetting.Password != "" {
 				if _, err := c.Do("AUTH", setting.RedisSetting.Password); err != nil {
 					c.Close()
+					logging.Fatal("redis connect fail.", err)
 					return nil, err
 				}
 			}
@@ -35,7 +37,7 @@ func Setup() error {
 			return err
 		},
 	}
-
+	logging.Info("redis connect ok.")
 	return nil
 }
 
