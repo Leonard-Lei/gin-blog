@@ -13,11 +13,7 @@
 			<div class="container">
 				<article itemscope="itemscope" id="content">
 					<div class="posts-list js-posts" id="content_list">
-						
-						
-
-						
-
+						<!-- 展示文章列表 -->
 					</div>
 					<!-- post-formats end Infinite Scroll star -->
 					<!-- post-formats -->
@@ -52,7 +48,7 @@
 									"<div class='status_list_item icon_kyubo'>"+
 										"<div class='status_user' style='background-image: url(/statics/blog/images/b0ce3f3cde0c084b6d42321b2dcbc407.jpeg);'>"+
 											"<div class='status_section'>"+
-												"<a href='detail' class='status_btn'>"+item.title+"</a>"+
+												"<a href='detail?id="+item.id+"' class='status_btn'>"+item.title+"</a>"+
 												"<p class='section_p'>"+item.desc+"... </p>"+
 											"</div>"+
 										"</div>"+
@@ -64,13 +60,13 @@
 										"<div class='post-container review-item'>"+
 											"<div class='row review-item-wrapper'>"+
 												"<div class='col-sm-3'>"+
-													"<a rel='nofollow' href='detail'>"+
+													"<a rel='nofollow' href='detail?id="+item.id+"'>"+
 														"<div class='review-item-img' style='background-image: url(/statics/blog/images/diego-ph-249471-2-800x1000.jpg);'></div>"+
 														"</a>"+
 														"</div>"+
 														"<div class='col-sm-9 flex-xs-middle'>"+
 															"<div class='review-item-title'>"+
-																"<a href='detail' rel='bookmark'>"+item.title+"</a>"+
+																"<a href='detail?id="+item.id+"' rel='bookmark'>"+item.title+"</a>"+
 																"</div>"+
 																"<div class='review-item-creator'><b>发布日期：</b>"+item.title+"</div>"+
 																"<span class='review-item-info'><b>总浏览量：</b>"+item.title+"</span>"+
@@ -83,7 +79,7 @@
 																	"<div class='post-container'>"+
 																		"<div class='entry-content'>"+item.desc+"...</div>"+
 																		"<div class='post-footer'>"+
-																			"<a class='gaz-btn primary' href='detail'>READ MORE</a>"+
+																			"<a class='gaz-btn primary' href='detail?id="+item.id+"'>READ MORE</a>"+
 																			"<span class='total-comments-on-post pull-right'><a href=''>31 Comments</a></span>"+
 																			"</div>"+
 																			"</div>"+
@@ -97,7 +93,7 @@
 												"<div class='bg' style='background-image: url(/statics/blog/images/IMG_0150.jpg);'></div>"+
 												"<div class='contentext flex-xs-middle'>"+
 													"<div class='album-title'>"+
-														"<a href='detail.html'>"+item.title+"</a>"+
+														"<a href='detail?id="+item.id+"'>"+item.title+"</a>"+
 														"</div>"+
 														"<h5 class='review-item-creator'><b>发布日期：</b>"+item.desc+"</h5>"+
 													"<div class='album-content'>"+item.desc+"。</div>"+
