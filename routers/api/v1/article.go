@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/boombuler/barcode/qr"
@@ -117,8 +118,8 @@ type AddArticleForm struct {
 	TagID         int    `form:"tag_id" valid:"Required;Min(1)"`
 	Title         string `form:"title" valid:"Required;MaxSize(100)"`
 	Desc          string `form:"desc" valid:"Required;MaxSize(255)"`
-	Content       string `form:"content" valid:"Required;MaxSize(65535)"`
-	MdContent     string `form:"md_content" valid:"Required;MaxSize(65535)"`
+	Content       string `form:"content" valid:"Required;MaxSize(102400)"`
+	MdContent     string `form:"md_content" valid:"Required;MaxSize(102400)"`
 	CreatedBy     string `form:"created_by" valid:"Required;MaxSize(100)"`
 	CoverImageUrl string `form:"cover_image_url" valid:"Required;MaxSize(255)"`
 	State         int    `form:"state" valid:"Range(0,1)"`
@@ -141,9 +142,9 @@ func AddArticle(c *gin.Context) {
 		form AddArticleForm
 	)
 
-	body := make([]byte, 1024)
+	body := make([]byte, 1024000)
 	n, _ := c.Request.Body.Read(body)
-	//fmt.Println(string(body[0:n]))
+	fmt.Println(string(body[0:n]))
 	//string 转json 再转 form
 	err := json.Unmarshal([]byte(string(body[0:n])), &form)
 	if err != nil {
