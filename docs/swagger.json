@@ -23,14 +23,15 @@
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Get multiple articles",
+                "summary": "获取多篇文章",
                 "parameters": [
                     {
                         "description": "TagID",
                         "name": "tag_id",
                         "in": "body",
                         "schema": {
-                            "type": "integer"
+                            "type": "object",
+                            "$ref": "#/definitions/int"
                         }
                     },
                     {
@@ -38,7 +39,8 @@
                         "name": "state",
                         "in": "body",
                         "schema": {
-                            "type": "integer"
+                            "type": "object",
+                            "$ref": "#/definitions/int"
                         }
                     },
                     {
@@ -46,7 +48,8 @@
                         "name": "created_by",
                         "in": "body",
                         "schema": {
-                            "type": "integer"
+                            "type": "object",
+                            "$ref": "#/definitions/int"
                         }
                     }
                 ],
@@ -69,7 +72,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Add article",
+                "summary": "增加文章",
                 "parameters": [
                     {
                         "description": "TagID",
@@ -77,7 +80,8 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "object",
+                            "$ref": "#/definitions/int"
                         }
                     },
                     {
@@ -86,7 +90,8 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                            "$ref": "#/definitions/string"
                         }
                     },
                     {
@@ -95,7 +100,8 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                            "$ref": "#/definitions/string"
                         }
                     },
                     {
@@ -104,7 +110,8 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                            "$ref": "#/definitions/string"
                         }
                     },
                     {
@@ -113,7 +120,8 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                            "$ref": "#/definitions/string"
                         }
                     },
                     {
@@ -122,7 +130,8 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "object",
+                            "$ref": "#/definitions/int"
                         }
                     }
                 ],
@@ -147,7 +156,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Get a single article",
+                "summary": "获取一篇文章",
                 "parameters": [
                     {
                         "type": "integer",
@@ -176,7 +185,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Update article",
+                "summary": "更新文章",
                 "parameters": [
                     {
                         "type": "integer",
@@ -190,7 +199,8 @@
                         "name": "tag_id",
                         "in": "body",
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                            "$ref": "#/definitions/string"
                         }
                     },
                     {
@@ -198,7 +208,8 @@
                         "name": "title",
                         "in": "body",
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                            "$ref": "#/definitions/string"
                         }
                     },
                     {
@@ -206,7 +217,8 @@
                         "name": "desc",
                         "in": "body",
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                            "$ref": "#/definitions/string"
                         }
                     },
                     {
@@ -214,7 +226,8 @@
                         "name": "content",
                         "in": "body",
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                            "$ref": "#/definitions/string"
                         }
                     },
                     {
@@ -223,7 +236,8 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                            "$ref": "#/definitions/string"
                         }
                     },
                     {
@@ -231,7 +245,8 @@
                         "name": "state",
                         "in": "body",
                         "schema": {
-                            "type": "integer"
+                            "type": "object",
+                            "$ref": "#/definitions/int"
                         }
                     }
                 ],
@@ -254,7 +269,7 @@
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Delete article",
+                "summary": "删除文章",
                 "parameters": [
                     {
                         "type": "integer",
@@ -282,10 +297,13 @@
         },
         "/api/v1/tags": {
             "get": {
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Get multiple article tags",
+                "summary": "获取多个文章标签",
                 "parameters": [
                     {
                         "type": "string",
@@ -316,10 +334,13 @@
                 }
             },
             "post": {
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Add article tag",
+                "summary": "新增文章标签",
                 "parameters": [
                     {
                         "description": "Name",
@@ -327,7 +348,8 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                            "$ref": "#/definitions/string"
                         }
                     },
                     {
@@ -335,7 +357,8 @@
                         "name": "state",
                         "in": "body",
                         "schema": {
-                            "type": "integer"
+                            "type": "object",
+                            "$ref": "#/definitions/int"
                         }
                     },
                     {
@@ -343,7 +366,8 @@
                         "name": "created_by",
                         "in": "body",
                         "schema": {
-                            "type": "integer"
+                            "type": "object",
+                            "$ref": "#/definitions/int"
                         }
                     }
                 ],
@@ -365,17 +389,21 @@
         },
         "/api/v1/tags/export": {
             "post": {
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Export article tag",
+                "summary": "导出文章标签",
                 "parameters": [
                     {
                         "description": "Name",
                         "name": "name",
                         "in": "body",
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                            "$ref": "#/definitions/string"
                         }
                     },
                     {
@@ -383,7 +411,8 @@
                         "name": "state",
                         "in": "body",
                         "schema": {
-                            "type": "integer"
+                            "type": "object",
+                            "$ref": "#/definitions/int"
                         }
                     }
                 ],
@@ -408,17 +437,14 @@
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Import article tag",
+                "summary": "导入图片",
                 "parameters": [
                     {
-                        "description": "Excel File",
-                        "name": "file",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/file"
-                        }
+                        "type": "file",
+                        "description": "Image File",
+                        "name": "image",
+                        "in": "formData",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -439,10 +465,13 @@
         },
         "/api/v1/tags/{id}": {
             "put": {
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Update article tag",
+                "summary": "修改文章标签",
                 "parameters": [
                     {
                         "type": "integer",
@@ -452,12 +481,13 @@
                         "required": true
                     },
                     {
-                        "description": "ID",
+                        "description": "Name",
                         "name": "name",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                            "$ref": "#/definitions/string"
                         }
                     },
                     {
@@ -465,7 +495,8 @@
                         "name": "state",
                         "in": "body",
                         "schema": {
-                            "type": "integer"
+                            "type": "object",
+                            "$ref": "#/definitions/int"
                         }
                     },
                     {
@@ -474,7 +505,8 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                            "$ref": "#/definitions/string"
                         }
                     }
                 ],
@@ -494,16 +526,57 @@
                 }
             },
             "delete": {
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Delete article tag",
+                "summary": "删除文章标签",
                 "parameters": [
                     {
                         "type": "integer",
                         "description": "ID",
                         "name": "id",
                         "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":200,\"data\":{},\"msg\":\"ok\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "{\"code\":200,\"data\":{},\"msg\":\"ok\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "登陆",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "userName",
+                        "name": "username",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "password",
+                        "name": "password",
+                        "in": "query",
                         "required": true
                     }
                 ],

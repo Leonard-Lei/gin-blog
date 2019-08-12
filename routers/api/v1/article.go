@@ -20,7 +20,7 @@ import (
 	"gin-blog/service/tag_service"
 )
 
-// @Summary Get a single article
+// @Summary 获取一篇文章
 // @Produce  json
 // @Param id path int true "ID"
 // @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
@@ -58,7 +58,7 @@ func GetArticle(c *gin.Context) {
 	appG.Response(http.StatusOK, e.SUCCESS, article)
 }
 
-// @Summary Get multiple articles
+// @Summary 获取多篇文章
 // @Produce  json
 // @Param tag_id body int false "TagID"
 // @Param state body int false "State"
@@ -125,7 +125,7 @@ type AddArticleForm struct {
 	State         int    `form:"state" valid:"Range(0,1)"`
 }
 
-// @Summary Add article
+// @Summary 增加文章
 // @Produce  json
 // @Param tag_id body int true "TagID"
 // @Param title body string true "Title"
@@ -197,7 +197,7 @@ type EditArticleForm struct {
 	State         int    `form:"state" valid:"Range(0,1)"`
 }
 
-// @Summary Update article
+// @Summary 更新文章
 // @Produce  json
 // @Param id path int true "ID"
 // @Param tag_id body string false "TagID"
@@ -272,7 +272,7 @@ func EditArticle(c *gin.Context) {
 	appG.Response(http.StatusOK, e.SUCCESS, nil)
 }
 
-// @Summary Delete article
+// @Summary 删除文章
 // @Produce  json
 // @Param id path int true "ID"
 // @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"

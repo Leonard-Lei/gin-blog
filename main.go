@@ -11,7 +11,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"gin-blog/pkg/gredis"
+	//"gin-blog/pkg/gredis"
 	"gin-blog/pkg/util"
 	/*
 		    "fmt"
@@ -28,7 +28,7 @@ func init() {
 	setting.Setup()
 	models.Setup()
 	logging.Setup()
-	gredis.Setup()
+	//gredis.Setup()
 	util.Setup()
 }
 

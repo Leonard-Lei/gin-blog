@@ -8,5 +8,5 @@ type Auth struct {
 }
 
 func (a *Auth) Check() (bool, error) {
-	return false, models.CheckAuth(a.Username, a.Password)
+	return models.CheckAuth(a.Username, a.Password)
 }
