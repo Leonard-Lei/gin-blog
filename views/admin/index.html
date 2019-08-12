@@ -598,6 +598,7 @@
 		$(document).ready(function(){
 			logout = function (){
 				sessionStorage.removeItem("flyray_blog_token");
+				localStorage.removeItem("flyray_blog_token");
 				window.location.href="login"
 			  alert("logout");
 			}
