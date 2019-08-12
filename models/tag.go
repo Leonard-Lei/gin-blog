@@ -7,16 +7,16 @@ import (
 type Tag struct {
 	Model
 
-	Name       string `json:"name"`
-	CreatedBy  string `json:"created_by"`
-	ModifiedBy string `json:"modified_by"`
-	State      int    `json:"state"`
+	Name     string `json:"name"`
+	CreateBy int    `json:"create_by"`
+	UpdateBy int    `json:"update_by"`
+	State    int    `json:"state"`
 }
 
 // ExistTagByName checks if there is a tag with the same name
 func ExistTagByName(name string) (bool, error) {
 	var tag Tag
-	err := db.Select("id").Where("name = ? AND deleted_on = ? ", name, 0).First(&tag).Error
+	err := db.Select("id").Where("name = ? AND delete_flag = ?", name, 0).First(&tag).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return false, err
 	}
@@ -29,11 +29,11 @@ func ExistTagByName(name string) (bool, error) {
 }
 
 // AddTag Add a Tag
-func AddTag(name string, state int, createdBy string) error {
+func AddTag(name string, state int, create_by int) error {
 	tag := Tag{
-		Name:      name,
-		State:     state,
-		CreatedBy: createdBy,
+		Name:     name,
+		State:    state,
+		CreateBy: create_by,
 	}
 	if err := db.Create(&tag).Error; err != nil {
 		return err
@@ -75,7 +75,7 @@ func GetTagTotal(maps interface{}) (int, error) {
 // ExistTagByID determines whether a Tag exists based on the ID
 func ExistTagByID(id int) (bool, error) {
 	var tag Tag
-	err := db.Select("id").Where("id = ? AND deleted_on = ? ", id, 0).First(&tag).Error
+	err := db.Select("id").Where("id = ? AND delete_flag = ? ", id, 0).First(&tag).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return false, err
 	}
@@ -97,7 +97,7 @@ func DeleteTag(id int) error {
 
 // EditTag modify a single tag
 func EditTag(id int, data interface{}) error {
-	if err := db.Model(&Tag{}).Where("id = ? AND deleted_on = ? ", id, 0).Updates(data).Error; err != nil {
+	if err := db.Model(&Tag{}).Where("id = ? AND delete_flag = ? ", id, 0).Updates(data).Error; err != nil {
 		return err
 	}
 
@@ -106,7 +106,7 @@ func EditTag(id int, data interface{}) error {
 
 // CleanAllTag clear all tag
 func CleanAllTag() (bool, error) {
-	if err := db.Unscoped().Where("deleted_on != ? ", 0).Delete(&Tag{}).Error; err != nil {
+	if err := db.Unscoped().Where("delete_flag != ? ", 0).Delete(&Tag{}).Error; err != nil {
 		return false, err
 	}
 

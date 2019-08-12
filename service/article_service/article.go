@@ -13,8 +13,8 @@ type Article struct {
 	MdContent     string
 	CoverImageUrl string
 	State         int
-	CreatedBy     string
-	ModifiedBy    string
+	CreateBy      int
+	UpdateBy      int
 
 	PageNum  int
 	PageSize int
@@ -27,7 +27,7 @@ func (a *Article) Add() error {
 		"desc":            a.Desc,
 		"content":         a.Content,
 		"md_content":      a.MdContent,
-		"created_by":      a.CreatedBy,
+		"create_by":       a.CreateBy,
 		"cover_image_url": a.CoverImageUrl,
 		"state":           a.State,
 	}
@@ -48,7 +48,7 @@ func (a *Article) Edit() error {
 		"md_content":      a.MdContent,
 		"cover_image_url": a.CoverImageUrl,
 		"state":           a.State,
-		"modified_by":     a.ModifiedBy,
+		"update_by":       a.UpdateBy,
 	})
 }
 

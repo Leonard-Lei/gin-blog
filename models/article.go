@@ -15,15 +15,15 @@ type Article struct {
 	Content       string `json:"content"`
 	MdContent     string `json:"md_content"`
 	CoverImageUrl string `json:"cover_image_url"`
-	CreatedBy     string `json:"created_by"`
-	ModifiedBy    string `json:"modified_by"`
+	CreateBy      int    `json:"create_by"`
+	UpdateBy      int    `json:"update_by"`
 	State         int    `json:"state"`
 }
 
 // ExistArticleByID checks if an article exists based on ID
 func ExistArticleByID(id int) (bool, error) {
 	var article Article
-	err := db.Select("id").Where("id = ? AND deleted_on = ? ", id, 0).First(&article).Error
+	err := db.Select("id").Where("id = ? AND delete_flag = ? ", id, 0).First(&article).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return false, err
 	}
@@ -59,7 +59,7 @@ func GetArticles(pageNum int, pageSize int, maps interface{}) ([]*Article, error
 // GetArticle Get a single article based on ID
 func GetArticle(id int) (*Article, error) {
 	var article Article
-	err := db.Where("id = ? AND deleted_on = ? ", id, 0).First(&article).Error
+	err := db.Where("id = ? AND delete_flag = ?", id, 0).First(&article).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return nil, err
 	}
@@ -74,7 +74,7 @@ func GetArticle(id int) (*Article, error) {
 
 // EditArticle modify a single article
 func EditArticle(id int, data interface{}) error {
-	if err := db.Model(&Article{}).Where("id = ? AND deleted_on = ? ", id, 0).Updates(data).Error; err != nil {
+	if err := db.Model(&Article{}).Where("id = ? AND delete_flag = ? ", id, 0).Updates(data).Error; err != nil {
 		return err
 	}
 
@@ -89,7 +89,7 @@ func AddArticle(data map[string]interface{}) error {
 		Desc:          data["desc"].(string),
 		Content:       data["content"].(string),
 		MdContent:     data["md_content"].(string),
-		CreatedBy:     data["created_by"].(string),
+		CreateBy:      data["create_by"].(int),
 		State:         data["state"].(int),
 		CoverImageUrl: data["cover_image_url"].(string),
 	}
@@ -111,7 +111,7 @@ func DeleteArticle(id int) error {
 
 // CleanAllArticle clear all article
 func CleanAllArticle() error {
-	if err := db.Unscoped().Where("deleted_on != ? ", 0).Delete(&Article{}).Error; err != nil {
+	if err := db.Unscoped().Where("delete_flag != ?", 0).Delete(&Article{}).Error; err != nil {
 		return err
 	}
 

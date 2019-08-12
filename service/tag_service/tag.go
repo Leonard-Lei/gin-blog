@@ -18,11 +18,11 @@ import (
 )
 
 type Tag struct {
-	ID         int
-	Name       string
-	CreatedBy  string
-	ModifiedBy string
-	State      int
+	ID       int
+	Name     string
+	CreateBy int
+	UpdateBy int
+	State    int
 
 	PageNum  int
 	PageSize int
@@ -37,12 +37,12 @@ func (t *Tag) ExistByID() (bool, error) {
 }
 
 func (t *Tag) Add() error {
-	return models.AddTag(t.Name, t.State, t.CreatedBy)
+	return models.AddTag(t.Name, t.State, t.CreateBy)
 }
 
 func (t *Tag) Edit() error {
 	data := make(map[string]interface{})
-	data["modified_by"] = t.ModifiedBy
+	data["update_by"] = t.UpdateBy
 	data["name"] = t.Name
 	if t.State >= 0 {
 		data["state"] = t.State
@@ -115,10 +115,10 @@ func (t *Tag) Export() (string, error) {
 		values := []string{
 			strconv.Itoa(v.ID),
 			v.Name,
-			v.CreatedBy,
-			strconv.Itoa(v.CreatedOn),
-			v.ModifiedBy,
-			strconv.Itoa(v.ModifiedOn),
+			strconv.Itoa(v.CreateBy),
+			strconv.Itoa(v.CreateTime),
+			strconv.Itoa(v.UpdateBy),
+			strconv.Itoa(v.UpdateTime),
 		}
 
 		row = sheet.AddRow()
@@ -158,8 +158,8 @@ func (t *Tag) Import(r io.Reader) error {
 			for _, cell := range row {
 				data = append(data, cell)
 			}
-
-			models.AddTag(data[1], 1, data[2])
+			create_by, _ := strconv.Atoi(data[2])
+			models.AddTag(data[1], 1, create_by)
 		}
 	}
 
@@ -168,7 +168,7 @@ func (t *Tag) Import(r io.Reader) error {
 
 func (t *Tag) getMaps() map[string]interface{} {
 	maps := make(map[string]interface{})
-	maps["deleted_on"] = 0
+	maps["delete_flag"] = 0
 
 	if t.Name != "" {
 		maps["name"] = t.Name

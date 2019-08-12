@@ -58,9 +58,9 @@ func GetTags(c *gin.Context) {
 }
 
 type AddTagForm struct {
-	Name      string `form:"name" valid:"Required;MaxSize(100)"`
-	CreatedBy string `form:"created_by" valid:"Required;MaxSize(100)"`
-	State     int    `form:"state" valid:"Range(0,1)"`
+	Name     string `form:"name" valid:"Required;MaxSize(100)"`
+	CreateBy int    `form:"create_by" valid:"Required;Min(1)"`
+	State    int    `form:"state" valid:"Range(0,1)"`
 }
 
 // @Summary 新增文章标签
@@ -94,9 +94,9 @@ func AddTag(c *gin.Context) {
 	}
 
 	tagService := tag_service.Tag{
-		Name:      form.Name,
-		CreatedBy: form.CreatedBy,
-		State:     form.State,
+		Name:     form.Name,
+		CreateBy: form.CreateBy,
+		State:    form.State,
 	}
 	exists, err := tagService.ExistByName()
 	if err != nil {
@@ -118,10 +118,10 @@ func AddTag(c *gin.Context) {
 }
 
 type EditTagForm struct {
-	ID         int    `form:"id" valid:"Required;Min(1)"`
-	Name       string `form:"name" valid:"Required;MaxSize(100)"`
-	ModifiedBy string `form:"modified_by" valid:"Required;MaxSize(100)"`
-	State      int    `form:"state" valid:"Range(0,1)"`
+	ID       int    `form:"id" valid:"Required;Min(1)"`
+	Name     string `form:"name" valid:"Required;MaxSize(100)"`
+	UpdateBy int    `form:"update_by" valid:"Required;Min(1)"`
+	State    int    `form:"state" valid:"Range(0,1)"`
 }
 
 // @Summary 修改文章标签
@@ -130,7 +130,7 @@ type EditTagForm struct {
 // @Param id path int true "ID"
 // @Param name body string true "Name"
 // @Param state body int false "State"
-// @Param modified_by body string true "ModifiedBy"
+// @Param update_by body string true "UpdateBy"
 // @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Router /api/v1/tags/{id} [put]
@@ -157,10 +157,10 @@ func EditTag(c *gin.Context) {
 	}
 
 	tagService := tag_service.Tag{
-		ID:         form.ID,
-		Name:       form.Name,
-		ModifiedBy: form.ModifiedBy,
-		State:      form.State,
+		ID:       form.ID,
+		Name:     form.Name,
+		UpdateBy: form.UpdateBy,
+		State:    form.State,
 	}
 
 	exists, err := tagService.ExistByID()

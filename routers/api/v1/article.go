@@ -62,7 +62,7 @@ func GetArticle(c *gin.Context) {
 // @Produce  json
 // @Param tag_id body int false "TagID"
 // @Param state body int false "State"
-// @Param created_by body int false "CreatedBy"
+// @Param create_by body int false "CreatedBy"
 // @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Router /api/v1/articles [get]
@@ -120,7 +120,7 @@ type AddArticleForm struct {
 	Desc          string `form:"desc" valid:"Required;MaxSize(255)"`
 	Content       string `form:"content" valid:"Required;MaxSize(102400)"`
 	MdContent     string `form:"md_content" valid:"Required;MaxSize(102400)"`
-	CreatedBy     string `form:"created_by" valid:"Required;MaxSize(100)"`
+	CreateBy      int    `form:"create_by" valid:"Required;Min(1)"`
 	CoverImageUrl string `form:"cover_image_url" valid:"Required;MaxSize(255)"`
 	State         int    `form:"state" valid:"Range(0,1)"`
 }
@@ -131,7 +131,7 @@ type AddArticleForm struct {
 // @Param title body string true "Title"
 // @Param desc body string true "Desc"
 // @Param content body string true "Content"
-// @Param created_by body string true "CreatedBy"
+// @Param create_by body string true "CreatedBy"
 // @Param state body int true "State"
 // @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
@@ -142,7 +142,7 @@ func AddArticle(c *gin.Context) {
 		form AddArticleForm
 	)
 
-	body := make([]byte, 1024000)
+	body := make([]byte, 1024)
 	n, _ := c.Request.Body.Read(body)
 	fmt.Println(string(body[0:n]))
 	//string 转json 再转 form
@@ -192,7 +192,7 @@ type EditArticleForm struct {
 	Title         string `form:"title" valid:"Required;MaxSize(100)"`
 	Desc          string `form:"desc" valid:"Required;MaxSize(255)"`
 	Content       string `form:"content" valid:"Required;MaxSize(65535)"`
-	ModifiedBy    string `form:"modified_by" valid:"Required;MaxSize(100)"`
+	UpdateBy      int    `form:"update_by" valid:"Required;Min(1)"`
 	CoverImageUrl string `form:"cover_image_url" valid:"Required;MaxSize(255)"`
 	State         int    `form:"state" valid:"Range(0,1)"`
 }
@@ -204,7 +204,7 @@ type EditArticleForm struct {
 // @Param title body string false "Title"
 // @Param desc body string false "Desc"
 // @Param content body string false "Content"
-// @Param modified_by body string true "ModifiedBy"
+// @Param update_by body string true "UpdateBy"
 // @Param state body int false "State"
 // @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
@@ -238,7 +238,7 @@ func EditArticle(c *gin.Context) {
 		Desc:          form.Desc,
 		Content:       form.Content,
 		CoverImageUrl: form.CoverImageUrl,
-		ModifiedBy:    form.ModifiedBy,
+		UpdateBy:      form.UpdateBy,
 		State:         form.State,
 	}
 	exists, err := articleService.ExistByID()
