@@ -122,7 +122,7 @@ func (a *Article) Count() (int, error) {
 
 func (a *Article) getMaps() map[string]interface{} {
 	maps := make(map[string]interface{})
-	maps["deleted_on"] = 0
+	maps["delete_flag"] = 0
 	if a.State != -1 {
 		maps["state"] = a.State
 	}
