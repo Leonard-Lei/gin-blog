@@ -116,9 +116,11 @@ func (t *Tag) Export() (string, error) {
 			strconv.Itoa(v.ID),
 			v.Name,
 			strconv.Itoa(v.CreateBy),
-			strconv.Itoa(v.CreateTime),
+			//strconv.Itoa(v.CreateTime),
+			v.CreateTime.String(),
 			strconv.Itoa(v.UpdateBy),
-			strconv.Itoa(v.UpdateTime),
+			//strconv.Itoa(v.UpdateTime),
+			v.UpdateTime.String(),
 		}
 
 		row = sheet.AddRow()
