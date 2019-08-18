@@ -1,6 +1,9 @@
 package models
 
 import (
+	"gin-blog/pkg/util"
+	"time"
+
 	"github.com/jinzhu/gorm"
 )
 
@@ -31,9 +34,10 @@ func ExistTagByName(name string) (bool, error) {
 // AddTag Add a Tag
 func AddTag(name string, state int, create_by int) error {
 	tag := Tag{
-		Name:     name,
-		State:    state,
-		CreateBy: create_by,
+		Name:       name,
+		State:      state,
+		CreateBy:   create_by,
+		CreateTime: util.JsonDateTime(time.Now()),
 	}
 	if err := db.Create(&tag).Error; err != nil {
 		return err

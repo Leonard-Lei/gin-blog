@@ -55,43 +55,30 @@ func CloseDB() {
 //update TimeStamp For Create Callback will set `CreateTime` when creating
 func updateTimeStampForCreateCallback(scope *gorm.Scope) {
 
-	nowTime := util.JsonDateTime(time.Now())
-
-	err := scope.SetColumn("CreateTime", nowTime)
-	if err != nil {
-		log.Println(err)
-	}
-	err = scope.SetColumn("UpdateTime", util.JsonDateTime(time.Now()))
-	if err != nil {
-		log.Println(err)
-	}
-	log.Println("CreateTime callback")
-
 	//检查是否有错误
 	if !scope.HasError() {
 		//nowTime := time.Now().Unix()
+		nowTime := util.JsonDateTime(time.Now())
 
 		//通过scope.FieldByName()获取所有字段，判断当前是否包含所需要字段
-		// if createTimeField, ok := scope.FieldByName("CreateTime"); ok {
-		// 	//判断该字段的值是否为空
-		// 	if createTimeField.IsBlank {
-		// 		err := createTimeField.Set(nowTime)
-		// 		if err != nil {
-		// 			log.Println(err)
-		// 		}
-		// 	}
-		// }
+		if createTimeField, ok := scope.FieldByName("CreateTime"); ok {
+			//判断该字段的值是否为空
+			if createTimeField.IsBlank {
+				err := createTimeField.Set(nowTime)
+				if err != nil {
+					log.Println(err)
+				}
+			}
+		}
 
-		// if modifyTimeField, ok := scope.FieldByName("UpdateTime"); ok {
-
-		// 	scope.SetColumn("UpdateTime", util.JsonDateTime(time.Now()).String())
-		// 	if modifyTimeField.IsBlank {
-		// 		err := modifyTimeField.Set(nowTime)
-		// 		if err != nil {
-		// 			log.Println(err)
-		// 		}
-		// 	}
-		// }
+		if modifyTimeField, ok := scope.FieldByName("UpdateTime"); ok {
+			if modifyTimeField.IsBlank {
+				err := modifyTimeField.Set(nowTime)
+				if err != nil {
+					log.Println(err)
+				}
+			}
+		}
 	}
 }
 
@@ -100,7 +87,6 @@ func updateTimeStampForUpdateCallback(scope *gorm.Scope) {
 	//假设没有指定 update_column 的字段，我们默认在更新回调设置 ModifiedOn 的值
 	//scope.SetColumn("UpdateTime", time.Now().Unix())
 	scope.SetColumn("UpdateTime", util.JsonDateTime(time.Now()).String())
-	scope.SetColumn("CreateeTime", util.JsonDateTime(time.Now()).String())
 }
 
 // deleteCallback will set `DeletedTime` where deleting
@@ -121,8 +107,7 @@ func deleteCallback(scope *gorm.Scope) {
 				scope.QuotedTableName(),
 				scope.Quote(deletedOnField.DBName),
 				//添加值作为SQL的参数，也可用于防范SQL注入
-				//scope.AddToVars(time.Now().Unix()),
-				scope.AddToVars(util.JsonDateTime(time.Now()).String()),
+				scope.AddToVars(time.Now().Unix()),
 				//返回组合好的条件SQL，看一下方法原型很明了
 				addExtraSpaceIfExist(scope.CombinedConditionSql()),
 				addExtraSpaceIfExist(extraOption),

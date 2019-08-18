@@ -16,6 +16,7 @@ type Article struct {
 	MdContent     string `json:"md_content"`
 	CoverImageUrl string `json:"cover_image_url"`
 	CreateBy      int    `json:"create_by"`
+	CreateTime    string `json:"create_time"`
 	UpdateBy      int    `json:"update_by"`
 	State         int    `json:"state"`
 }
@@ -90,6 +91,7 @@ func AddArticle(data map[string]interface{}) error {
 		Content:       data["content"].(string),
 		MdContent:     data["md_content"].(string),
 		CreateBy:      data["create_by"].(int),
+		CreateTime:    data["create_time"].(string),
 		State:         data["state"].(int),
 		CoverImageUrl: data["cover_image_url"].(string),
 	}

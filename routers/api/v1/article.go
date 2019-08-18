@@ -3,6 +3,7 @@ package v1
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/boombuler/barcode/qr"
 
@@ -177,6 +178,8 @@ func AddArticle(c *gin.Context) {
 		CoverImageUrl: form.CoverImageUrl,
 		State:         form.State,
 		MdContent:     form.MdContent,
+		CreateBy:      form.CreateBy,
+		CreateTime:    util.JsonDateTime(time.Now()).String(),
 	}
 	if err := articleService.Add(); err != nil {
 		appG.Response(http.StatusInternalServerError, e.ERROR_ADD_ARTICLE_FAIL, nil)

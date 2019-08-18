@@ -14,6 +14,7 @@ type Article struct {
 	CoverImageUrl string
 	State         int
 	CreateBy      int
+	CreateTime    string
 	UpdateBy      int
 
 	PageNum  int
@@ -28,6 +29,7 @@ func (a *Article) Add() error {
 		"content":         a.Content,
 		"md_content":      a.MdContent,
 		"create_by":       a.CreateBy,
+		"create_time":     a.CreateTime,
 		"cover_image_url": a.CoverImageUrl,
 		"state":           a.State,
 	}
