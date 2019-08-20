@@ -3,7 +3,6 @@ package v1
 import (
 	"fmt"
 	"net/http"
-	"time"
 
 	"github.com/boombuler/barcode/qr"
 
@@ -121,7 +120,7 @@ type AddArticleForm struct {
 	Desc          string `form:"desc" valid:"Required;MaxSize(255)"`
 	Content       string `form:"content" valid:"Required;MaxSize(102400)"`
 	MdContent     string `form:"md_content" valid:"Required;MaxSize(102400)"`
-	CreateBy      int    `form:"create_by" valid:"Required;Min(1)"`
+	CreateBy      int    `form:"create_by"`
 	CoverImageUrl string `form:"cover_image_url" valid:"Required;MaxSize(255)"`
 	State         int    `form:"state" valid:"Range(0,1)"`
 }
@@ -179,7 +178,6 @@ func AddArticle(c *gin.Context) {
 		State:         form.State,
 		MdContent:     form.MdContent,
 		CreateBy:      form.CreateBy,
-		CreateTime:    util.JsonDateTime(time.Now()).String(),
 	}
 	if err := articleService.Add(); err != nil {
 		appG.Response(http.StatusInternalServerError, e.ERROR_ADD_ARTICLE_FAIL, nil)

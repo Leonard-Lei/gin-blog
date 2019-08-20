@@ -39,7 +39,7 @@ func Setup() {
 	}
 
 	db.SingularTable(true)
-	db.Callback().Create().Replace("gorm:create_time_stamp", updateTimeStampForCreateCallback)
+	db.Callback().Create().Replace("gorm:update_time_stamp", updateTimeStampForCreateCallback)
 	db.Callback().Update().Replace("gorm:update_time_stamp", updateTimeStampForUpdateCallback)
 	db.Callback().Delete().Replace("gorm:delete", deleteCallback)
 	db.DB().SetMaxIdleConns(10)
@@ -64,19 +64,15 @@ func updateTimeStampForCreateCallback(scope *gorm.Scope) {
 		if createTimeField, ok := scope.FieldByName("CreateTime"); ok {
 			//判断该字段的值是否为空
 			if createTimeField.IsBlank {
-				err := createTimeField.Set(nowTime)
-				if err != nil {
-					log.Println(err)
-				}
+				scope.SetColumn("CreateTime", nowTime)
+				createTimeField.Set(nowTime)
 			}
 		}
 
 		if modifyTimeField, ok := scope.FieldByName("UpdateTime"); ok {
 			if modifyTimeField.IsBlank {
-				err := modifyTimeField.Set(nowTime)
-				if err != nil {
-					log.Println(err)
-				}
+				scope.SetColumn("UpdateTime", nowTime)
+				modifyTimeField.Set(nowTime)
 			}
 		}
 	}
@@ -86,7 +82,7 @@ func updateTimeStampForCreateCallback(scope *gorm.Scope) {
 func updateTimeStampForUpdateCallback(scope *gorm.Scope) {
 	//假设没有指定 update_column 的字段，我们默认在更新回调设置 ModifiedOn 的值
 	//scope.SetColumn("UpdateTime", time.Now().Unix())
-	scope.SetColumn("UpdateTime", util.JsonDateTime(time.Now()).String())
+	scope.SetColumn("UpdateTime", util.JsonDateTime(time.Now()))
 }
 
 // deleteCallback will set `DeletedTime` where deleting
