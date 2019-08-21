@@ -29,8 +29,8 @@
 						</div>
 						<div class="meta split split--responsive cf">
 							<div class="split__title">
-								<time datetime="" id="">2017/10/02</time>
-								<span class=""><a href="" rel="tag">主题</a><a href="" rel="tag">日常</a><a href="" rel="tag">更新</a> </span>
+								<time datetime="" id="time"></time>
+								<span class=""><a href="" rel="tag" id="tag">主题</a></span>
 							</div>
 							<div id="social-share"><span class="entypo-share"><i class="iconfont">&#xe614;</i>分享</span></div>
 							<div class="slide">
@@ -188,7 +188,9 @@
 						$("#title").text(item.title);
 						$("#content").html(item.content);
 						$("#title").text(item.title);
-						
+						$("#time").text(item.create_time);
+                        $("#tag").text(item.tag.name);
+
 					},
 					//请求失败，包含具体的错误信息
 					error : function(e){
