@@ -9,16 +9,15 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 
 	"gin-blog/pkg/setting"
-	"gin-blog/pkg/util"
 )
 
 var db *gorm.DB
 
 type Model struct {
-	ID         int               `gorm:"primary_key" json:"id"`
-	CreateTime util.JsonDateTime `json:"create_time" time_format:"2006-01-02 15:04:05"`
-	UpdateTime util.JsonDateTime `json:"update_time" time_format:"2006-01-02 15:04:05"`
-	DeleteFlag int               `json:"delete_flag"`
+	ID         int       `gorm:"primary_key" json:"id"`
+	CreateTime time.Time `json:"create_time" time_format:"2006-01-02 15:04:05"`
+	UpdateTime time.Time `json:"update_time" time_format:"2006-01-02 15:04:05"`
+	DeleteFlag int       `json:"delete_flag"`
 }
 
 // Setup initializes the database instance
@@ -58,20 +57,18 @@ func updateTimeStampForCreateCallback(scope *gorm.Scope) {
 	//检查是否有错误
 	if !scope.HasError() {
 		//nowTime := time.Now().Unix()
-		nowTime := util.JsonDateTime(time.Now())
+		nowTime := time.Now()
 
 		//通过scope.FieldByName()获取所有字段，判断当前是否包含所需要字段
 		if createTimeField, ok := scope.FieldByName("CreateTime"); ok {
 			//判断该字段的值是否为空
 			if createTimeField.IsBlank {
-				scope.SetColumn("CreateTime", nowTime)
 				createTimeField.Set(nowTime)
 			}
 		}
 
 		if modifyTimeField, ok := scope.FieldByName("UpdateTime"); ok {
 			if modifyTimeField.IsBlank {
-				scope.SetColumn("UpdateTime", nowTime)
 				modifyTimeField.Set(nowTime)
 			}
 		}
@@ -82,7 +79,7 @@ func updateTimeStampForCreateCallback(scope *gorm.Scope) {
 func updateTimeStampForUpdateCallback(scope *gorm.Scope) {
 	//假设没有指定 update_column 的字段，我们默认在更新回调设置 ModifiedOn 的值
 	//scope.SetColumn("UpdateTime", time.Now().Unix())
-	scope.SetColumn("UpdateTime", util.JsonDateTime(time.Now()))
+	scope.SetColumn("UpdateTime", time.Now())
 }
 
 // deleteCallback will set `DeletedTime` where deleting
