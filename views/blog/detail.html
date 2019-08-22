@@ -40,7 +40,7 @@
 					</section>
 				</article>
 			</div>
-			<svg id="upTriangleColor" width="100%" height="40" viewBox="0 0 100 102" preserveAspectRatio="none">
+			<svg id="go" width="100%" height="40" viewBox="0 0 100 102" preserveAspectRatio="none">
 				<path d="M0 0 L50 100 L100 0 Z"></path>
 			</svg>
 			<div id="social">
@@ -145,18 +145,18 @@
 		</div>
 		<div class="navpost-part">
 			<div id="NextPrevPosts">
-				<div class="prev" data-aos="slide-right" data-aos-delay="1.5s">
+				<div id ="prev" class="prev" data-aos="slide-right" data-aos-delay="1.5s">
 					<div class="arrow"><i class="iconfont">&#xe625;</i></div>
 					<div class="preview">
 						<div class="pull-left featuredImg" style="background-image:url('/statics/blog/images/97a354cb9519f97e84139f26017386026b3fd7f517b96-DCDbdE-250x250.jpeg');"></div>
-						<a class="pull-left preview-content bold" href="#"><span>《别哭妈妈》</span></a>
+						<a id="prevHref" class="pull-left preview-content bold" href="#"><span id="prevTitle">没有文章</span></a>
 					</div>
 				</div>
-				<div class="next" data-aos="slide-left" data-aos-delay="1.5s">
+				<div id ="next" class="next" data-aos="slide-left" data-aos-delay="1.5s">
 					<div class="arrow"><i class="iconfont">&#xe623;</i></div>
 					<div class="preview">
 						<div class="pull-right featuredImg" style="background-image:url('/statics/blog/images/no-image.png');"></div>
-						<a class="pull-right preview-content bold" href="#"><span>重构图像样式测试</span></a>
+						<a id="nextHref" class="pull-right preview-content bold" href="#"><span id="nextTitle">没有文章</span></a>
 					</div>
 				</div>
 			</div>
@@ -198,6 +198,47 @@
 						console.log(e.responseText);
 					}
 				})
+				var preId = id - 1
+                $.ajax({
+                    type:"GET",
+                    //请求的媒体类型
+                    contentType: "application/json;charset=UTF-8",
+                    headers:{'token':token},
+                    //请求地址
+                    url : "/api/v1/articles/"+preId,
+                    //请求成功
+                    success : function(result) {
+                        var item = result.data;
+                        $("#prevTitle").text(item.title);
+                        $("#prevHref").attr('href','http://localhost:8000/blog/detail?id='+preId);
+                    },
+                    //请求失败，包含具体的错误信息
+                    error : function(e){
+                        console.log(e.status);
+                        console.log(e.responseText);
+                    }
+                })
+                var nextId = parseInt(id) + 1
+                $.ajax({
+                    type:"GET",
+                    //请求的媒体类型
+                    contentType: "application/json;charset=UTF-8",
+                    headers:{'token':token},
+                    //请求地址
+                    url : "/api/v1/articles/"+nextId,
+                    //请求成功
+                    success : function(result) {
+                        var item = result.data;
+                        $("#nextTitle").text(item.title);
+                        $("#nextHref").attr('href','http://localhost:8000/blog/detail?id='+nextId);
+
+                    },
+                    //请求失败，包含具体的错误信息
+                    error : function(e){
+                        console.log(e.status);
+                        console.log(e.responseText);
+                    }
+                })
 
 
 				
