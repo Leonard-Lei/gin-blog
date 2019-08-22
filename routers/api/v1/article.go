@@ -58,29 +58,54 @@ func GetArticle(c *gin.Context) {
 	appG.Response(http.StatusOK, e.SUCCESS, article)
 }
 
+type GetArticleForm struct {
+	TagID         int    `form:"tag_id" valid:"Required;Min(1)"`
+	Title         string `form:"title" valid:"Required;MaxSize(100)"`
+	Desc          string `form:"desc" valid:"Required;MaxSize(255)"`
+	Content       string `form:"content" valid:"Required;MaxSize(102400)"`
+	MdContent     string `form:"md_content" valid:"Required;MaxSize(102400)"`
+	CreateBy      int    `form:"create_by"`
+	CoverImageUrl string `form:"cover_image_url" valid:"Required;MaxSize(255)"`
+	State         int    `form:"state" valid:"Range(0,1)"`
+}
+
 // @Summary 获取多篇文章
 // @Produce  json
 // @Param tag_id body int false "TagID"
 // @Param state body int false "State"
-// @Param create_by body int false "CreatedBy"
 // @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Router /api/v1/articles [get]
 func GetArticles(c *gin.Context) {
-	appG := app.Gin{C: c}
+	var (
+		appG = app.Gin{C: c}
+		form GetArticleForm
+	)
 	valid := validation.Validation{}
 
-	state := -1
-	if arg := c.PostForm("state"); arg != "" {
-		state = com.StrTo(arg).MustInt()
-		valid.Range(state, 0, 1, "state")
+	body := make([]byte, 128)
+	n, _ := c.Request.Body.Read(body)
+	fmt.Println(string(body[0:n]))
+	//string 转json 再转 form
+	err := json.Unmarshal([]byte(string(body[0:n])), &form)
+	if err != nil {
+		appG.Response(http.StatusBadRequest, e.INVALID_JSON_PARAMS, nil)
+		return
 	}
 
+	state := -1
+	//if arg := c.PostForm("state"); arg != "" {
+	//state = com.StrTo(arg).MustInt()
+	state = form.State
+	valid.Range(state, 0, 1, "state")
+	//}
+
 	tagId := -1
-	if arg := c.PostForm("tag_id"); arg != "" {
-		tagId = com.StrTo(arg).MustInt()
-		valid.Min(tagId, 1, "tag_id")
-	}
+	//if arg := c.PostForm("tag_id"); arg != "" {
+	//tagId = com.StrTo(arg).MustInt()
+	tagId = form.TagID
+	valid.Min(tagId, 1, "tag_id")
+	//}
 
 	if valid.HasErrors() {
 		app.MarkErrors(valid.Errors)
