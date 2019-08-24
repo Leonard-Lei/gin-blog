@@ -13,6 +13,14 @@ func GetAdminIndex(c *gin.Context) {
 	})
 }
 
+//后台首页
+func GetAdminPath(c *gin.Context) {
+	path := c.Param("path")
+	c.HTML(http.StatusOK, "admin/html/"+path, gin.H{
+		"title": "GIN: 首页",
+	})
+}
+
 //后台登陆页面
 func GetLogin(c *gin.Context) {
 	c.HTML(http.StatusOK, "admin/login.html", gin.H{
