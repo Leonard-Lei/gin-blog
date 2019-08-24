@@ -30,7 +30,7 @@ func InitRouter() *gin.Engine {
 	r.GET("/auth", api.GetAuth)
 
 	// 加载static文件夹下所有的文件
-	r.LoadHTMLGlob("views/**/*")
+	r.LoadHTMLGlob("views/**/**/*")
 	//swagger接口
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	//图片上传
@@ -46,6 +46,9 @@ func InitRouter() *gin.Engine {
 		admin.GET("/list", GetAdminBlogList)
 		//写博客页面
 		admin.GET("/writeBlog", GetWriteBlog)
+
+		//后台首页
+		admin.GET("/html/:path", GetAdminPath)
 	}
 
 	blog := r.Group("/blog")
