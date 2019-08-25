@@ -30,11 +30,18 @@
 				var token = localStorage.getItem("flyray_blog_token");
 				$.ajax({
 					type:"GET",
+					dataType:"json",
+					data:{
+						"TagID": -1,
+						"CategoryId":-1,
+						"PageNum": 1,
+						"State": 0
+						},
+					//请求地址
+					url : "/api/v1/articles",
 					//请求的媒体类型
 					contentType: "application/json;charset=UTF-8",
 					headers:{'token':token},
-					//请求地址
-					url : "/api/v1/articles",
 					//请求成功
 					success : function(result) {
 						var lists = result.data.lists;

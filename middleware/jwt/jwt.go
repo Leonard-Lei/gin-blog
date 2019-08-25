@@ -3,6 +3,7 @@ package jwt
 import (
 	"fmt"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -19,10 +20,14 @@ func JWT() gin.HandlerFunc {
 		code = e.SUCCESS
 		//token := c.Query("token")
 		uri := c.Request.RequestURI
+		method := c.Request.Method
 		fmt.Println(uri)
-		if uri == "/api/v1/articles" || uri == "/api/v1/tags" {
-			c.Next()
-			return
+		if method == "GET" {
+			if strings.Contains(uri, "/api/v1/articles") || strings.Contains(uri, "/api/v1/tags") {
+				//if uri == "/api/v1/articles" || uri == "/api/v1/tags" {
+				c.Next()
+				return
+			}
 		}
 
 		token := c.Request.Header.Get("token")
