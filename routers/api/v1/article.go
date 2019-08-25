@@ -15,6 +15,7 @@ import (
 	"gin-blog/pkg/e"
 	"gin-blog/pkg/qrcode"
 	"gin-blog/pkg/setting"
+	"gin-blog/pkg/util"
 	"gin-blog/service/article_service"
 	"gin-blog/service/tag_service"
 )
@@ -57,19 +58,6 @@ func GetArticle(c *gin.Context) {
 	appG.Response(http.StatusOK, e.SUCCESS, article)
 }
 
-type GetArticleForm struct {
-	TagID         int    `form:"tag_id" valid:"Required;Min(-1)"`
-	Title         string `form:"title" valid:"Required;MaxSize(100)"`
-	Desc          string `form:"desc" valid:"Required;MaxSize(255)"`
-	Content       string `form:"content" valid:"Required;MaxSize(102400)"`
-	MdContent     string `form:"md_content" valid:"Required;MaxSize(102400)"`
-	CreateBy      int    `form:"create_by"`
-	CoverImageUrl string `form:"cover_image_url" valid:"Required;MaxSize(255)"`
-	State         int    `form:"state" valid:"Range(0,1)"`
-	PageNum       int    `form:"page_num" valid:"Required;Min(1)"`
-	CategoryId    int    `form:"category_id" valid:"Required;Min(-1)"`
-}
-
 // @Summary 获取多篇文章
 // @Produce  json
 // @Param tag_id body int false "TagID"
@@ -79,39 +67,34 @@ type GetArticleForm struct {
 // @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Router /api/v1/articles [get]
 func GetArticles(c *gin.Context) {
-	var (
-		appG = app.Gin{C: c}
-		form GetArticleForm
-	)
+
+	appG := app.Gin{C: c}
+
 	valid := validation.Validation{}
 
-	body := make([]byte, 128)
-	n, _ := c.Request.Body.Read(body)
-	fmt.Println(string(body[0:n]))
-	//string 转json 再转 form
-	err := json.Unmarshal([]byte(string(body[0:n])), &form)
-	if err != nil {
-		appG.Response(http.StatusBadRequest, e.INVALID_JSON_PARAMS, nil)
-		return
+	state := -1
+	if arg := c.Query("state"); arg != "" {
+		state = com.StrTo(arg).MustInt()
+		valid.Range(state, 0, 1, "state")
 	}
 
-	state := -1
-	//if arg := c.PostForm("state"); arg != "" {
-	//state = com.StrTo(arg).MustInt()
-	state = form.State
-	valid.Range(state, 0, 1, "state")
-	//}
-
 	tagId := -1
-	//if arg := c.PostForm("tag_id"); arg != "" {
-	//tagId = com.StrTo(arg).MustInt()
-	tagId = form.TagID
-	valid.Min(tagId, -1, "tag_id")
-	//}
+	if arg := c.Query("tag_id"); arg != "" {
+		tagId = com.StrTo(arg).MustInt()
+		valid.Min(tagId, -1, "tag_id")
+	}
 
 	categoryId := -1
-	categoryId = form.CategoryId
-	valid.Min(tagId, -1, "category_id")
+	if arg := c.Query("category_id"); arg != "" {
+		categoryId = com.StrTo(arg).MustInt()
+		valid.Min(categoryId, -1, "category_id")
+	}
+
+	pageNum := -1
+	if arg := c.Query("page_num"); arg != "" {
+		pageNum = com.StrTo(arg).MustInt()
+		valid.Min(pageNum, -1, "page_num")
+	}
 
 	if valid.HasErrors() {
 		app.MarkErrors(valid.Errors)
@@ -124,7 +107,7 @@ func GetArticles(c *gin.Context) {
 		State:      state,
 		CategoryId: categoryId,
 		//PageNum:  util.GetPage(c),
-		//PageNum:  util.GetPage(currentpage),
+		PageNum:  util.GetPage(pageNum),
 		PageSize: setting.AppSetting.PageSize,
 	}
 
@@ -134,19 +117,19 @@ func GetArticles(c *gin.Context) {
 		return
 	}
 
-	//page总页数
-	totalpages := (total + articleService.PageSize - 1) / articleService.PageSize
-	//当前页
-	articleService.PageNum = func() int {
-		switch {
-		case form.PageNum < 1:
-			return 1
-		case form.PageNum > totalpages:
-			return totalpages
-		default:
-			return form.PageNum
-		}
-	}()
+	// //page总页数
+	// totalpages := (total + articleService.PageSize - 1) / articleService.PageSize
+	// //当前页
+	// articleService.PageNum = func() int {
+	// 	switch {
+	// 	case pageNum < 1:
+	// 		return 1
+	// 	case pageNum > totalpages:
+	// 		return totalpages
+	// 	default:
+	// 		return pageNum
+	// 	}
+	// }()
 
 	articles, err := articleService.GetAll()
 	if err != nil {
