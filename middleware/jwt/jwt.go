@@ -1,6 +1,7 @@
 package jwt
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -17,6 +18,13 @@ func JWT() gin.HandlerFunc {
 
 		code = e.SUCCESS
 		//token := c.Query("token")
+		uri := c.Request.RequestURI
+		fmt.Println(uri)
+		if uri == "/api/v1/articles" {
+			c.Next()
+			return
+		}
+
 		token := c.Request.Header.Get("token")
 
 		// body := make([]byte, 1024)
