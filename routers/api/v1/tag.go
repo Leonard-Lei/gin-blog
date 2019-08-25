@@ -33,10 +33,13 @@ func GetTags(c *gin.Context) {
 		state = com.StrTo(arg).MustInt()
 	}
 
+	page := 1
+
 	tagService := tag_service.Tag{
-		Name:     name,
-		State:    state,
-		PageNum:  util.GetPage(c),
+		Name:  name,
+		State: state,
+		//PageNum:  util.GetPage(c),
+		PageNum:  util.GetPage(page),
 		PageSize: setting.AppSetting.PageSize,
 	}
 	tags, err := tagService.GetAll()

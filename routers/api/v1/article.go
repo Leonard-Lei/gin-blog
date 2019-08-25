@@ -67,6 +67,7 @@ type GetArticleForm struct {
 	CreateBy      int    `form:"create_by"`
 	CoverImageUrl string `form:"cover_image_url" valid:"Required;MaxSize(255)"`
 	State         int    `form:"state" valid:"Range(0,1)"`
+	PageNum       int    `form:"page_num" valid:"Required;Min(1)"`
 }
 
 // @Summary 获取多篇文章
@@ -113,10 +114,15 @@ func GetArticles(c *gin.Context) {
 		return
 	}
 
+	page := -1
+	page = form.PageNum
+	valid.Min(page, 1, "page_num")
+
 	articleService := article_service.Article{
-		TagID:    tagId,
-		State:    state,
-		PageNum:  util.GetPage(c),
+		TagID: tagId,
+		State: state,
+		//PageNum:  util.GetPage(c),
+		PageNum:  util.GetPage(page),
 		PageSize: setting.AppSetting.PageSize,
 	}
 
