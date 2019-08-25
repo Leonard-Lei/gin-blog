@@ -1,7 +1,6 @@
 package tag_service
 
 import (
-	"encoding/json"
 	"io"
 	"strconv"
 	"time"
@@ -12,9 +11,7 @@ import (
 	"gin-blog/models"
 	"gin-blog/pkg/export"
 	"gin-blog/pkg/file"
-	"gin-blog/pkg/gredis"
-	"gin-blog/pkg/logging"
-	"gin-blog/service/cache_service"
+	//"gin-blog/pkg/gredis"
 )
 
 type Tag struct {
@@ -60,33 +57,33 @@ func (t *Tag) Count() (int, error) {
 }
 
 func (t *Tag) GetAll() ([]models.Tag, error) {
-	var (
-		tags, cacheTags []models.Tag
-	)
+	// var (
+	// 	tags, cacheTags []models.Tag
+	// )
 
-	cache := cache_service.Tag{
-		State: t.State,
+	// cache := cache_service.Tag{
+	// 	State: t.State,
 
-		PageNum:  t.PageNum,
-		PageSize: t.PageSize,
-	}
-	key := cache.GetTagsKey()
-	if gredis.Exists(key) {
-		data, err := gredis.Get(key)
-		if err != nil {
-			logging.Info(err)
-		} else {
-			json.Unmarshal(data, &cacheTags)
-			return cacheTags, nil
-		}
-	}
+	// 	PageNum:  t.PageNum,
+	// 	PageSize: t.PageSize,
+	// }
+	// key := cache.GetTagsKey()
+	// if gredis.Exists(key) {
+	// 	data, err := gredis.Get(key)
+	// 	if err != nil {
+	// 		logging.Info(err)
+	// 	} else {
+	// 		json.Unmarshal(data, &cacheTags)
+	// 		return cacheTags, nil
+	// 	}
+	// }
 
 	tags, err := models.GetTags(t.PageNum, t.PageSize, t.getMaps())
 	if err != nil {
 		return nil, err
 	}
 
-	gredis.Set(key, tags, 3600)
+	//gredis.Set(key, tags, 3600)
 	return tags, nil
 }
 

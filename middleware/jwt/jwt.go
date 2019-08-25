@@ -20,7 +20,7 @@ func JWT() gin.HandlerFunc {
 		//token := c.Query("token")
 		uri := c.Request.RequestURI
 		fmt.Println(uri)
-		if uri == "/api/v1/articles" {
+		if uri == "/api/v1/articles" || uri == "/api/v1/tags" {
 			c.Next()
 			return
 		}

@@ -13,9 +13,15 @@ import (
 	"gin-blog/pkg/export"
 	"gin-blog/pkg/logging"
 	"gin-blog/pkg/setting"
-	"gin-blog/pkg/util"
 	"gin-blog/service/tag_service"
 )
+
+type GetTagForm struct {
+	Name     string `form:"name" valid:"Required;MaxSize(100)"`
+	CreateBy int    `form:"create_by" valid:"Required;Min(1)"`
+	State    int    `form:"state" valid:"Range(0,1)"`
+	PageNum  int
+}
 
 // @Summary 获取多个文章标签
 // @Accept  json
@@ -26,31 +32,63 @@ import (
 // @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Router /api/v1/tags [get]
 func GetTags(c *gin.Context) {
-	appG := app.Gin{C: c}
-	name := c.Query("name")
-	state := -1
-	if arg := c.Query("state"); arg != "" {
-		state = com.StrTo(arg).MustInt()
-	}
+	var (
+		appG = app.Gin{C: c}
+		form GetTagForm
+	)
+	valid := validation.Validation{}
 
-	page := 1
+	body := make([]byte, 128)
+	n, _ := c.Request.Body.Read(body)
+	//string 转json 再转 form
+	err := json.Unmarshal([]byte(string(body[0:n])), &form)
+
+	//name := c.Query("name")
+	name := form.Name
+
+	// state := -1
+	// if arg := c.Query("state"); arg != "" {
+	// 	state = com.StrTo(arg).MustInt()
+	// }
+	state := form.State
+
+	if valid.HasErrors() {
+		app.MarkErrors(valid.Errors)
+		appG.Response(http.StatusBadRequest, e.INVALID_PARAMS, nil)
+		return
+	}
 
 	tagService := tag_service.Tag{
 		Name:  name,
 		State: state,
 		//PageNum:  util.GetPage(c),
-		PageNum:  util.GetPage(page),
+		//PageNum:  util.GetPage(page),
 		PageSize: setting.AppSetting.PageSize,
-	}
-	tags, err := tagService.GetAll()
-	if err != nil {
-		appG.Response(http.StatusInternalServerError, e.ERROR_GET_TAGS_FAIL, nil)
-		return
 	}
 
 	count, err := tagService.Count()
 	if err != nil {
 		appG.Response(http.StatusInternalServerError, e.ERROR_COUNT_TAG_FAIL, nil)
+		return
+	}
+
+	//page总页数
+	totalpages := (count + tagService.PageSize - 1) / tagService.PageSize
+	//当前页
+	tagService.PageNum = func() int {
+		switch {
+		case form.PageNum < 1:
+			return 1
+		case form.PageNum > totalpages:
+			return totalpages
+		default:
+			return form.PageNum
+		}
+	}()
+
+	tags, err := tagService.GetAll()
+	if err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR_GET_TAGS_FAIL, nil)
 		return
 	}
 

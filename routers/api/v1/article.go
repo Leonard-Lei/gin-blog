@@ -73,6 +73,7 @@ type GetArticleForm struct {
 // @Summary 获取多篇文章
 // @Produce  json
 // @Param tag_id body int false "TagID"
+// @Param category_id body int false "State"
 // @Param state body int false "State"
 // @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
