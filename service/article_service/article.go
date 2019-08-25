@@ -17,8 +17,9 @@ type Article struct {
 	CreateTime    string
 	UpdateBy      int
 
-	PageNum  int
-	PageSize int
+	CategoryId int
+	PageNum    int
+	PageSize   int
 }
 
 func (a *Article) Add() error {
@@ -129,6 +130,9 @@ func (a *Article) getMaps() map[string]interface{} {
 	}
 	if a.TagID != -1 {
 		maps["tag_id"] = a.TagID
+	}
+	if a.CategoryId != -1 {
+		maps["category_id"] = a.CategoryId
 	}
 
 	return maps

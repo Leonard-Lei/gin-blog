@@ -15,7 +15,6 @@ import (
 	"gin-blog/pkg/e"
 	"gin-blog/pkg/qrcode"
 	"gin-blog/pkg/setting"
-	"gin-blog/pkg/util"
 	"gin-blog/service/article_service"
 	"gin-blog/service/tag_service"
 )
@@ -59,7 +58,7 @@ func GetArticle(c *gin.Context) {
 }
 
 type GetArticleForm struct {
-	TagID         int    `form:"tag_id" valid:"Required;Min(1)"`
+	TagID         int    `form:"tag_id" valid:"Required;Min(-1)"`
 	Title         string `form:"title" valid:"Required;MaxSize(100)"`
 	Desc          string `form:"desc" valid:"Required;MaxSize(255)"`
 	Content       string `form:"content" valid:"Required;MaxSize(102400)"`
@@ -68,6 +67,7 @@ type GetArticleForm struct {
 	CoverImageUrl string `form:"cover_image_url" valid:"Required;MaxSize(255)"`
 	State         int    `form:"state" valid:"Range(0,1)"`
 	PageNum       int    `form:"page_num" valid:"Required;Min(1)"`
+	CategoryId    int    `form:"category_id" valid:"Required;Min(-1)"`
 }
 
 // @Summary 获取多篇文章
@@ -105,8 +105,12 @@ func GetArticles(c *gin.Context) {
 	//if arg := c.PostForm("tag_id"); arg != "" {
 	//tagId = com.StrTo(arg).MustInt()
 	tagId = form.TagID
-	valid.Min(tagId, 1, "tag_id")
+	valid.Min(tagId, -1, "tag_id")
 	//}
+
+	categoryId := -1
+	categoryId = form.CategoryId
+	valid.Min(tagId, -1, "category_id")
 
 	if valid.HasErrors() {
 		app.MarkErrors(valid.Errors)
@@ -114,15 +118,12 @@ func GetArticles(c *gin.Context) {
 		return
 	}
 
-	page := -1
-	page = form.PageNum
-	valid.Min(page, 1, "page_num")
-
 	articleService := article_service.Article{
-		TagID: tagId,
-		State: state,
+		TagID:      tagId,
+		State:      state,
+		CategoryId: categoryId,
 		//PageNum:  util.GetPage(c),
-		PageNum:  util.GetPage(page),
+		//PageNum:  util.GetPage(currentpage),
 		PageSize: setting.AppSetting.PageSize,
 	}
 
@@ -131,6 +132,20 @@ func GetArticles(c *gin.Context) {
 		appG.Response(http.StatusInternalServerError, e.ERROR_COUNT_ARTICLE_FAIL, nil)
 		return
 	}
+
+	//page总页数
+	totalpages := (total + articleService.PageSize - 1) / articleService.PageSize
+	//当前页
+	articleService.PageNum = func() int {
+		switch {
+		case form.PageNum < 1:
+			return 1
+		case form.PageNum > totalpages:
+			return totalpages
+		default:
+			return form.PageNum
+		}
+	}()
 
 	articles, err := articleService.GetAll()
 	if err != nil {
