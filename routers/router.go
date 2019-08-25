@@ -104,6 +104,28 @@ func InitRouter() *gin.Engine {
 		apiv1.DELETE("/articles/:id", v1.DeleteArticle)
 		//生成文章海报
 		apiv1.POST("/articles/poster/generate", v1.GenerateArticlePoster)
+
+		//获取评论列表
+		apiv1.GET("/comments", v1.GetComments)
+		//获取指定评论
+		apiv1.GET("/comments/:id", v1.GetComment)
+		//新建评论
+		apiv1.POST("/comments", v1.AddComment)
+		//更新指定评论
+		//apiv1.PUT("/comments/:id", v1.EditComment)
+		//删除指定评论
+		//apiv1.DELETE("/comments/:id", v1.DeleteComment)
+
+		//获取分类列表
+		apiv1.GET("/categorys", v1.GetCategorys)
+		//获取指定分类
+		apiv1.GET("/categorys/:id", v1.GetCategory)
+		//新建分类
+		apiv1.POST("/categorys", v1.AddCategory)
+		//更新指定分类
+		//apiv1.PUT("/categorys/:id", v1.EditCategory)
+		//删除指定分类
+		//apiv1.DELETE("/categorys/:id", v1.DeleteCategory)
 	}
 
 	return r
