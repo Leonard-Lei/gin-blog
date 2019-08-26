@@ -42,6 +42,16 @@ func AddTag(name string, state int, create_by int) error {
 	return nil
 }
 
+// GetArticle Get a single article based on ID
+func GetTag(id int) (*Tag, error) {
+	var tag Tag
+	err := db.Where("id = ? AND delete_flag = ?", id, 0).First(&tag).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return nil, err
+	}
+	return &tag, nil
+}
+
 // GetTags gets a list of tags based on paging and constraints
 func GetTags(pageNum int, pageSize int, maps interface{}) ([]Tag, error) {
 	var (

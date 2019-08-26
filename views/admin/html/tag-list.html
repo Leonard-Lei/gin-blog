@@ -35,6 +35,7 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
+          <input type="hidden" id="selectId">
           <input class="layui-input" placeholder="开始日" name="start" id="start">
           <input class="layui-input" placeholder="截止日" name="end" id="end">
           <input type="text" name="username"  placeholder="请输入TAG" autocomplete="off" class="layui-input">
@@ -84,36 +85,31 @@
         });
       });
 
-       /*用户-停用*/
-      function member_stop(obj,id){
-          layer.confirm('确认要停用吗？',function(index){
-
-              if($(obj).attr('title')=='启用'){
-
-                //发异步把用户状态进行更改
-                $(obj).attr('title','停用')
-                $(obj).find('i').html('&#xe62f;');
-
-                $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
-                layer.msg('已停用!',{icon: 5,time:1000});
-
-              }else{
-                $(obj).attr('title','启用')
-                $(obj).find('i').html('&#xe601;');
-
-                $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
-                layer.msg('已启用!',{icon: 5,time:1000});
-              }
-              
-          });
-      }
 
       /*用户-删除*/
       function member_del(obj,id){
           layer.confirm('确认要删除吗？',function(index){
               //发异步删除数据
-              $(obj).parents("tr").remove();
-              layer.msg('已删除!',{icon:1,time:1000});
+
+              var token = localStorage.getItem("flyray_blog_token");
+              $.ajax({
+                  type: "DELETE",
+                  //请求的媒体类型
+                  contentType: "application/json;charset=UTF-8",
+                  headers: {'token': token},
+                  //请求地址
+                  url: "/api/v1/tags/" + id,
+                  //请求成功
+                  success: function (result) {
+                      $(obj).parents("tr").remove();
+                      layer.msg('已删除!',{icon:1,time:1000});
+                  },
+                  //请求失败，包含具体的错误信息
+                  error: function (e) {
+                      console.log(e.status);
+                      console.log(e.responseText);
+                  }
+              })
           });
       }
 
@@ -132,13 +128,13 @@
                   var content = $("#tag_content");
                   for(i=0;i<items.length;i++){
                       content.append("<tr><td>"+items[i].name+"</td>"+
-                              "<td>2017-08-17 18:22</td>"+
-                              "<td>2017-08-17 18:22</td>"+
+                              "<td>"+items[i].create_time+"</td>"+
+                              "<td>"+items[i].update_time+"</td>"+
                       "<td class='td-manage'>"+
-                      "<a title='编辑'  onclick=x_admin_show('编辑TAG','./tag-edit.html') href=javascript:;>"+
+                      "<a title='编辑'  onclick=x_admin_edit('编辑tag',"+items[i].id+",'./tag-edit.html') href=javascript:;>"+
                       "<i class='layui-icon'>&#xe63c;</i>"+
                       "</a>"+
-                      "<a title='删除' onclick=member_del(this,'要删除的id') href=javascript:;>"+
+                          "<a title='删除' onclick=member_del(this,"+items[i].id+") href=javascript:;>"+
                       "<i class='layui-icon'>&#xe640;</i>"+
                       "</a>"+
                       "</td></tr>"

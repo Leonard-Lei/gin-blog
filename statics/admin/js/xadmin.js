@@ -195,7 +195,33 @@ function x_admin_show(title,url,w,h){
         shadeClose: true,
         shade:0.4,
         title: title,
-        content: url
+        content: [url, '#id']
+    });
+}
+
+function x_admin_edit(title,id,url,w,h){
+    if (title == null || title == '') {
+        title=false;
+    };
+    if (url == null || url == '') {
+        url="404.html";
+    };
+    if (w == null || w == '') {
+        w=($(window).width()*0.9);
+    };
+    if (h == null || h == '') {
+        h=($(window).height() - 50);
+    };
+    $("#selectId").val(id);
+    layer.open({
+        type: 2,
+        area: [w+'px', h +'px'],
+        fix: false, //不固定
+        maxmin: true,
+        shadeClose: true,
+        shade:0.4,
+        title: title,
+        content: [url, id]
     });
 }
 

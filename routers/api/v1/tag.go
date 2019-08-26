@@ -17,6 +17,45 @@ import (
 	"gin-blog/service/tag_service"
 )
 
+// @Summary 获取一个标签
+// @Produce  json
+// @Param id path int true "ID"
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Router /api/v1/tags/{id} [get]
+func GetTag(c *gin.Context) {
+	appG := app.Gin{C: c}
+	id := com.StrTo(c.Param("id")).MustInt()
+	valid := validation.Validation{}
+	valid.Min(id, 1, "id")
+
+	if valid.HasErrors() {
+		app.MarkErrors(valid.Errors)
+		appG.Response(http.StatusBadRequest, e.INVALID_PARAMS, nil)
+		return
+	}
+
+	tagService := tag_service.Tag{ID: id}
+	exists, err := tagService.ExistByID()
+	if err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR_CHECK_EXIST_ARTICLE_FAIL, nil)
+		return
+	}
+	if !exists {
+		appG.Response(http.StatusOK, e.ERROR_NOT_EXIST_ARTICLE, nil)
+		return
+	}
+
+	tag, err := tagService.Get()
+	if err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR_GET_ARTICLE_FAIL, nil)
+		return
+	}
+
+	appG.Response(http.StatusOK, e.SUCCESS, tag)
+
+}
+
 // @Summary 获取多个文章标签
 // @Accept  json
 // @Produce  json
@@ -91,8 +130,8 @@ func GetTags(c *gin.Context) {
 
 type AddTagForm struct {
 	Name     string `form:"name" valid:"Required;MaxSize(100)"`
-	CreateBy int    `form:"create_by" valid:"Required;Min(1)"`
-	State    int    `form:"state" valid:"Range(0,1)"`
+	CreateBy int    `form:"create_by"`
+	State    int    `form:"state"`
 }
 
 // @Summary 新增文章标签
@@ -151,9 +190,9 @@ func AddTag(c *gin.Context) {
 
 type EditTagForm struct {
 	ID       int    `form:"id" valid:"Required;Min(1)"`
-	Name     string `form:"name" valid:"Required;MaxSize(100)"`
-	UpdateBy int    `form:"update_by" valid:"Required;Min(1)"`
-	State    int    `form:"state" valid:"Range(0,1)"`
+	Name     string `form:"name"`
+	UpdateBy int    `form:"update_by"`
+	State    int    `form:"state"`
 }
 
 // @Summary 修改文章标签

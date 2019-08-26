@@ -56,6 +56,30 @@ func (t *Tag) Count() (int, error) {
 	return models.GetTagTotal(t.getMaps())
 }
 
+func (a *Tag) Get() (*models.Tag, error) {
+	//var cacheArticle *models.Article
+
+	// cache := cache_service.Article{ID: a.ID}
+	// key := cache.GetArticleKey()
+	// if gredis.Exists(key) {
+	// 	data, err := gredis.Get(key)
+	// 	if err != nil {
+	// 		logging.Info(err)
+	// 	} else {
+	// 		json.Unmarshal(data, &cacheArticle)
+	// 		return cacheArticle, nil
+	// 	}
+	// }
+
+	tag, err := models.GetTag(a.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	//gredis.Set(key, article, 3600)
+	return tag, nil
+}
+
 func (t *Tag) GetAll() ([]models.Tag, error) {
 	// var (
 	// 	tags, cacheTags []models.Tag
