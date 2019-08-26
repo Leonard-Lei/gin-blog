@@ -39,11 +39,11 @@ func GetCommentTotal(maps interface{}) (int, error) {
 // GetComments gets a list of comments based on paging constraints
 func GetComments(pageNum int, pageSize int, maps interface{}) ([]*Comment, error) {
 	var comment []*Comment
-	err := db.Preload("Article").Where(maps).Offset(pageNum).Limit(pageSize).Find(&comment).Error
+	//err := db.Preload("Article").Where(maps).Offset(pageNum).Limit(pageSize).Find(&comment).Error
+	err := db.Where(maps).Offset(pageNum).Limit(pageSize).Find(&comment).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return nil, err
 	}
-
 	return comment, nil
 }
 

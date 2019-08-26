@@ -114,9 +114,9 @@ func InitRouter() *gin.Engine {
 		//新建评论
 		apiv1.POST("/comments", v1.AddComment)
 		//更新指定评论
-		//apiv1.PUT("/comments/:id", v1.EditComment)
+		apiv1.PUT("/comments/:id", v1.EditComment)
 		//删除指定评论
-		//apiv1.DELETE("/comments/:id", v1.DeleteComment)
+		apiv1.DELETE("/comments/:id", v1.DeleteComment)
 
 		//获取分类列表
 		apiv1.GET("/categorys", v1.GetCategorys)
@@ -125,9 +125,9 @@ func InitRouter() *gin.Engine {
 		//新建分类
 		apiv1.POST("/categorys", v1.AddCategory)
 		//更新指定分类
-		//apiv1.PUT("/categorys/:id", v1.EditCategory)
+		apiv1.PUT("/categorys/:id", v1.EditCategory)
 		//删除指定分类
-		//apiv1.DELETE("/categorys/:id", v1.DeleteCategory)
+		apiv1.DELETE("/categorys/:id", v1.DeleteCategory)
 	}
 
 	return r

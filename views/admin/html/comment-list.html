@@ -4,7 +4,7 @@
   
   <head>
     <meta charset="UTF-8">
-    <title>欢迎页面-L-admin1.0</title>
+    <title>博羸兄弟</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
@@ -25,9 +25,9 @@
     <div class="x-nav">
       <span class="layui-breadcrumb">
         <a href="">首页</a>
-        <a href="">演示</a>
+        <a href="">文章管理</a>
         <a>
-          <cite>导航元素</cite></a>
+          <cite>评论管理</cite></a>
       </span>
       <a class="layui-btn layui-btn-primary layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
         <i class="layui-icon" style="line-height:38px">ဂ</i></a>
@@ -43,16 +43,13 @@
       </div>
       <xblock>
         <button class="layui-btn" onclick="delAll()"><i class="layui-icon"></i>批量审核</button>
-        <button class="layui-btn layui-btn-warm" onclick="x_admin_show('回复','./order-add.html')"><i class="layui-icon"></i>回复</button>
+        <button class="layui-btn layui-btn-warm" onclick="x_admin_show('回复','./comment-add.html')"><i class="layui-icon"></i>回复</button>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
         <span class="x-right" style="line-height:40px">共有数据：88 条</span>
       </xblock>
       <table class="layui-table">
         <thead>
           <tr>
-            <th>
-              <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
-            </th>
             <th>评论内容</th>
             <th>评论时间</th>
             <th>评论人</th>
@@ -62,26 +59,8 @@
             <th >操作</th>
             </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
-            </td>
-            <td>hello</td>
-            <td>2017-08-17 18:22</td>
-            <td>1</td>
-            <td>1287279970@qq.com</td>
-            <td>审核通过</td>
-            <td>happy</td>
-            <td class="td-manage">
-              <a title="查看"  onclick="x_admin_show('编辑','order-view.html')" href="javascript:;">
-                <i class="layui-icon">&#xe63c;</i>
-              </a>
-              <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
-                <i class="layui-icon">&#xe640;</i>
-              </a>
-            </td>
-          </tr>
+        <tbody id="comment_content">
+        
         </tbody>
       </table>
       <div class="page">
@@ -139,8 +118,21 @@
       function member_del(obj,id){
           layer.confirm('确认要删除吗？',function(index){
               //发异步删除数据
-              $(obj).parents("tr").remove();
-              layer.msg('已删除!',{icon:1,time:1000});
+              var token = localStorage.getItem("flyray_blog_token");
+              $.ajax({
+                type:"DELETE",
+                contentType:"application/json;charset=UTF-8",
+                headers:{"token":token},
+                url:"/api/v1/comments/" + id,
+                success: function(result){
+                      $(obj).parents("tr").remove();
+                      layer.msg('已删除!',{icon:1,time:1000});
+                },
+                error: function(e) {
+                  console.log(e.status);
+                  console.log(e.responseText);
+                }
+              })
           });
       }
 
@@ -156,6 +148,46 @@
             $(".layui-form-checked").not('.header').parents('tr').remove();
         });
       }
+      
+      $(document).ready(function() {
+          var token = localStorage.getItem("flyray_blog_token");
+          $.ajax({
+              type: "GET",
+              //请求的媒体类型
+              contentType: "application/json;charset=UTF-8",
+              headers: {'token': token},
+              //请求地址
+              url: "/api/v1/comments",
+              //请求成功
+              success: function (result) {
+                  var items = result.data.lists;
+                  var content = $("#comment_content");
+                  for(i=0;i<items.length;i++){
+                      content.append("<tr><td>"+items[i].content+"</td>"+
+                              "<td>"+items[i].create_time+"</td>"+
+                              "<td>"+items[i].create_by+"</td>"+
+                              "<td>"+items[i].email+"</td>"+
+                              "<td>"+items[i].state+"</td>"+
+                              "<td>"+items[i].reply_content+"</td>"+
+                              "<td class='td-manage'>"+
+                      "<a title='编辑'  onclick=x_admin_edit('编辑tag',"+items[i].id+",'./tag-edit.html') href=javascript:;>"+
+                      "<i class='layui-icon'>&#xe63c;</i>"+
+                      "</a>"+
+                          "<a title='删除' onclick=member_del(this,"+items[i].id+") href=javascript:;>"+
+                      "<i class='layui-icon'>&#xe640;</i>"+
+                      "</a>"+
+                      "</td></tr>"
+                      )
+                  }
+              },
+              //请求失败，包含具体的错误信息
+              error: function (e) {
+                  console.log(e.status);
+                  console.log(e.responseText);
+              }
+          })
+      })
+
     </script>
   </body>
 

@@ -171,3 +171,107 @@ func AddCategory(c *gin.Context) {
 
 	appG.Response(http.StatusOK, e.SUCCESS, nil)
 }
+
+type EditCategoryForm struct {
+	ID       int    `form:"id" valid:"Required;Min(1)"`
+	Name     string `form:"name"`
+	UpdateBy int    `form:"update_by"`
+	State    int    `form:"state"`
+}
+
+// @Summary 修改文章分类
+// @Accept  json
+// @Produce  json
+// @Param id path int true "ID"
+// @Param name body string true "Name"
+// @Param state body int false "State"
+// @Param update_by body string true "UpdateBy"
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Router /api/v1/categorys/{id} [put]
+func EditCategory(c *gin.Context) {
+	var (
+		appG = app.Gin{C: c}
+		form = EditCategoryForm{ID: com.StrTo(c.Param("id")).MustInt()}
+	)
+
+	body := make([]byte, 1024)
+	n, _ := c.Request.Body.Read(body)
+	//fmt.Println(string(body[0:n]))
+	//string 转json 再转 form
+	err := json.Unmarshal([]byte(string(body[0:n])), &form)
+	if err != nil {
+		appG.Response(http.StatusBadRequest, e.INVALID_JSON_PARAMS, nil)
+		return
+	}
+
+	httpCode, errCode := app.BindAndValid(c, form)
+	if errCode != e.SUCCESS {
+		appG.Response(httpCode, errCode, nil)
+		return
+	}
+
+	categoryService := category_service.Category{
+		ID:       form.ID,
+		Name:     form.Name,
+		UpdateBy: form.UpdateBy,
+		State:    form.State,
+	}
+
+	exists, err := categoryService.ExistByID()
+	if err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR_CHECK_EXIST_CATEGORY_FAIL, nil)
+		return
+	}
+
+	if !exists {
+		appG.Response(http.StatusOK, e.ERROR_NOT_EXIST_CATEGORY, nil)
+		return
+	}
+
+	err = categoryService.Edit()
+	if err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR_EDIT_CATEGORY_FAIL, nil)
+		return
+	}
+
+	appG.Response(http.StatusOK, e.SUCCESS, nil)
+}
+
+// @Summary 删除文章分类
+// @Accept  json
+// @Produce  json
+// @Param id path int true "ID"
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Router /api/v1/categorys/{id} [delete]
+func DeleteCategory(c *gin.Context) {
+	appG := app.Gin{C: c}
+	valid := validation.Validation{}
+	id := com.StrTo(c.Param("id")).MustInt()
+	valid.Min(id, 1, "id").Message("ID必须大于0")
+
+	if valid.HasErrors() {
+		app.MarkErrors(valid.Errors)
+		appG.Response(http.StatusBadRequest, e.INVALID_PARAMS, nil)
+	}
+
+	categoryService := category_service.Category{ID: id}
+	exists, err := categoryService.ExistByID()
+	if err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR_CHECK_EXIST_CATEGORY_FAIL, nil)
+		return
+	}
+
+	if !exists {
+		appG.Response(http.StatusOK, e.ERROR_NOT_EXIST_CATEGORY, nil)
+		return
+	}
+
+	if err := categoryService.Delete(); err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR_DELETE_CATEGORY_FAIL, nil)
+		return
+	}
+
+	appG.Response(http.StatusOK, e.SUCCESS, nil)
+}

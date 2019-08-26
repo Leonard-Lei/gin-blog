@@ -181,3 +181,107 @@ func AddComment(c *gin.Context) {
 
 	appG.Response(http.StatusOK, e.SUCCESS, nil)
 }
+
+type EditCommentForm struct {
+	ID        int `form:"id" valid:"Required;Min(1)"`
+	ArticleID int `form:"article_id"`
+	UpdateBy  int `form:"update_by"`
+	State     int `form:"state"`
+}
+
+// @Summary 修改文章评论
+// @Accept  json
+// @Produce  json
+// @Param id path int true "ID"
+// @Param article_id body string true "ArticleId"
+// @Param state body int false "State"
+// @Param update_by body string true "UpdateBy"
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Router /api/v1/tags/{id} [put]
+func EditComment(c *gin.Context) {
+	var (
+		appG = app.Gin{C: c}
+		form = EditCommentForm{ID: com.StrTo(c.Param("id")).MustInt()}
+	)
+
+	body := make([]byte, 1024)
+	n, _ := c.Request.Body.Read(body)
+	//fmt.Println(string(body[0:n]))
+	//string 转json 再转 form
+	err := json.Unmarshal([]byte(string(body[0:n])), &form)
+	if err != nil {
+		appG.Response(http.StatusBadRequest, e.INVALID_JSON_PARAMS, nil)
+		return
+	}
+
+	httpCode, errCode := app.BindAndValid(c, form)
+	if errCode != e.SUCCESS {
+		appG.Response(httpCode, errCode, nil)
+		return
+	}
+
+	commentService := comment_service.Comment{
+		ID:        form.ID,
+		ArticleID: form.ArticleID,
+		UpdateBy:  form.UpdateBy,
+		State:     form.State,
+	}
+
+	exists, err := commentService.ExistByID()
+	if err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR_CHECK_EXIST_COMMENT_FAIL, nil)
+		return
+	}
+
+	if !exists {
+		appG.Response(http.StatusOK, e.ERROR_NOT_EXIST_TAG, nil)
+		return
+	}
+
+	err = commentService.Edit()
+	if err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR_EDIT_COMMENT_FAIL, nil)
+		return
+	}
+
+	appG.Response(http.StatusOK, e.SUCCESS, nil)
+}
+
+// @Summary 删除文章标签
+// @Accept  json
+// @Produce  json
+// @Param id path int true "ID"
+// @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
+// @Router /api/v1/comments/{id} [delete]
+func DeleteComment(c *gin.Context) {
+	appG := app.Gin{C: c}
+	valid := validation.Validation{}
+	id := com.StrTo(c.Param("id")).MustInt()
+	valid.Min(id, 1, "id").Message("ID必须大于0")
+
+	if valid.HasErrors() {
+		app.MarkErrors(valid.Errors)
+		appG.Response(http.StatusBadRequest, e.INVALID_PARAMS, nil)
+	}
+
+	commentService := comment_service.Comment{ID: id}
+	exists, err := commentService.ExistByID()
+	if err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR_CHECK_EXIST_COMMENT_FAIL, nil)
+		return
+	}
+
+	if !exists {
+		appG.Response(http.StatusOK, e.ERROR_NOT_EXIST_COMMENT, nil)
+		return
+	}
+
+	if err := commentService.Delete(); err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR_DELETE_COMMENT_FAIL, nil)
+		return
+	}
+
+	appG.Response(http.StatusOK, e.SUCCESS, nil)
+}
