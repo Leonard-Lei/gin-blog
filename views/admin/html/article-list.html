@@ -76,42 +76,19 @@
       <table class="layui-table">
         <thead>
           <tr>
-            <th>
-              <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
-            </th>
             <th>标题</th>
-            <th>预览图</th>
-            <th>浏览量</th>
-            <th>状态</th>
-            <th>Tag</th>
+            <th>描述</th>
+            <th>内容</th>
             <th>分类</th>
+            <th>标签</th>
+            <th>创建人</th>
             <th>创建时间</th>
             <th>更新时间</th>
             <th >操作</th>
             </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
-            </td>
-            <td>hello</td>
-            <td>老王:18925139194</td>
-            <td>1</td>
-            <td>发布</td>
-            <td>happy</td>
-            <td>生活</td>
-            <td>2017-08-17 18:22</td>
-            <td>2017-08-17 18:22</td>
-            <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('编辑','article-edit.html')" href="javascript:;">
-                <i class="layui-icon">&#xe63c;</i>
-              </a>
-              <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
-                <i class="layui-icon">&#xe640;</i>
-              </a>
-            </td>
-          </tr>
+        <tbody id="article_content">
+
         </tbody>
       </table>
       <div class="page">
@@ -186,6 +163,47 @@
             $(".layui-form-checked").not('.header').parents('tr').remove();
         });
       }
+
+      $(document).ready(function() {
+          var token = localStorage.getItem("flyray_blog_token");
+          $.ajax({
+              type: "GET",
+              //请求的媒体类型
+              contentType: "application/json;charset=UTF-8",
+              headers: {'token': token},
+              //请求地址
+              url: "/api/v1/articles",
+              //请求成功
+              success: function (result) {
+                  var items = result.data.lists;
+                  var content = $("#article_content");
+                  for(i=0;i<items.length;i++){
+                      content.append("<tr><td>"+items[i].title+"</td>"+
+                              "<td>"+items[i].desc+"</td>"+
+                              "<td>"+items[i].content+"</td>"+
+                              "<td>"+items[i].tag.name+"</td>"+
+                              "<td>"+items[i].tag.name+"</td>"+
+                              "<td>"+items[i].create_by+"</td>"+
+                              "<td>"+items[i].create_time+"</td>"+
+                              "<td>"+items[i].update_time+"</td>"+
+                              "<td class='td-manage'>"+
+                              "<a title='编辑'  onclick=x_admin_show('编辑article','./article-edit.html') href=javascript:;>"+
+                              "<i class='layui-icon'>&#xe63c;</i>"+
+                              "</a>"+
+                              "<a title='删除' onclick=member_del(this,'要删除的id') href=javascript:;>"+
+                              "<i class='layui-icon'>&#xe640;</i>"+
+                              "</a>"+
+                              "</td></tr>"
+                      )
+                  }
+              },
+              //请求失败，包含具体的错误信息
+              error: function (e) {
+                  console.log(e.status);
+                  console.log(e.responseText);
+              }
+          })
+      })
     </script>
   </body>
 
