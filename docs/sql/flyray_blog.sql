@@ -71,16 +71,18 @@ DROP TABLE IF EXISTS `blog_category`;
 
 CREATE TABLE `blog_category` (
   `id` bigint(20) NOT NULL DEFAULT '0' COMMENT '文章分类ID',
-  `name` varchar(100) DEFAULT '' COMMENT '分类名称',
-  `create_by` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建者',
-  `delete_flag` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否删除 0-未删除 1-已删除',
-  `state` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否审核通过 0-未审核 1-审核通过',
-  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `name` varchar(100) DEFAULT NULL COMMENT '分类名称',
+  `create_by` bigint(20) DEFAULT '0' COMMENT '创建者',
+  `delete_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除 0-未删除 1-已删除',
+  `state` tinyint(4) DEFAULT '0' COMMENT '是否审核通过 0-未审核 1-审核通过',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `blog_category` */
+
+insert  into `blog_category`(`id`,`name`,`create_by`,`delete_flag`,`state`,`create_time`,`update_time`) values (0,'工作',111,0,1,'2019-08-26 16:31:29','2019-08-26 16:31:29');
 
 /*Table structure for table `blog_comment` */
 
@@ -90,20 +92,18 @@ CREATE TABLE `blog_comment` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '评论ID',
   `article_id` bigint(20) DEFAULT NULL COMMENT '关联的文章ID',
   `create_by` bigint(20) DEFAULT NULL COMMENT '评论者',
-  `email` varchar(100) DEFAULT NULL COMMENT '评论人的邮箱',
-  `content` text COMMENT '评论内容',
-  `reply_content` text COMMENT '回复内容',
+  `email` varchar(100) CHARACTER SET latin1 DEFAULT NULL COMMENT '评论人的邮箱',
+  `content` text CHARACTER SET latin1 COMMENT '评论内容',
+  `reply_content` text CHARACTER SET latin1 COMMENT '回复内容',
   `delete_flag` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否删除 0-未删除 1-已删除',
   `state` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否审核通过 0-未审核 1-审核通过',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '评论时间',
   `reply_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '回复时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `blog_comment` */
-
-insert  into `blog_comment`(`id`,`article_id`,`create_by`,`email`,`content`,`reply_content`,`delete_flag`,`state`,`create_time`,`reply_time`,`update_time`) values (1,1,1,NULL,'hello comment',NULL,0,1,'2019-08-25 23:21:21','2019-08-25 23:11:18','2019-08-25 23:11:19'),(2,2,2,NULL,'hello comment',NULL,0,1,'2019-08-25 23:21:22','2019-08-25 23:14:04','2019-08-25 23:14:05'),(3,3,3,NULL,'hello comment',NULL,0,1,'2019-08-25 23:21:23','2019-08-25 23:19:56','2019-08-25 23:19:56');
 
 /*Table structure for table `blog_tag` */
 
