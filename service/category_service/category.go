@@ -17,13 +17,13 @@ type Category struct {
 }
 
 func (a *Category) Add() error {
-	comment := map[string]interface{}{
+	category := map[string]interface{}{
 		"name":      a.Name,
 		"create_by": a.CreateBy,
 		"state":     a.State,
 	}
 
-	if err := models.AddCategory(comment); err != nil {
+	if err := models.AddCategory(category); err != nil {
 		return err
 	}
 
