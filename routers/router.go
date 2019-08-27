@@ -27,7 +27,7 @@ func InitRouter() *gin.Engine {
 	//r.StaticFS("/qrcode", http.Dir(qrcode.GetQrCodeFullPath()))
 
 	//新增获取token的方法
-	r.GET("/auth", api.GetAuth)
+	r.GET("/auth", api.GetLogin)
 
 	// 加载static文件夹下所有的文件
 	r.LoadHTMLGlob("views/**/**/*")
@@ -79,6 +79,17 @@ func InitRouter() *gin.Engine {
 	apiv1 := r.Group("/api/v1")
 	apiv1.Use(jwt.JWT())
 	{
+		//获取用户列表
+		apiv1.GET("/auths", api.GetAuths)
+		//获取指定用户
+		apiv1.GET("/auths/:id", api.GetAuth)
+		//新建用户
+		apiv1.POST("/auths", api.AddAuth)
+		//更新指定用户
+		apiv1.PUT("/auths/:id", api.EditAuth)
+		//删除指定用户
+		apiv1.DELETE("/auths/:id", api.DeleteAuth)
+
 		//获取标签列表
 		apiv1.GET("/tags", v1.GetTags)
 		//获取标签列表
