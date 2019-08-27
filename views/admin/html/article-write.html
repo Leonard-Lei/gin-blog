@@ -4,7 +4,7 @@
   
   <head>
     <meta charset="UTF-8">
-    <title>欢迎页面-L-admin1.0</title>
+    <title>博羸兄弟</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
@@ -32,30 +32,33 @@
           <div class="layui-form-item">
             <label class="layui-form-label">标题</label>
             <div class="layui-input-block">
-              <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="*请输入文章标题(必填)" class="layui-input">
+              <input id="title" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="*请输入文章标题(必填)" class="layui-input">
             </div>
           </div>
 
           <div class="layui-form-item">
-            <label class="layui-form-label">标签</label>
-            <div class="layui-input-block">
-              <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入文章标签" class="layui-input">
-            </div>
-          </div>
-         
-
-          <div class="layui-form-item">
-              <label class="layui-form-label">文章分类</label>
+              <label class="layui-form-label">摘要</label>
               <div class="layui-input-block">
-                  <select name="interest" lay-filter="aihao">
-                      <option value=""></option>
-                      <option value="0">生活</option>
-                      <option value="1" selected="">学习</option>
-                      <option value="2">工作</option>
-                  </select><div class="layui-unselect layui-form-select"><div class="layui-select-title"><input type="text" placeholder="请选择" value="阅读" readonly class="layui-input layui-unselect"><i class="layui-edge"></i></div><dl class="layui-anim layui-anim-upbit"><dd lay-value="" class="layui-select-tips">请选择</dd><dd lay-value="0" class="">写作</dd><dd lay-value="1" class="layui-this">阅读</dd><dd lay-value="2" class="">游戏</dd><dd lay-value="3" class="">音乐</dd><dd lay-value="4" class="">旅行</dd></dl></div>
+                  <input id="desc" type="text" name="desc" lay-verify="desc" autocomplete="off" placeholder="*请输入文章摘要(必填)" class="layui-input">
               </div>
           </div>
 
+          <div class="layui-form-item">
+              <label class="layui-form-label">分类</label>
+              <div class="layui-input-block">
+                  <select id="categorys" name="interest" lay-filter="aihao">
+                  </select>
+              </div>
+          </div>
+
+          <div class="layui-form-item">
+              <label class="layui-form-label">标签</label>
+              <div class="layui-input-block">
+                  <select id="tags" name="interest" lay-filter="aihao">
+                  </select>
+              </div>
+          </div>
+         
             <div class="layui-upload">
             <button type="button" class="layui-btn" id="test1">上传图片</button>
             <div class="layui-upload-list">
@@ -64,8 +67,6 @@
             </div>
             </div>
           </form>
-          <button  class="layui-btn layui-btn-warm" id="get-md-btn">Get Markdown</button>
-          <button  class="layui-btn layui-btn-warm" id="get-html-btn">Get HTML</button>
           <button  class="layui-btn layui-btn-warm" id="save-html-db">发表文章</button>
           <div id="test-editor">
 				<textarea style="display:none;">### 关于 Editor.md
@@ -127,6 +128,8 @@
     });
   });
 
+  var token = sessionStorage.getItem("flyray_blog_token");
+
   $(function() {
       logout = function (){
           sessionStorage.removeItem("flyray_blog_token");
@@ -164,13 +167,18 @@
 
       //发表文章
       $("#save-html-db").bind('click', function() {
+          var title = $("#title").val();
+          var desc = $("#desc").val();
+          var tagId = $("#tags").val();
+          var categoryId = $("#categorys").val();
           var mdContent = editor.getMarkdown();
           var content = editor.getHTML();
-          var token = sessionStorage.getItem("flyray_blog_token");
+
           var json = {
-              "TagID": 1,
-              "Title": "33",
-              "Desc": "ee",
+              "TagID": parseInt(tagId),
+              "CategoryID": parseInt(categoryId),
+              "Title": title,
+              "Desc": desc,
               "Content": content,
               "CreatedBy": "eee",
               "CoverImageUrl": "22",
@@ -190,6 +198,7 @@
               //请求成功
               success : function(result) {
                   console.log(result);
+                  alert("发表成功！！");
               },
               //请求失败，包含具体的错误信息
               error : function(e){
@@ -197,10 +206,57 @@
                   console.log(e.responseText);
               }
           })
-          alert("发表成功！！");
       });
-
   });
+
+  $.ajax({
+      type:"GET",
+      //请求的媒体类型
+      contentType: "application/json;charset=UTF-8",
+      headers:{'token':token},
+      //请求地址
+      url : "/api/v1/tags",
+      //数据，json字符串
+      //请求成功
+      success : function(result) {
+          console.log(result);
+          var items = result.data.lists;
+          var tags = $("#tags");
+          for(i=0;i<items.length;i++){
+              tags.append("" +
+                      "<option value="+items[i].id+">"+items[i].name+"</option>")
+          }
+      },
+      //请求失败，包含具体的错误信息
+      error : function(e){
+          console.log(e.status);
+          console.log(e.responseText);
+      }
+  })
+
+  $.ajax({
+      type:"GET",
+      //请求的媒体类型
+      contentType: "application/json;charset=UTF-8",
+      headers:{'token':token},
+      //请求地址
+      url : "/api/v1/categorys",
+      //请求成功
+      success : function(result) {
+          console.log(result);
+          var items = result.data.lists;
+          var categorys = $("#categorys");
+          for(i=0;i<items.length;i++){
+              categorys.append("" +
+                      "<option value="+items[i].id+">"+items[i].name+"</option>")
+          }
+      },
+      //请求失败，包含具体的错误信息
+      error : function(e){
+          console.log(e.status);
+          console.log(e.responseText);
+      }
+  })
   </script>
 
 
