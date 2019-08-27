@@ -172,7 +172,7 @@ func AddArticle(c *gin.Context) {
 		form AddArticleForm
 	)
 
-	body := make([]byte, 1024)
+	body := make([]byte, 10240)
 	n, _ := c.Request.Body.Read(body)
 	fmt.Println(string(body[0:n]))
 	//string 转json 再转 form

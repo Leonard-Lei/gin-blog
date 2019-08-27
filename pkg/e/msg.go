@@ -35,6 +35,16 @@ var MsgFlags = map[int]string{
 	ERROR_GET_COMMENT_FAIL:         "获取单个评论失败",
 	ERROR_GEN_COMMENT_POSTER_FAIL:  "生成评论海报失败",
 
+	ERROR_NOT_EXIST_MESSAGE:        "该留言不存在",
+	ERROR_ADD_MESSAGE_FAIL:         "新增留言失败",
+	ERROR_DELETE_MESSAGE_FAIL:      "删除留言失败",
+	ERROR_CHECK_EXIST_MESSAGE_FAIL: "检查留言是否存在失败",
+	ERROR_EDIT_MESSAGE_FAIL:        "修改留言失败",
+	ERROR_COUNT_MESSAGE_FAIL:       "统计留言失败",
+	ERROR_GET_MESSAGES_FAIL:        "获取多个留言失败",
+	ERROR_GET_MESSAGE_FAIL:         "获取单个留言失败",
+	ERROR_GEN_MESSAGE_POSTER_FAIL:  "生成留言海报失败",
+
 	ERROR_NOT_EXIST_CATEGORY:        "该分类不存在",
 	ERROR_ADD_CATEGORY_FAIL:         "新增分类失败",
 	ERROR_DELETE_CATEGORY_FAIL:      "删除分类失败",

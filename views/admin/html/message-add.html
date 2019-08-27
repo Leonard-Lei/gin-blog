@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{{define "admin/html/comment-add.html"}}
+{{define "admin/html/message-add.html"}}
 <html>
   
   <head>
@@ -79,7 +79,7 @@
                   headers: {'token': token},
                   data : JSON.stringify(json),
                   //请求地址
-                  url: "/api/v1/comments",
+                  url: "/api/v1/messages",
                   //请求成功
                   success: function (result) {
                       layer.alert("增加成功", {icon: 6},function () {

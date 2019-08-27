@@ -118,6 +118,17 @@ func InitRouter() *gin.Engine {
 		//删除指定评论
 		apiv1.DELETE("/comments/:id", v1.DeleteComment)
 
+		//获取留言列表
+		apiv1.GET("/messages", v1.GetMessages)
+		//获取指定留言
+		apiv1.GET("/messages/:id", v1.GetMessages)
+		//新建留言
+		apiv1.POST("/messages", v1.AddMessage)
+		//更新指定留言
+		apiv1.PUT("/messages/:id", v1.EditMessage)
+		//删除指定留言
+		apiv1.DELETE("/messages/:id", v1.DeleteMessage)
+
 		//获取分类列表
 		apiv1.GET("/categorys", v1.GetCategorys)
 		//获取指定分类
