@@ -3,7 +3,7 @@ package jwt
 import (
 	"fmt"
 	"net/http"
-	"strings"
+	"regexp"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -21,10 +21,14 @@ func JWT() gin.HandlerFunc {
 		//token := c.Query("token")
 		uri := c.Request.RequestURI
 		method := c.Request.Method
+
 		fmt.Println(uri)
 		if method == "GET" {
-			if strings.Contains(uri, "/api/v1/articles") || strings.Contains(uri, "/api/v1/tags") {
-				//if uri == "/api/v1/articles" || uri == "/api/v1/tags" {
+			//2. 创建一个正则表达式对象
+			regx, _ := regexp.Compile("/api/v1")
+			//3. 利用正则表达式对象, 匹配指定的字符串
+			res := regx.FindAllString(uri, -1)
+			if res != nil {
 				c.Next()
 				return
 			}
