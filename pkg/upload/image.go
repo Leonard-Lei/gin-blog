@@ -13,10 +13,12 @@ import (
 	"strings"
 )
 
+//获取图片完整访问URL
 func GetImageFullUrl(name string) string {
 	return setting.AppSetting.PrefixUrl + "/" + GetImagePath() + name
 }
 
+//获取图片名称
 func GetImageName(name string) string {
 	ext := path.Ext(name)
 	fileName := strings.TrimSuffix(name, ext)
@@ -25,14 +27,17 @@ func GetImageName(name string) string {
 	return fileName + ext
 }
 
+//获取图片路径
 func GetImagePath() string {
 	return setting.AppSetting.ImageSavePath
 }
 
+//获取图片完整路径
 func GetImageFullPath() string {
 	return setting.AppSetting.RuntimeRootPath + GetImagePath()
 }
 
+//检查图片后缀
 func CheckImageExt(fileName string) bool {
 	ext := file.GetExt(fileName)
 	for _, allowExt := range setting.AppSetting.ImageAllowExts {
@@ -44,6 +49,7 @@ func CheckImageExt(fileName string) bool {
 	return false
 }
 
+//检查图片大小
 func CheckImageSize(f multipart.File) bool {
 	size, err := file.GetSize(f)
 	if err != nil {

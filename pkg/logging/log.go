@@ -2,7 +2,6 @@ package logging
 
 import (
 	"fmt"
-	"gin-blog/pkg/file"
 	"log"
 	"os"
 	"path/filepath"
@@ -35,7 +34,7 @@ func Setup() {
 	var err error
 	filePath := getLogFilePath()
 	fileName := getLogFileName()
-	F, err = file.MustOpen(fileName, filePath)
+	F, err = openLogFile(fileName, filePath)
 	if err != nil {
 		log.Fatalf("logging.Setup err: %v", err)
 	}
