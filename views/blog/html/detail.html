@@ -24,8 +24,8 @@
 						<header class="post_header">
 							<h1 class="post_title" id="title">title</h1>
 						</header>
-						<div class="post-body js-gallery" id="content">
-							
+						<div class="post-body js-gallery">
+							<p id="content"></p>
 						</div>
 						<div class="meta split split--responsive cf">
 							<div class="split__title">
@@ -186,7 +186,9 @@
 					success : function(result) {
 						var item = result.data;
 						$("#title").text(item.title);
-						$("#content").html(item.content);
+                        var content = item.content.replace("<pre>","")
+                        content = content.replace("</pre>","")
+						$("#content").html(content);
 						$("#title").text(item.title);
 						$("#time").text(item.create_time);
                         $("#tag").text(item.tag.name);
