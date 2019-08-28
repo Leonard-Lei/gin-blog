@@ -14,6 +14,8 @@ func GetPage(page int) int {
 
 	if page > 0 {
 		result = (page - 1) * setting.AppSetting.PageSize
+	} else {
+		result = -1
 	}
 
 	return result

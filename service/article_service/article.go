@@ -134,6 +134,5 @@ func (a *Article) getMaps() map[string]interface{} {
 	if a.CategoryId != -1 {
 		maps["category_id"] = a.CategoryId
 	}
-
 	return maps
 }
