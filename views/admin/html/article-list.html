@@ -76,7 +76,7 @@
           <tr>
             <th style="width:60px;overflow: hidden;text-overflow: ellipsis;">标题</th>
             <th style="width:80px;overflow: hidden;text-overflow: ellipsis;">描述</th>
-            <th style="width:20px;overflow: hidden;text-overflow: ellipsis;">内容</th>
+            <th style="width:20px;overflow: hidden;text-overflow: ellipsis;">封面</th>
             <th style="width:50px;overflow: hidden;text-overflow: ellipsis;">分类</th>
             <th style="width:50px;overflow: hidden;text-overflow: ellipsis;">标签</th>
             <th>创建人</th>
@@ -172,13 +172,15 @@
               //请求地址
               url: "/api/v1/articles",
               //请求成功
+              
               success: function (result) {
                   var items = result.data.lists;
                   var content = $("#article_content");
                   for(i=0;i<items.length;i++){
                       content.append("<tr><td>"+items[i].title+"</td>"+
                               "<td>"+items[i].desc+"</td>"+
-                              "<td>"+items[i].content+"</td>"+
+                              // "<td>"+items[i].content+"</td>"+
+                              "<td><img src='../../upload/images/f51d7f52f40969d685f13074d6ac3196.jpg' align='bottom'></td>"+
                               "<td>"+items[i].tag.name+"</td>"+
                               "<td>"+items[i].tag.name+"</td>"+
                               "<td>"+items[i].create_by+"</td>"+
