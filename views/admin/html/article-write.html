@@ -43,9 +43,8 @@
                     processData: false,
                     success: function (data) {
                         if (data.code == 200) {
-                            alert("上传成功！");
-                            var image_save_url  = data.image_save_url;
-                            alert(image_save_url);
+                            var image_url = data.data.image_url;
+                            $("#image_url").val(image_url)
                         }
                         else
                         {
@@ -112,6 +111,7 @@
             </div>
             <button type="button" class="layui-btn" id="upload-image-db">上传封面图片</button>
             </div> -->
+            <input type="hidden" id="image_url" value="" />
             选择封面:<input type="file" id="file1" /><br />
             <input type="button" id="upload" value="上传" />
             <img src="../../statics/admin/images/pic/1.png" style="display:none" id="imgWait" />  
@@ -216,35 +216,6 @@
           alert(editor.getHTML());
       });
 
-      //上传封面
-      $("#upload-image-db").bind('click', function() {
- 
-          var json = {
-              "TagID": parseInt(tagId),
-          }
-          $.ajax({
-              type:"POST",
-              //请求的媒体类型
-              contentType: "application/json;charset=UTF-8",
-              headers:{'token':token},
-              //请求地址
-              url : "/upload",
-              //数据，json字符串
-              dataType:"json",
-              data : JSON.stringify(json),
-              //请求成功
-              success : function(result) {
-                  console.log(result);
-                  alert("发表成功！！");
-              },
-              //请求失败，包含具体的错误信息
-              error : function(e){
-                  console.log(e.status);
-                  console.log(e.responseText);
-              }
-          })
-      });
-
       //发表文章
       $("#save-html-db").bind('click', function() {
           var title = $("#title").val();
@@ -253,6 +224,7 @@
           var categoryId = $("#categorys").val();
           var mdContent = editor.getMarkdown();
           var content = editor.getHTML();
+          var image_url = $("#image_url").val();
 
           var json = {
               "TagID": parseInt(tagId),
@@ -261,7 +233,7 @@
               "Desc": desc,
               "Content": content,
               "CreatedBy": "eee",
-              "CoverImageUrl": "22",
+              "CoverImageUrl": image_url,
               "State": 0,
               "MdContent":mdContent
           }
