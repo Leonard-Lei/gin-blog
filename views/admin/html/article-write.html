@@ -20,6 +20,51 @@
       <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
       <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script>
+        $(function () {
+            $("#upload").click(function () {
+                $("#imgWait").show();
+                var formData = new FormData();
+                formData.append("image", document.getElementById("file1").files[0]);   
+                $.ajax({
+                    url: "/upload",
+                    type: "POST",
+                    data: formData,
+                    /**
+                    *必须false才会自动加上正确的Content-Type
+                    */
+                    contentType: false,
+                    /**
+                    * 必须false才会避开jQuery对 formdata 的默认处理
+                    * XMLHttpRequest会对 formdata 进行正确的处理
+                    */
+                    processData: false,
+                    success: function (data) {
+                        if (data.code == 200) {
+                            alert("上传成功！");
+                            var image_save_url  = data.image_save_url;
+                            alert(image_save_url);
+                        }
+                        else
+                        {
+                            alert(data.msg);
+                        }
+                        // if (data.status == "error") {
+                          // alert(data.msg);
+                        // }
+                        $("#imgWait").hide();
+                    },
+                    error: function () {
+                        alert("上传失败！");
+                        $("#imgWait").hide();
+                    }
+                });
+            });
+        });
+    </script>
+    
   </head>
   
   <body class="form-wrap" >
@@ -59,14 +104,18 @@
               </div>
           </div>
          
-            <div class="layui-upload">
+            <!-- <div class="layui-upload">
             <button type="button" class="layui-btn" id="choose-image">选择图片</button>
             <div class="layui-upload-list">
                 <img class="layui-upload-img" id="demo1">
                 <p id="demoText"></p>
             </div>
             <button type="button" class="layui-btn" id="upload-image-db">上传封面图片</button>
-            </div>
+            </div> -->
+            选择封面:<input type="file" id="file1" /><br />
+            <input type="button" id="upload" value="上传" />
+            <img src="../../statics/admin/images/pic/1.png" style="display:none" id="imgWait" />  
+
           </form>
           <button  class="layui-btn layui-btn-warm" id="save-html-db">发表文章</button>
           <div id="test-editor">
