@@ -8,6 +8,7 @@ import (
 	_ "gin-blog/docs"
 	"gin-blog/middleware/jwt"
 	"gin-blog/pkg/export"
+	"gin-blog/pkg/qrcode"
 	"gin-blog/pkg/upload"
 	"gin-blog/routers/api"
 	v1 "gin-blog/routers/api/v1"
@@ -25,7 +26,7 @@ func InitRouter() *gin.Engine {
 	//gin.SetMode(setting.ServerSetting.RunMode)
 	r.StaticFS("/export", http.Dir(export.GetExcelFullPath()))
 	r.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
-	//r.StaticFS("/qrcode", http.Dir(qrcode.GetQrCodeFullPath()))
+	r.StaticFS("/qrcode", http.Dir(qrcode.GetQrCodeFullPath()))
 
 	//新增获取token的方法
 	r.GET("/auth", api.GetLogin)
