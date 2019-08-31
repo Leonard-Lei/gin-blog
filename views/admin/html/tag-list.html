@@ -44,6 +44,8 @@
       </div>
       <xblock>
         <button class="layui-btn" onclick="x_admin_show('添加TAG','./tag-add.html')"><i class="layui-icon"></i>添加</button>
+        <button class="layui-btn" onclick="x_admin_show('导出TAG','./tag-export.html')"><i class="layui-icon"></i>导出</button>
+        <button class="layui-btn" onclick="x_admin_show('导出TAG','./tag-import.html')"><i class="layui-icon"></i>导入</button>
         <span class="x-right" style="line-height:40px">共有数据：88 条</span>
       </xblock>
       <table class="layui-table">
@@ -84,7 +86,6 @@
           elem: '#end' //指定元素
         });
       });
-
 
       /*用户-删除*/
       function member_del(obj,id){

@@ -7,6 +7,7 @@ import (
 
 	_ "gin-blog/docs"
 	"gin-blog/middleware/jwt"
+	"gin-blog/pkg/export"
 	"gin-blog/pkg/upload"
 	"gin-blog/routers/api"
 	v1 "gin-blog/routers/api/v1"
@@ -22,7 +23,7 @@ func InitRouter() *gin.Engine {
 	r.Use(gin.Recovery())
 
 	//gin.SetMode(setting.ServerSetting.RunMode)
-	//r.StaticFS("/export", http.Dir(export.GetExcelFullPath()))
+	r.StaticFS("/export", http.Dir(export.GetExcelFullPath()))
 	r.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
 	//r.StaticFS("/qrcode", http.Dir(qrcode.GetQrCodeFullPath()))
 
@@ -101,7 +102,7 @@ func InitRouter() *gin.Engine {
 		//删除指定标签
 		apiv1.DELETE("/tags/:id", v1.DeleteTag)
 		//导出标签
-		r.POST("/tags/export", v1.ExportTag)
+		r.GET("/tags/export", v1.ExportTag)
 		//导入标签
 		r.POST("/tags/import", v1.ImportTag)
 
