@@ -176,6 +176,24 @@
 			"revisionTime": "2019-07-24T09:19:59Z"
 		},
 		{
+			"checksumSHA1": "66S00P4GDH4ng1B/hWWQX1+vdRY=",
+			"path": "github.com/gorilla/context",
+			"revision": "8559d4a6b87e4f517ec1846eb90a192b8748cc89",
+			"revisionTime": "2019-06-27T02:46:05Z"
+		},
+		{
+			"checksumSHA1": "gAOUQcmbKfDGlBOk8hZ0UJD5F2E=",
+			"path": "github.com/gorilla/securecookie",
+			"revision": "86450627d8e6b88e00ea41f228489b89d08a40de",
+			"revisionTime": "2019-07-07T03:38:17Z"
+		},
+		{
+			"checksumSHA1": "a2CT4E83/3QrKl0sa58UIJXFkI8=",
+			"path": "github.com/gorilla/sessions",
+			"revision": "9c6b24ee2dee928836dbf71f18bb0c7d0da4bf85",
+			"revisionTime": "2019-07-20T20:21:36Z"
+		},
+		{
 			"checksumSHA1": "cGQumTyZMk2jBu314CJ1MGFQ9DY=",
 			"path": "github.com/jinzhu/gorm",
 			"revision": ""
@@ -253,6 +271,12 @@
 			"path": "github.com/tealeg/xlsx",
 			"revision": "a6243d92b3699a06d678109bc19b1529b3f84aba",
 			"revisionTime": "2019-08-07T18:21:18Z"
+		},
+		{
+			"checksumSHA1": "cSVt/zeK4fogPsmi77TIikn+n6g=",
+			"path": "github.com/tommy351/gin-sessions",
+			"revision": "353060947eb6549deb9e15229c73ed37931acf5f",
+			"revisionTime": "2015-06-17T14:18:53Z"
 		},
 		{
 			"checksumSHA1": "VBd/SrK/NSQUjOgCpDzan3+AWnI=",
