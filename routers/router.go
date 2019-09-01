@@ -30,6 +30,7 @@ func InitRouter() *gin.Engine {
 
 	//新增获取token的方法
 	r.GET("/auth", api.GetLogin)
+	r.GET("/verify", api.Verify)
 
 	// 加载static文件夹下所有的文件
 	r.LoadHTMLGlob("views/**/**/*")

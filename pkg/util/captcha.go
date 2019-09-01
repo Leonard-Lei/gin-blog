@@ -401,9 +401,9 @@ func LoadVerify(ctx *gin.Context) {
 		d[v] %= 10
 		ss += strconv.FormatInt(int64(d[v]), 32)
 	}
-	session := sessions.Get(ctx)
-	session.Set("___verify", ss)
-	session.Save()
+	// session := sessions.Get(ctx)
+	// session.Set("___verify", ss)
+	// session.Save()
 	NewImage(d, 100, 40).WriteTo(ctx.Writer)
 
 }
