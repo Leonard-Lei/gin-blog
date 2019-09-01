@@ -69,6 +69,12 @@
 			"revisionTime": "2019-02-19T06:25:09Z"
 		},
 		{
+			"checksumSHA1": "k9pGz1TGLVnIWIhvKIR9OTKLae4=",
+			"path": "github.com/dchest/captcha",
+			"revision": "6a29415a8364ec2971fdc62d9e415ed53fc20410",
+			"revisionTime": "2017-06-22T15:38:21Z"
+		},
+		{
 			"checksumSHA1": "0cytTxS0qPVjtknc7OrfuNmxvBE=",
 			"path": "github.com/dgrijalva/jwt-go",
 			"revision": "5e25c22bd5d6de03265bbe5462dcd162f85046f6",
