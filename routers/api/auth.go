@@ -325,7 +325,7 @@ func DeleteAuth(c *gin.Context) {
 // @Produce  json
 // @Router /vertify [GET]
 func Verify(c *gin.Context) {
-	util.LoadVerify(c)
+	//util.LoadVerify(c)
 }
 
 // //鉴权接口

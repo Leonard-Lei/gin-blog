@@ -56,6 +56,11 @@ var MsgFlags = map[int]string{
 	ERROR_GEN_CATEGORY_POSTER_FAIL:  "生成分类海报失败",
 	ERROR_ALREADY_EXIST_CATEGORY:    "改分类已经存在",
 
+	ERROR_CAPTCHA_QUERY_PARAM_ERROR:  "验证码请求参数有误",
+	ERROR_CAPTCHA_RESOURCE_NOT_FOUNT: "验证码访问资源不存在",
+	ERROR_CAPTCHA_SYSTEM_ERROE:       "验证码服务内部错误",
+	ERROR_CAPTCHA_ERROR:              "验证码验证码错误",
+
 	ERROR_AUTH_CHECK_TOKEN_FAIL:     "Token鉴权失败",
 	ERROR_AUTH_CHECK_TOKEN_TIMEOUT:  "Token已超时",
 	ERROR_AUTH_TOKEN:                "Token生成失败",
