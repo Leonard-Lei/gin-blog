@@ -4,6 +4,20 @@
 
 	{{ template "top_header.html" .}}
 
+    <style type="text/css">
+        .send{
+            width: 84px !important;
+            float: right !important;
+            height: 70px !important;
+            line-height: 20px !important;
+            padding: 0 !important;
+            text-transform: uppercase !important;
+            color: #888 !important;
+            background: #eee !important;
+            border-radius: 4px !important;
+        }
+    </style>
+
 	<body class="home blog custom-background round-avatars">
 
         {{ template "header.html" .}}
@@ -97,7 +111,7 @@
 										<p class="input-row">
 											<i class="row-icon"></i>
 											<textarea class="text_area" rows="3" cols="80" name="comment" id="comment" tabindex="4" placeholder="你不说两句吗？(°∀°)ﾉ……"></textarea>
-											<input type="submit" name="submit" class="button" id="submit" tabindex="5" value="发送" />
+											<input type="button" name="submit" class="button send" id="submit" tabindex="5" value="发送" />
 										</p>
 									</div>
 								</form>
@@ -121,14 +135,13 @@
                     type:"GET",
                     //请求的媒体类型
                     contentType: "application/json;charset=UTF-8",
-                    headers:{'token':token},
                     //请求地址
                     url : "/api/v1/messages",
                     //请求成功
                     success : function(result) {
                         var items = result.data.lists;
                         var masseges = $("#masseges");
-                        for (i=0;i<items.length,i++) {
+                        for(i=0;i<items.length;i++){
                             masseges.append("<li class=\"comment odd alt thread-odd thread-alt depth-1\" id=\"li-comment-\">\n" +
                                     "<div id=\"comment-986\" class=\"comment_body contents\">\n" +
                                     "<div class=\"profile\">\n" +
@@ -138,15 +151,15 @@
                                     "<div class=\"commentinfo\">\n" +
                                     "<section class=\"commeta\">\n" +
                                     "<div class=\"shang\">\n" +
-                                    "<h4 class=\"author\"><a href=\"\" target=\"_blank\"><img src=\"/statics/blog/images/b8b61f04b19de2e728bfef9dcc4332d5.jpeg\" class=\"gravatarsmall\" alt=\"vxZoo\">vxZoo</a></h4>\n" +
+                                    "<h4 class=\"author\">"+items[i].content+"</h4>\n" +
                                     "</div>\n" +
                                     "</section>\n" +
                                     "</div>\n" +
                                     "<div class=\"body\">\n" +
-                                    "<p>打卡</p>\n" +
+                                    "<p>"+items[i].content+"</p>\n" +
                                     "</div>\n" +
                                     "<div class=\"xia info\">\n" +
-                                    "<span><time datetime=\"2018-03-29\">2018年3月29日</time></span>\n" +
+                                    "<span><time datetime=\"2018-03-29\">"+items[i].create_time+"</time></span>\n" +
                                     "<span><a rel='nofollow' class='comment-reply-link' href='' onclick='return addComment.moveForm( \"comment-986\", \"986\", \"respond\", \"2\" )' aria-label='回复给vxZoo'>回复</a></span>\n" +
                                     "</div>\n" +
                                     "</div>\n" +
@@ -162,13 +175,12 @@
                 })
 				//留言
                 $("#submit").click(function () {
-                    var id = GetQueryString("id")
                     var author = $("#author").val();
                     var comment = $("#comment").val();
                     var email = $("#email").val();
 
                     var json ={
-                        "ArticleID": parseInt(id),
+
                         "Content": comment,
                         "author": author,
                         "email": email,
