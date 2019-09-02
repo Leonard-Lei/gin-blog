@@ -20,18 +20,16 @@ func JWT() gin.HandlerFunc {
 		code = e.SUCCESS
 		//token := c.Query("token")
 		uri := c.Request.RequestURI
-		method := c.Request.Method
 
 		fmt.Println(uri)
-		if method == "GET" {
-			//2. 创建一个正则表达式对象
-			regx, _ := regexp.Compile("/api/v1")
-			//3. 利用正则表达式对象, 匹配指定的字符串
-			res := regx.FindAllString(uri, -1)
-			if res != nil {
-				c.Next()
-				return
-			}
+
+		//2. 创建一个正则表达式对象
+		regx, _ := regexp.Compile("/api/v1")
+		//3. 利用正则表达式对象, 匹配指定的字符串
+		res := regx.FindAllString(uri, -1)
+		if res != nil {
+			c.Next()
+			return
 		}
 
 		token := c.Request.Header.Get("token")

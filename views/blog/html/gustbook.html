@@ -59,7 +59,6 @@
 				<div class="comment-area">
 					<section class="comments">
 						<div class="comments-main">
-							<div id="comments-list-title"><span>160</span> 条评论 </div>
 							<div id="loading-comments">
 								<div class="host">
 									<div class="loading loading-0"></div>
@@ -67,102 +66,8 @@
 									<div class="loading loading-2"></div>
 								</div>
 							</div>
-							<ul class="commentwrap">
-								<li class="comment even thread-even depth-1" id="li-comment-">
-									<div id="comment-936" class="comment_body contents">
-										<div class="profile">
-											<a href=""><img src="/statics/blog/images/d9885b7dc7a78f9cadfb81be7512d630.png" class="gravatar" alt="沺"></a>
-										</div>
-										<div class="main shadow">
-											<div class="commentinfo">
-												<section class="commeta">
-													<div class="shang">
-														<h4 class="author"><a href="" target="_blank"><img src="/statics/blog/images/d9885b7dc7a78f9cadfb81be7512d630.png" class="gravatarsmall" alt="沺">沺</a></h4>
-													</div>
-												</section>
-											</div>
-											<div class="body">
-												<p>每日惯例来检查，生意兴隆通四海</p>
-											</div>
-											<div class="xia info">
-												<span><time datetime="2018-01-16">2018年1月16日</time></span>
-												<span><a rel='nofollow' class='comment-reply-link' href='' onclick='return addComment.moveForm( "comment-936", "936", "respond", "2" )' aria-label='回复给沺'>回复</a></span>
-											</div>
-										</div>
-									</div>
-								</li>
+							<ul id="masseges" class="commentwrap">
 								<!-- #comment-## -->
-								<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-">
-									<div id="comment-949" class="comment_body contents">
-										<div class="profile">
-											<a href=""><img src="/statics/blog/images/573594c6f0bb6559381e5acf27845208.jpg" class="gravatar" alt="吖远zzy"></a>
-										</div>
-										<div class="main shadow">
-											<div class="commentinfo">
-												<section class="commeta">
-													<div class="shang">
-														<h4 class="author"><a href="" target="_blank"><img src="/statics/blog/images/573594c6f0bb6559381e5acf27845208.jpg" class="gravatarsmall" alt="吖远zzy">吖远zzy</a></h4>
-													</div>
-												</section>
-											</div>
-											<div class="body">
-												<p>(๑•॒̀ ູ॒•́๑) 这主题不错，留个脚印~</p>
-											</div>
-											<div class="xia info">
-												<span><time datetime="2018-02-03">2018年2月3日</time></span>
-												<span><a rel='nofollow' class='comment-reply-link' href='' onclick='return addComment.moveForm( "comment-949", "949", "respond", "2" )' aria-label='回复给吖远zzy'>回复</a></span>
-											</div>
-										</div>
-									</div>
-								</li>
-								<!-- #comment-## -->
-								<li class="comment even thread-even depth-1" id="li-comment-">
-									<div id="comment-959" class="comment_body contents">
-										<div class="profile">
-											<a href=""><img src="/statics/blog/images/b8b61f04b19de2e728bfef9dcc4332d5.jpeg" class="gravatar" alt="vxZoo"></a>
-										</div>
-										<div class="main shadow">
-											<div class="commentinfo">
-												<section class="commeta">
-													<div class="shang">
-														<h4 class="author"><a href="" target="_blank"><img src="/statics/blog/images/b8b61f04b19de2e728bfef9dcc4332d5.jpeg" class="gravatarsmall" alt="vxZoo">vxZoo</a></h4>
-													</div>
-												</section>
-											</div>
-											<div class="body">
-												<p>俊杰男神，小弟给您拜年了。新年行大运，阖家欢乐，幸福安康。</p>
-											</div>
-											<div class="xia info">
-												<span><time datetime="2018-02-16">2018年2月16日</time></span>
-												<span><a rel='nofollow' class='comment-reply-link' href='' onclick='return addComment.moveForm( "comment-959", "959", "respond", "2" )' aria-label='回复给vxZoo'>回复</a></span>
-											</div>
-										</div>
-									</div>
-								</li>
-								<!-- #comment-## -->
-								<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-">
-									<div id="comment-986" class="comment_body contents">
-										<div class="profile">
-											<a href=""><img src="/statics/blog/images/b8b61f04b19de2e728bfef9dcc4332d5.jpeg" class="gravatar" alt="vxZoo"></a>
-										</div>
-										<div class="main shadow">
-											<div class="commentinfo">
-												<section class="commeta">
-													<div class="shang">
-														<h4 class="author"><a href="" target="_blank"><img src="/statics/blog/images/b8b61f04b19de2e728bfef9dcc4332d5.jpeg" class="gravatarsmall" alt="vxZoo">vxZoo</a></h4>
-													</div>
-												</section>
-											</div>
-											<div class="body">
-												<p>打卡</p>
-											</div>
-											<div class="xia info">
-												<span><time datetime="2018-03-29">2018年3月29日</time></span>
-												<span><a rel='nofollow' class='comment-reply-link' href='' onclick='return addComment.moveForm( "comment-986", "986", "respond", "2" )' aria-label='回复给vxZoo'>回复</a></span>
-											</div>
-										</div>
-									</div>
-								</li>
 								<!-- #comment-## -->
 							</ul>
 							<nav id="comments-navi">
@@ -210,6 +115,85 @@
 		</div>
 
         {{ template "footer.html" .}}
+
+		<script type="text/javascript">
+            $(document).ready(function(){
+                $.ajax({
+                    type:"GET",
+                    //请求的媒体类型
+                    contentType: "application/json;charset=UTF-8",
+                    headers:{'token':token},
+                    //请求地址
+                    url : "/api/v1/messages",
+                    //请求成功
+                    success : function(result) {
+
+                    },
+                    //请求失败，包含具体的错误信息
+                    error : function(e){
+                        console.log(e.status);
+                        console.log(e.responseText);
+                    }
+                })
+				//留言
+                $("#submit").click(function () {
+                    var id = GetQueryString("id")
+                    var author = $("#author").val();
+                    var comment = $("#comment").val();
+                    var email = $("#email").val();
+
+                    var json ={
+                        "ArticleID": parseInt(id),
+                        "Content": comment,
+                        "author": author,
+                        "email": email,
+                        "State": 1
+                    }
+                    $.ajax({
+                        type:"POST",
+                        //请求的媒体类型
+                        contentType: "application/json;charset=UTF-8",
+                        //请求地址
+                        url : "/api/v1/messages",
+                        dataType:"json",
+                        data : JSON.stringify(json),
+                        //请求成功
+                        success : function(result) {
+                            var masseges = $("#masseges");
+                            masseges.append("<li class=\"comment odd alt thread-odd thread-alt depth-1\" id=\"li-comment-\">\n" +
+                                    "<div id=\"comment-986\" class=\"comment_body contents\">\n" +
+                                    "<div class=\"profile\">\n" +
+                                    "<a href=\"\"><img src=\"/statics/blog/images/b8b61f04b19de2e728bfef9dcc4332d5.jpeg\" class=\"gravatar\" alt=\"vxZoo\"></a>\n" +
+                                    "</div>\n" +
+                                    "<div class=\"main shadow\">\n" +
+                                    "<div class=\"commentinfo\">\n" +
+                                    "<section class=\"commeta\">\n" +
+                                    "<div class=\"shang\">\n" +
+                                    "<h4 class=\"author\"><a href=\"\" target=\"_blank\"><img src=\"/statics/blog/images/b8b61f04b19de2e728bfef9dcc4332d5.jpeg\" class=\"gravatarsmall\" alt=\"vxZoo\">vxZoo</a></h4>\n" +
+                                    "</div>\n" +
+                                    "</section>\n" +
+                                    "</div>\n" +
+                                    "<div class=\"body\">\n" +
+                                    "<p>打卡</p>\n" +
+                                    "</div>\n" +
+                                    "<div class=\"xia info\">\n" +
+                                    "<span><time datetime=\"2018-03-29\">2018年3月29日</time></span>\n" +
+                                    "<span><a rel='nofollow' class='comment-reply-link' href='' onclick='return addComment.moveForm( \"comment-986\", \"986\", \"respond\", \"2\" )' aria-label='回复给vxZoo'>回复</a></span>\n" +
+                                    "</div>\n" +
+                                    "</div>\n" +
+                                    "</div>\n" +
+                                    "</li>")
+
+                        },
+                        //请求失败，包含具体的错误信息
+                        error : function(e){
+                            console.log(e.status);
+                            console.log(e.responseText);
+                        }
+                    })
+                })
+            });
+		</script>
 
 	</body>
 
