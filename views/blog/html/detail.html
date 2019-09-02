@@ -292,7 +292,7 @@
                     contentType: "application/json;charset=UTF-8",
                     headers:{'token':token},
                     //请求地址
-                    url : "/api/v1/comments/"+parseInt(id),
+                    url : "/api/v1/comments?state=0&page_num=-1&article_id="+parseInt(id),
                     //请求成功
                     success : function(result) {
                         var items = result.data.lists;
