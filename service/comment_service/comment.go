@@ -77,5 +77,8 @@ func (a *Comment) getMaps() map[string]interface{} {
 	if a.State != -1 {
 		maps["state"] = a.State
 	}
+	if a.ArticleID != -1 {
+		maps["article_id"] = a.ArticleID
+	}
 	return maps
 }

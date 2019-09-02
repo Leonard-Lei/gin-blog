@@ -57,9 +57,9 @@ func GetComment(c *gin.Context) {
 
 // @Summary 获取多篇评论
 // @Produce  json
-// @Param tag_id body int false "ID"
-// @Param category_id body int false "State"
-// @Param state body int false "State"
+// @Param tag_id path int false "ID"
+// @Param article_id path int false "ArticleId"
+// @Param state path int false "State"
 // @Success 200 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Failure 500 {string} json "{"code":200,"data":{},"msg":"ok"}"
 // @Router /api/v1/comments [get]
