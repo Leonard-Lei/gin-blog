@@ -10,8 +10,10 @@ type Comment struct {
 	Content    string
 	State      int
 	CreateBy   int
+	Nickname   string
 	CreateTime string
 	UpdateBy   int
+	Email      string
 
 	PageNum  int
 	PageSize int
@@ -22,6 +24,8 @@ func (a *Comment) Add() error {
 		"article_id": a.ArticleID,
 		"content":    a.Content,
 		"create_by":  a.CreateBy,
+		"nickname":   a.Nickname,
+		"email":      a.Email,
 		"state":      a.State,
 	}
 
@@ -37,6 +41,8 @@ func (a *Comment) Edit() error {
 		"id":        a.ID,
 		"content":   a.Content,
 		"state":     a.State,
+		"nickname":  a.Nickname,
+		"email":     a.Email,
 		"update_by": a.UpdateBy,
 	})
 }

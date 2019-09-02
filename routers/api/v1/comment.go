@@ -123,6 +123,8 @@ type AddCommentForm struct {
 	ArticleID int    `form:"article_id" valid:"Required;Min(1)"`
 	Content   string `form:"content" valid:"Required;MaxSize(102400)"`
 	CreateBy  int    `form:"create_by"`
+	Nickname  string `form:"nickname"`
+	Email     string `form:"email"`
 	State     int    `form:"state" valid:"Range(0,1)"`
 }
 
@@ -173,6 +175,8 @@ func AddComment(c *gin.Context) {
 		Content:   form.Content,
 		State:     form.State,
 		CreateBy:  form.CreateBy,
+		Email:     form.Email,
+		Nickname:  form.Nickname,
 	}
 	if err := commentService.Add(); err != nil {
 		appG.Response(http.StatusInternalServerError, e.ERROR_ADD_COMMENT_FAIL, nil)
@@ -183,10 +187,12 @@ func AddComment(c *gin.Context) {
 }
 
 type EditCommentForm struct {
-	ID        int `form:"id" valid:"Required;Min(1)"`
-	ArticleID int `form:"article_id"`
-	UpdateBy  int `form:"update_by"`
-	State     int `form:"state"`
+	ID        int    `form:"id" valid:"Required;Min(1)"`
+	ArticleID int    `form:"article_id"`
+	UpdateBy  int    `form:"update_by"`
+	Nickname  string `form:"nickname"`
+	Email     string `form:"email"`
+	State     int    `form:"state"`
 }
 
 // @Summary 修改文章评论
@@ -225,6 +231,7 @@ func EditComment(c *gin.Context) {
 		ID:        form.ID,
 		ArticleID: form.ArticleID,
 		UpdateBy:  form.UpdateBy,
+		Nickname:  form.Nickname,
 		State:     form.State,
 	}
 

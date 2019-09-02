@@ -162,14 +162,16 @@
 			$("#submit").click(function () {
                 var id = GetQueryString("id")
                 var author = $("#author").val();
+                var nickname = $("#author").val();
                 var comment = $("#comment").val();
                 var email = $("#email").val();
 
                 var json ={
                     "ArticleID": parseInt(id),
                     "Content": comment,
-                    "author": author,
-                    "email": email,
+                    "CreateBy": parseInt(author),
+                    "Nickname": author,
+                    "Email": email,
                     "State": 1
                 }
                 $.ajax({
@@ -192,7 +194,7 @@
                                 "<div class=\"commentinfo\">\n" +
                                 "<section class=\"commeta\">\n" +
                                 "<div class=\"shang\">\n" +
-                                "<h4 class=\"author\">"+json.author+"</h4>\n" +
+                                "<h4 class=\"author\">"+json.Nickname+"</h4>\n" +
                                 "</div>\n" +
                                 "</section>\n" +
                                 "</div>\n" +
@@ -292,7 +294,7 @@
                     contentType: "application/json;charset=UTF-8",
                     headers:{'token':token},
                     //请求地址
-                    url : "/api/v1/comments?state=0&page_num=-1&article_id="+parseInt(id),
+                    url : "/api/v1/comments?state=1&page_num=-1&article_id="+parseInt(id),
                     //请求成功
                     success : function(result) {
                         var items = result.data.lists;
@@ -301,21 +303,21 @@
                             comment.append("<li class=\"comment even thread-even depth-1\" id=\"li-comment-\">\n" +
                                     "<div id=\"comment-969\" class=\"comment_body contents\">\n" +
                                     "<div class=\"profile\">\n" +
-                                    "<a href=\"\"><img src=\"/statics/blog/images/9cc50a9e422fb1c89aebafeb959cef7a.jpg\" class=\"gravatar\" alt=\"小布丁\"></a>\n" +
+                                    "<a href=\"\"><img src=\"/statics/blog/images/9cc50a9e422fb1c89aebafeb959cef7a.jpg\" class=\"gravatar\" alt=\""+items[i].nickname+"\"></a>\n" +
                                     "</div>\n" +
                                     "<div class=\"main shadow\">\n" +
                                     "<div class=\"commentinfo\">\n" +
                                     "<section class=\"commeta\">\n" +
                                     "<div class=\"shang\">\n" +
-                                    "<h4 class=\"author\"><a href=\"\" target=\"_blank\"><img src=\"/statics/blog/images/9cc50a9e422fb1c89aebafeb959cef7a.jpg\" class=\"gravatarsmall\" alt=\"小布丁\">小布丁</a></h4>\n" +
+                                    "<h4 class=\"author\"><a href=\"\" target=\"_blank\"><img src=\"/statics/blog/images/9cc50a9e422fb1c89aebafeb959cef7a.jpg\" class=\"gravatarsmall\" alt=\"小布丁\">"+items[i].nickname+"</a></h4>\n" +
                                     "</div>\n" +
                                     "</section>\n" +
                                     "</div>\n" +
                                     "<div class=\"body\">\n" +
-                                    "<p>挺好的</p>\n" +
+                                    "<p>"+items[i].content+"</p>\n" +
                                     "</div>\n" +
                                     "<div class=\"xia info\">\n" +
-                                    "<span><time datetime=\"2018-03-09\">2018年3月9日</time></span>\n" +
+                                    "<span><time datetime=\"2018-03-09\">"+items[i].create_time+"</time></span>\n" +
                                     "<span><a rel='nofollow' class='comment-reply-link' href=\"\" onclick='return addComment.moveForm( \"comment-969\", \"969\", \"respond\", \"1202\" )' aria-label='回复给小布丁'>回复</a></span>\n" +
                                     "</div>\n" +
                                     "</div>\n" +

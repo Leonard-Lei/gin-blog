@@ -8,6 +8,8 @@ type Comment struct {
 	ArticleID int    `json:"article_id"`
 	Content   string `json:"content"`
 	CreateBy  int    `json:"create_by"`
+	Nickname  string `json:"nickname"`
+	Email     string `json:"email"`
 	State     int    `json:"state"`
 }
 
@@ -78,6 +80,8 @@ func AddComment(data map[string]interface{}) error {
 		ArticleID: data["article_id"].(int),
 		Content:   data["content"].(string),
 		CreateBy:  data["create_by"].(int),
+		Nickname:  data["nickname"].(string),
+		Email:     data["email"].(string),
 		State:     data["state"].(int),
 	}
 
