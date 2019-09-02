@@ -127,7 +127,33 @@
                     url : "/api/v1/messages",
                     //请求成功
                     success : function(result) {
-
+                        var items = result.data.lists;
+                        var masseges = $("#masseges");
+                        for (i=0;i<items.length,i++) {
+                            masseges.append("<li class=\"comment odd alt thread-odd thread-alt depth-1\" id=\"li-comment-\">\n" +
+                                    "<div id=\"comment-986\" class=\"comment_body contents\">\n" +
+                                    "<div class=\"profile\">\n" +
+                                    "<a href=\"\"><img src=\"/statics/blog/images/b8b61f04b19de2e728bfef9dcc4332d5.jpeg\" class=\"gravatar\" alt=\"vxZoo\"></a>\n" +
+                                    "</div>\n" +
+                                    "<div class=\"main shadow\">\n" +
+                                    "<div class=\"commentinfo\">\n" +
+                                    "<section class=\"commeta\">\n" +
+                                    "<div class=\"shang\">\n" +
+                                    "<h4 class=\"author\"><a href=\"\" target=\"_blank\"><img src=\"/statics/blog/images/b8b61f04b19de2e728bfef9dcc4332d5.jpeg\" class=\"gravatarsmall\" alt=\"vxZoo\">vxZoo</a></h4>\n" +
+                                    "</div>\n" +
+                                    "</section>\n" +
+                                    "</div>\n" +
+                                    "<div class=\"body\">\n" +
+                                    "<p>打卡</p>\n" +
+                                    "</div>\n" +
+                                    "<div class=\"xia info\">\n" +
+                                    "<span><time datetime=\"2018-03-29\">2018年3月29日</time></span>\n" +
+                                    "<span><a rel='nofollow' class='comment-reply-link' href='' onclick='return addComment.moveForm( \"comment-986\", \"986\", \"respond\", \"2\" )' aria-label='回复给vxZoo'>回复</a></span>\n" +
+                                    "</div>\n" +
+                                    "</div>\n" +
+                                    "</div>\n" +
+                                    "</li>")
+                        }
                     },
                     //请求失败，包含具体的错误信息
                     error : function(e){
