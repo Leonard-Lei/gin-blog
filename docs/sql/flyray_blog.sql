@@ -96,22 +96,23 @@ DROP TABLE IF EXISTS `blog_comment`;
 
 CREATE TABLE `blog_comment` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '评论ID',
+  `nickname` varchar(50) DEFAULT NULL COMMENT '评论者昵称',
   `article_id` bigint(20) DEFAULT NULL COMMENT '关联的文章ID',
   `create_by` bigint(20) DEFAULT NULL COMMENT '评论者',
-  `email` varchar(100) CHARACTER SET latin1 DEFAULT NULL COMMENT '评论人的邮箱',
-  `content` text CHARACTER SET latin1 COMMENT '评论内容',
-  `reply_content` text CHARACTER SET latin1 COMMENT '回复内容',
+  `email` varchar(100) DEFAULT NULL COMMENT '评论人的邮箱',
+  `content` text COMMENT '评论内容',
+  `reply_content` text COMMENT '回复内容',
   `delete_flag` int(10) DEFAULT '0' COMMENT '是否删除 0-未删除 1-已删除',
   `state` tinyint(4) DEFAULT '0' COMMENT '是否审核通过 0-未审核 1-审核通过',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '评论时间',
   `reply_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '回复时间',
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 /*Data for the table `blog_comment` */
 
-insert  into `blog_comment`(`id`,`article_id`,`create_by`,`email`,`content`,`reply_content`,`delete_flag`,`state`,`create_time`,`reply_time`,`update_time`) values (1,1,1,'1224','g vb','dsfb ',0,0,'2019-08-26 22:01:02','2019-08-26 22:01:02','2019-08-26 22:01:02');
+insert  into `blog_comment`(`id`,`nickname`,`article_id`,`create_by`,`email`,`content`,`reply_content`,`delete_flag`,`state`,`create_time`,`reply_time`,`update_time`) values (1,NULL,1,1,'1224','g vb','dsfb ',0,0,'2019-08-26 22:01:02','2019-08-26 22:01:02','2019-08-26 22:01:02'),(2,NULL,2,1,'2312',NULL,NULL,0,0,'2019-09-02 15:21:56','2019-09-02 15:21:56','2019-09-02 15:21:56'),(3,NULL,3,2,'13',NULL,NULL,0,0,'2019-09-02 15:21:57','2019-09-02 15:21:57','2019-09-02 15:21:57'),(4,NULL,1,3,'321',NULL,NULL,0,1,'2019-09-02 15:22:03','2019-09-02 15:22:03','2019-09-02 15:22:03'),(5,'五十',36,2,'12123','fas df ',NULL,0,1,'2019-09-02 17:22:10','2019-09-02 17:22:09','2019-09-02 17:22:10'),(6,'岁月',36,11,'123','fas df ',NULL,0,1,'2019-09-02 17:22:13','2019-09-02 17:22:12','2019-09-02 17:22:13'),(7,'tony',42,11,'312','fdsaFDGFGADSGF',NULL,0,1,'2019-09-02 17:23:57','2019-09-02 17:23:57','2019-09-02 17:23:57'),(8,'tom',42,12,'123','gqfdfghggh',NULL,0,1,'2019-09-02 17:53:31','2019-09-02 17:53:31','2019-09-02 17:53:31'),(9,'leijiwu',42,12,'3123','hrewehj',NULL,0,1,'2019-09-02 17:55:23','2019-09-02 17:55:22','2019-09-02 17:55:23'),(10,'雷继武',42,0,'1234@qq.com','不错啊',NULL,0,1,'2019-09-02 19:07:39','2019-09-02 19:07:39','2019-09-02 19:07:39'),(11,'雷继武',42,0,'1234@qq.com','不错啊',NULL,0,1,'2019-09-02 19:07:39','2019-09-02 19:07:39','2019-09-02 19:07:39'),(12,'累计',42,0,'恶趣味二','请问',NULL,0,1,'2019-09-02 19:07:55','2019-09-02 19:07:55','2019-09-02 19:07:55'),(13,'累计额',42,0,'但是',' SAF ',NULL,0,1,'2019-09-02 19:18:57','2019-09-02 19:18:56','2019-09-02 19:18:57'),(14,'VDSG',42,0,'GDASFGDF','HDFSHH',NULL,0,1,'2019-09-02 19:26:37','2019-09-02 19:26:36','2019-09-02 19:26:37'),(15,'雷继武',42,0,'1234@qq.com','不错啊',NULL,0,1,'2019-09-02 19:27:05','2019-09-02 19:27:04','2019-09-02 19:27:05'),(16,'内容和',42,0,'u634jn4','4hyb6',NULL,0,1,'2019-09-02 19:27:36','2019-09-02 19:27:35','2019-09-02 19:27:36'),(17,'电池',42,0,' 发多少',' 地方',NULL,0,1,'2019-09-02 19:30:07','2019-09-02 19:30:07','2019-09-02 19:30:07'),(18,'  GDS F',41,0,'DS GSD',' SAGDAVF',NULL,0,1,'2019-09-02 19:31:07','2019-09-02 19:31:06','2019-09-02 19:31:07'),(19,'wgth',36,0,'ywer','ywer',NULL,0,1,'2019-09-02 20:20:34','2019-09-02 20:20:33','2019-09-02 20:20:34');
 
 /*Table structure for table `blog_message` */
 
