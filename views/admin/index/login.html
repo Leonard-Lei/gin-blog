@@ -7,34 +7,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>博羸兄弟</title>
 		<link rel="stylesheet" type="text/css" href="/statics/admin/css/login.css">
-		
-		<script>
-			$(document).ready(function() {
-				$.ajax({
-					url: "/getCaptcha",
-					type: "GET",
-					/**
-					*必须false才会自动加上正确的Content-Type
-					*/
-					contentType: false,
-		
-					processData: false,
-					success: function (data) {
-						if (data.code == 200) {
-							var image_url = data.data.ImageUrl;
-							$("#image_url").val(image_url)
-						}
-						else
-						{
-							alert(data.msg);
-						}
-					},
-					error: function () {
-						alert("获取验证码失败！");
-					}
-				});
-			});
-		</script>
 	</head>
 
 
@@ -46,7 +18,7 @@
 		<input type="password" placeholder="密码" id="r_password" />
 		<input type="text" placeholder="电子邮件" id="r_emial" />
 		<input type="text" id="code" class="form-control" placeholder="请输入下图验证码">
-		<img id="verify" src="../"+image_url onclick="reloadverify($(this))" />
+		<img id="verify" src="" onclick="reloadverify($(this))" alt="图片加载失败" />
 		<a href="javascript:reloadverify($('#verify'))">点击这里刷新验证码</a>
 		<button id="create">创建账户</button>
 		<p class="message">已经有了一个账户? <a href="#">立刻登录</a></p>
@@ -57,7 +29,7 @@
 		<input type="password" placeholder="密码" id="password" />
 
 		<input type="text" id="code" class="form-control" placeholder="请输入下图验证码">
-		<img id="verify" src="../"+image_url onclick="reloadverify($(this))" />
+		<img id="verify" src="" onclick="reloadverify($(this))" alt="图片加载失败"/>
 		<a href="javascript:reloadverify($('#verify'))">点击这里刷新验证码</a>
 
 		<button id="login">登　录</button>
@@ -68,82 +40,112 @@
 
 		<script src="/statics/admin/js/jquery.min.js"></script>
 		<script type="text/javascript">
+
 			function reloadverify(o){
-				o.attr("src","localhost:8000/verify?t="+new Date().getTime())
+				//o.attr("src","localhost:8000/verify?t="+new Date().getTime())
+				o.attr("src","localhost:8000/getCaptcha")
 			}
 			
 			function check_login()
 			{
-			var name=$("#user_name").val();
-			var pass=$("#password").val();
-			$.ajax({
-				//请求方式
-				type : "GET",
-				//请求的媒体类型
-				// contentType: "application/json;charset=UTF-8",
-				//请求地址
-				url : "/auth",
-				//数据，json字符串
-				data : "username=" + name+"&password="+pass,
-				//请求成功
-				success : function(result) {
-					console.log(result);
-					if(result.code == 200){
-						sessionStorage.setItem("flyray_blog_token",result.data.token);
-						localStorage.setItem("flyray_blog_token",result.data.token);
-						alert("登录成功！");
-						$("#user_name").val("");
-						$("#password").val("");
-						$(location).attr('href', 'index');
-					}else{
-						$("#alerttopright").fadeToggle(350);
+				var name=$("#user_name").val();
+				var pass=$("#password").val();
+				$.ajax({
+					//请求方式
+					type : "GET",
+					//请求的媒体类型
+					// contentType: "application/json;charset=UTF-8",
+					//请求地址
+					url : "/auth",
+					//数据，json字符串
+					data : "username=" + name+"&password="+pass,
+					//请求成功
+					success : function(result) {
+						console.log(result);
+						if(result.code == 200){
+							sessionStorage.setItem("flyray_blog_token",result.data.token);
+							localStorage.setItem("flyray_blog_token",result.data.token);
+							alert("登录成功！");
+							$("#user_name").val("");
+							$("#password").val("");
+							$(location).attr('href', 'index');
+						}else{
+							$("#alerttopright").fadeToggle(350);
+						}
+					},
+					//请求失败，包含具体的错误信息
+					error : function(e){
+						$("#login_form").removeClass('shake_effect');
+						setTimeout(function()
+						{
+							$("#login_form").addClass('shake_effect')
+						},1);
 					}
-				},
-				//请求失败，包含具体的错误信息
-				error : function(e){
-					$("#login_form").removeClass('shake_effect');
+				})
+			}
+			function check_register(){
+				var name = $("#r_user_name").val();
+				var pass = $("#r_password").val();
+				var email = $("r_email").val();
+				if(name!="" && pass=="" && email != "")
+				{
+					alert("注册成功！");
+					$("#user_name").val("");
+					$("#password").val("");
+				}
+				else
+				{
+					$("#login_form").removeClass('shake_effect');  
 					setTimeout(function()
 					{
-						$("#login_form").addClass('shake_effect')
-					},1);
+					$("#login_form").addClass('shake_effect')
+					},1);  
 				}
-			})
-		}
-		function check_register(){
-			var name = $("#r_user_name").val();
-			var pass = $("#r_password").val();
-			var email = $("r_email").val();
-			if(name!="" && pass=="" && email != "")
-			{
-				alert("注册成功！");
-				$("#user_name").val("");
-				$("#password").val("");
 			}
-			else
-			{
-				$("#login_form").removeClass('shake_effect');  
-				setTimeout(function()
-				{
-				$("#login_form").addClass('shake_effect')
-				},1);  
-			}
-		}
-		$(function(){
-			$("#create").click(function(){
-				check_register();
-				return false;
+			$(function(){
+				$("#create").click(function(){
+					check_register();
+					return false;
+				})
+				$("#login").click(function(){
+					check_login();
+					return false;
+				})
+				$('.message a').click(function () {
+					$('form').animate({
+						height: 'toggle',
+						opacity: 'toggle'
+					}, 'slow');
+				});
 			})
-			$("#login").click(function(){
-				check_login();
-				return false;
-			})
-			$('.message a').click(function () {
-				$('form').animate({
-					height: 'toggle',
-					opacity: 'toggle'
-				}, 'slow');
+			
+			$(document).ready(function() {
+				$.ajax({
+					//请求方式
+					type : "GET",
+					//请求的媒体类型
+					contentType: "application/json;charset=UTF-8",
+					//请求地址
+					url: "/getCaptcha",
+					//数据，json字符串
+					data : "",
+					//请求成功
+					success: function (data) {
+						if (data.code == 200) {
+							var image_url = data.data.ImageUrl;
+							document.getElementById("verify").src = "localhost:8000"+image_url;
+							alert(image_url);
+						}
+						else
+						{
+							alert(data.msg);
+						}
+					},
+					error: function () {
+						alert("获取验证码失败！");
+					}
+				});
 			});
-		})
 		</script>
 	</body>
 </html>
